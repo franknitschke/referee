@@ -3,7 +3,7 @@
 2. npm start
 3. localhost:3030
 
-#Socket
+## Socket
 
 Daten vom WK Programm an socket.emit('competition') => siehe /server/app.js
 

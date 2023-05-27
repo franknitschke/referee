@@ -45,6 +45,7 @@ jspm_packages/
 # Database
 server/db/database/
 
+.DS_Store
 
 
 # Optional npm cache directory

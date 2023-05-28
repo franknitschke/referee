@@ -17,7 +17,7 @@ router.get('/ref', async (req, res) => {
   const { token, light } = req.query;
   const role = await dbFind(dbMemory, 'token', token);
 
-  const autoReset = await dbGet(dbMemory, 'settings');
+  const settings = await dbGet(dbMemory, 'settings');
   const position = role[0]?._id;
 
   if (!role || !position) return res.status(403).send('Unauthorized');
@@ -43,15 +43,15 @@ router.get('/ref', async (req, res) => {
   }
 
   res.io.emit('rating', cleanObject(refValue));
-  if (autoReset?.autoReset && refValue.lock) {
+  if (settings?.autoReset && refValue.lock) {
     refValue.resetTimerRef = setTimeout(() => {
       console.log('Timeout läuft');
       res.io.emit('lastRating', cleanObject(refValue));
       refValue.clearTimer();
       refValue.reset();
-      //refValue = new defaultRefValue();
+
       res.io.emit('rating', cleanObject(refValue));
-    }, refValue.resetTime * 1000);
+    }, settings?.autoResetTimer * 1000 || 15000);
   }
 
   res.status(200).send('OK');

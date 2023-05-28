@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const jwt = require('jsonwebtoken');
+const { jwtSecret } = require('../const');
 
 const bcrypt = require('bcrypt');
 
@@ -29,7 +30,7 @@ router.get('/admin', async function (req, res) {
       {
         user: 'admin',
       },
-      'secret',
+      jwtSecret,
       { expiresIn: '6h' }
     );
 

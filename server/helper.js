@@ -1,3 +1,8 @@
+const jwt = require('jsonwebtoken');
+const { jwtSecret } = require('./const');
+
+console.log(jwtSecret);
+
 //db find helper
 async function dbFind(db, field, value) {
   try {
@@ -90,6 +95,18 @@ function cleanSettingsBody(body) {
   });
 }
 
+//middleware to protect settings route
+function middleware(req, res, next) {
+  const token = req?.headers?.authorization?.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    if (decoded) next();
+  } catch (err) {
+    console.error(err);
+    return res.status(403).send('Unauthorized');
+  }
+}
+
 module.exports = {
   dbFind,
   dbInit,
@@ -98,4 +115,5 @@ module.exports = {
   dbUpdate,
   cleanObject,
   cleanSettingsBody,
+  middleware,
 };

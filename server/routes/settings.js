@@ -7,12 +7,13 @@ const saltRounds = 10;
 const { db, dbMemory } = require('../db/db');
 const {
   dbFind,
-  dbGet,
-  dbAll,
   dbUpdate,
-  cleanObject,
   cleanSettingsBody,
+  middleware,
 } = require('../helper');
+
+//protect routes
+router.use(middleware);
 
 //settings
 router.get('/', async (req, res) => {
@@ -53,11 +54,10 @@ router.post('/update/admin', async (req, res) => {
     return res.status(500).send('Error');
   const hashPassword = await bcrypt.hash(password.trim(), saltRounds);
   const payload = { name: name.trim(), password: hashPassword };
-  //console.log('Payload: ', payload);
+
   const updateAdmin = await dbUpdate(db, 'admin', payload);
   if (!updateAdmin) return res.status(500).send('Error');
 
-  console.log('Admin Update: ', updateAdmin);
   res.status(200).send('Admin updated!');
 });
 

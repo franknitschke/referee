@@ -88,4 +88,7 @@ const refValue = new DefaultRefValue();
 //map for socket user
 const users = new Map();
 
-module.exports = { refValue, users };
+//jwt secret
+const jwtSecret = 'secret';
+
+module.exports = { refValue, users, jwtSecret };

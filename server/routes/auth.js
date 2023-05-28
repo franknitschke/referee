@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const jwt = require('jsonwebtoken');
+
 const bcrypt = require('bcrypt');
 
 const { dbMemory } = require('../db/db');
@@ -23,7 +25,16 @@ router.get('/admin', async function (req, res) {
   const passCheck = await bcrypt.compare(password, adminUser?.password);
 
   if (user === adminUser.name && passCheck) {
-    return res.status(200).send('Login');
+    const token = await jwt.sign(
+      {
+        user: 'admin',
+      },
+      'secret',
+      { expiresIn: '6h' }
+    );
+
+    res.header({ 'content-type': 'application/json' });
+    return res.status(200).send({ token: token });
   } else {
     return res.status(401).send('Unauthorized');
   }

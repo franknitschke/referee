@@ -12,7 +12,7 @@ const {
   cleanSettingsBody,
 } = require('../helper');
 
-//Referee Submit
+//referee submit
 router.get('/ref', async (req, res) => {
   const { token, light } = req.query;
   const role = await dbFind(dbMemory, 'token', token);
@@ -73,33 +73,6 @@ router.post('/ref/reset', async (req, res) => {
   }
 });
 
-//settings
-/* router.get('/settings', async (req, res) => {
-  const data = await dbAll(dbMemory);
-
-  res.header({ 'content-type': 'application/json' });
-  res.status(200).send(JSON.stringify(data, null, 4));
-}); */
-
-//edit ref tokens
-/* router.post('/settings/update/ref', async (req, res) => {
-  const { id, token } = req.body;
-  const payload = { token: token };
-  //check if token allready exists - sanitize
-  const data = await dbUpdate(db, id, payload);
-  if (!data) return res.status(403).send('Unauthorized');
-
-  res.header({ 'content-type': 'application/json' });
-  res.status(200).send(JSON.stringify(data, null, 4));
-}); */
-
-router.post('/db', async (req, res) => {
-  const data = await dbAll(dbMemory);
-
-  res.header({ 'content-type': 'application/json' });
-  res.status(200).send(JSON.stringify(data, null, 4));
-});
-
 // timer
 router.post('/timer', async (req, res) => {
   const { token, position } = req.query;
@@ -117,6 +90,14 @@ router.post('/timer', async (req, res) => {
     }, 1000);
   }
   res.status(200).send('OK');
+});
+
+//for testing in dev
+router.get('/db', async (req, res) => {
+  const data = await dbAll(dbMemory);
+
+  res.header({ 'content-type': 'application/json' });
+  res.status(200).send(JSON.stringify(data, null, 4));
 });
 
 module.exports = router;

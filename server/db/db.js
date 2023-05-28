@@ -20,7 +20,7 @@ const doc = [
     _id: 'admin',
     name: 'admin',
     role: 'admin',
-    password: '12345678',
+    password: '$2a$10$f6DCKDU18EwgNWBPnRVqZu6szCqsMQFXw3OQJYlBDQStdcuzqIoUK',
   },
   {
     _id: 'left',

@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const { db, dbMemory } = require('../db/db');
 const {
   dbFind,
@@ -41,6 +44,21 @@ router.post('/update/ref', async (req, res) => {
 
   res.header({ 'content-type': 'application/json' });
   res.status(200).send(JSON.stringify(data, null, 4));
+});
+
+//edit admin account
+router.post('/update/admin', async (req, res) => {
+  const { name, password } = req.body;
+  if (name.length < 4 || password.length < 6)
+    return res.status(500).send('Error');
+  const hashPassword = await bcrypt.hash(password.trim(), saltRounds);
+  const payload = { name: name.trim(), password: hashPassword };
+  //console.log('Payload: ', payload);
+  const updateAdmin = await dbUpdate(db, 'admin', payload);
+  if (!updateAdmin) return res.status(500).send('Error');
+
+  console.log('Admin Update: ', updateAdmin);
+  res.status(200).send('Admin updated!');
 });
 
 module.exports = router;

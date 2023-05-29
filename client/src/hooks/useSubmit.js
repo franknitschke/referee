@@ -15,33 +15,42 @@ function useSubmit() {
     };
   }, []);
 
-  async function fetchData(url, method, body) {
+  async function fetchData(url, method, body, accessToken) {
     try {
       setLoading(true);
       const req = await fetch(url, {
         method: method,
-        headers: { 'content-type': 'application/json' },
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
         body: JSON.stringify(body),
       });
+      const res = await req.json();
+
       if (req.ok) {
         setLoading(false);
         setSuccess(true);
         setTimeout(() => {
           isMounted.current && setSuccess(false);
         }, 1000);
+        return res;
       } else {
         setLoading(false);
         setError(true);
         setTimeout(() => {
           isMounted.current && setError(false);
         }, 1000);
+        return null;
       }
     } catch (error) {
+      console.error(error);
       setLoading(false);
       setError(true);
       setTimeout(() => {
         isMounted.current && setError(false);
       }, 1000);
+      return null;
     }
   }
 

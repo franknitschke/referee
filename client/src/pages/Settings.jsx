@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import Loading from '../components/Loading';
 import SettingsTokenCard from '../components/SettingsTokenCard';
@@ -11,27 +12,44 @@ const refTitle = {
 };
 
 function Settings({ ip, settings }) {
-  const [token, setToken] = useState(null);
+  const [data, setData] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    async function getToken() {
-      const req = await fetch('/api/settings?field=role&value=ref');
+    async function getToken(token) {
+      const req = await fetch('/api/settings?field=role&value=ref', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!req.ok) return navigate('/login');
       const res = await req.json();
-      setToken(res);
+      setData(res);
+    }
+    const token = localStorage.getItem('token');
+    if (token) {
+      setAccessToken(token);
+      getToken(token);
+    } else {
+      navigate('/login');
     }
 
-    getToken();
     console.log('Settings: ', settings);
   }, []);
 
   useEffect(() => {
-    console.log('Settings Token: ', token);
-  }, [token]);
+    console.log('Settings Token: ', data);
+  }, [data]);
 
   function handleChange(e) {
     console.log(e.target.checked);
     fetch('/api/settings', {
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
       method: 'POST',
       body: JSON.stringify({
         [e.target.name]: `${
@@ -43,20 +61,21 @@ function Settings({ ip, settings }) {
 
   return (
     <div className='min-h-screen'>
-      {!token ? (
+      {!data ? (
         <Loading />
       ) : (
         <div className='grid grid-cols-3 gap-4 p-4 justify-center m-auto'>
-          {token?.map((el) => (
+          {data?.map((el) => (
             <div
               key={el._id}
               className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'
             >
               <SettingsTokenCard
-                token={el.token}
+                data={el.token}
                 title={refTitle[el.position]}
                 position={el.position}
                 ip={ip}
+                accessToken={accessToken}
               />
             </div>
           ))}
@@ -122,7 +141,7 @@ function Settings({ ip, settings }) {
           </div>
 
           <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
-            <SettingsAdminCard />
+            <SettingsAdminCard accessToken={accessToken} />
           </div>
         </div>
       )}

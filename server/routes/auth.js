@@ -19,7 +19,7 @@ router.get('/ref', async function (req, res) {
 });
 
 // auth admin
-router.get('/admin', async function (req, res) {
+router.post('/admin', async function (req, res) {
   const { user, password } = req.body;
   const adminUser = await dbGet(dbMemory, 'admin');
 

@@ -8,6 +8,7 @@ import Display from './pages/Display';
 import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import Ref from './pages/Ref';
+import Login from './pages/Login';
 import Test from './pages/Test';
 
 function App() {
@@ -102,6 +103,7 @@ function App() {
           path='/test'
           element={<Test competitionData={competitionData} />}
         />
+        <Route path='/login' element={<Login />} />
       </Routes>
     </div>
   );

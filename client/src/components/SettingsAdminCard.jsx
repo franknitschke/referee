@@ -4,14 +4,18 @@ import { useEffect, useState } from 'react';
 import Loading from './Loading';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
-function SettingsAdminCard({ token, position, title, ip }) {
+function SettingsAdminCard({ accessToken }) {
   const [hide, setHide] = useState(true);
   const [admin, setAdmin] = useState(null);
   const { loading, error, success, fetchData } = useSubmit();
 
   useEffect(() => {
     async function fetchAdmin() {
-      const req = await fetch('/api/settings?field=_id&value=admin');
+      const req = await fetch('/api/settings?field=_id&value=admin', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       const res = await req.json();
 
       if (req.ok) setAdmin(res[0]);
@@ -20,10 +24,6 @@ function SettingsAdminCard({ token, position, title, ip }) {
     fetchAdmin();
   }, []);
 
-  useEffect(() => {
-    console.log('admin: ', admin);
-  }, [admin]);
-
   function handelSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -31,7 +31,6 @@ function SettingsAdminCard({ token, position, title, ip }) {
     for (let [key, value] of formData.entries()) {
       body[key] = value;
     }
-    console.log(body);
     return body;
   }
   return (
@@ -42,9 +41,14 @@ function SettingsAdminCard({ token, position, title, ip }) {
         </div>
       ) : (
         <form
-        /* onSubmit={(e) =>
-        fetchData('/api/settings/update/ref', 'POST', handelSubmit(e))
-      } */
+          onSubmit={(e) =>
+            fetchData(
+              '/api/settings/update/admin',
+              'POST',
+              handelSubmit(e),
+              accessToken
+            )
+          }
         >
           <span className='text-xl font-semibold'>{'Admin Account'}</span>
           <div className={`grid grid-cols-2 gap-1`}>
@@ -54,7 +58,8 @@ function SettingsAdminCard({ token, position, title, ip }) {
               </label>
               <input
                 required
-                id={position}
+                minLength={'4'}
+                id={'name'}
                 name='name'
                 type='text'
                 defaultValue={admin?.name}
@@ -86,7 +91,6 @@ function SettingsAdminCard({ token, position, title, ip }) {
                 id={`password`}
                 name='password'
                 type={hide ? 'password' : 'text'}
-                placeholder='*******'
                 className=' input input-bordered w-full max-w-xs'
               />
             </div>

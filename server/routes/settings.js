@@ -50,15 +50,18 @@ router.post('/update/ref', async (req, res) => {
 //edit admin account
 router.post('/update/admin', async (req, res) => {
   const { name, password } = req.body;
-  if (name.length < 4 || password.length < 6)
+
+  if (name.length < 4 || password.length < 6) {
     return res.status(500).send('Error');
+  }
   const hashPassword = await bcrypt.hash(password.trim(), saltRounds);
   const payload = { name: name.trim(), password: hashPassword };
 
   const updateAdmin = await dbUpdate(db, 'admin', payload);
   if (!updateAdmin) return res.status(500).send('Error');
 
-  res.status(200).send('Admin updated!');
+  res.header({ 'content-type': 'application/json' });
+  res.status(200).send({ msg: 'Admin updated!' });
 });
 
 module.exports = router;

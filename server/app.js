@@ -92,6 +92,5 @@ io.on('disconnect', (socket) => {
 });
 
 server.listen(port, () => {
-  console.log(`listening on *: ${port}`);
-  console.log(ip.address());
+  console.log(`listening on: http://${ip.address()}:${port}`);
 });

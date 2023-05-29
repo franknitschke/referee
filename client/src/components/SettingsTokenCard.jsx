@@ -3,7 +3,7 @@ import useSubmit from '../hooks/useSubmit';
 import { useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
-function SettingsTokenCard({ token, position, title, ip }) {
+function SettingsTokenCard({ data, position, title, ip, accessToken }) {
   const [hide, setHide] = useState(true);
   const { loading, error, success, fetchData } = useSubmit();
 
@@ -14,14 +14,18 @@ function SettingsTokenCard({ token, position, title, ip }) {
     for (let [key, value] of formData.entries()) {
       body[key] = value;
     }
-    console.log(body);
     return body;
   }
 
   return (
     <form
       onSubmit={(e) =>
-        fetchData('/api/settings/update/ref', 'POST', handelSubmit(e))
+        fetchData(
+          '/api/settings/update/ref',
+          'POST',
+          handelSubmit(e),
+          accessToken
+        )
       }
     >
       <span className='text-xl font-semibold'>
@@ -49,7 +53,7 @@ function SettingsTokenCard({ token, position, title, ip }) {
             id={position}
             name='token'
             type='text'
-            defaultValue={token}
+            defaultValue={data}
             className=' input input-bordered w-full max-w-xs'
           />
           <input
@@ -61,7 +65,7 @@ function SettingsTokenCard({ token, position, title, ip }) {
           />
         </div>
         <div className='col-span-1 m-auto'>
-          <QRCode value={`${ip}/ref?token=${token}`} size={125} level='Q' />
+          <QRCode value={`${ip}/ref?token=${data}`} size={125} level='Q' />
         </div>
         <div className='my-4 col-span-2'>
           <button

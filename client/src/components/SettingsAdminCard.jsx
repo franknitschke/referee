@@ -1,5 +1,6 @@
 import useSubmit from '../hooks/useSubmit';
 import { useEffect, useState } from 'react';
+import { handelSubmit } from '../helper/helper';
 
 import Loading from './Loading';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
@@ -24,15 +25,6 @@ function SettingsAdminCard({ accessToken }) {
     fetchAdmin();
   }, []);
 
-  function handelSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const body = {};
-    for (let [key, value] of formData.entries()) {
-      body[key] = value;
-    }
-    return body;
-  }
   return (
     <>
       {!admin ? (

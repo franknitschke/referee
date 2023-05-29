@@ -23,3 +23,13 @@ export function showRating(rating, position) {
     return false;
   }
 }
+
+export function handelSubmit(e) {
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget);
+  const body = {};
+  for (let [key, value] of formData.entries()) {
+    body[key] = value;
+  }
+  return body;
+}

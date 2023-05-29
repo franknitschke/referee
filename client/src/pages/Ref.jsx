@@ -63,9 +63,6 @@ function Ref({ rating, id }) {
       ) : (
         <div className='h-screen'>
           <div className='flex flex-col justify-center space-y-4 m-auto p-6 h-full'>
-            {/* <div className='  h-24'>
-            <RefControllerPanel rating={rating} position={ref?._id} />
-          </div> */}
             <div className='flex flex-row w-full space-x-6 justify-center border border-gray-400 bg-gray-300 rounded p-1'>
               <div className='w-full flex-grow'>
                 <Light

@@ -1,21 +1,12 @@
 import QRCode from 'react-qr-code';
 import useSubmit from '../hooks/useSubmit';
 import { useState } from 'react';
+import { handelSubmit } from '../helper/helper';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 function SettingsTokenCard({ data, position, title, ip, accessToken }) {
   const [hide, setHide] = useState(true);
   const { loading, error, success, fetchData } = useSubmit();
-
-  function handelSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const body = {};
-    for (let [key, value] of formData.entries()) {
-      body[key] = value;
-    }
-    return body;
-  }
 
   return (
     <form

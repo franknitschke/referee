@@ -3,9 +3,10 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const path = require('path');
-const api = require('./routes/api.js');
-const auth = require('./routes/auth.js');
-const settings = require('./routes/settings.js');
+const api = require('./routes/api');
+const auth = require('./routes/auth');
+const settings = require('./routes/settings');
+const update = require('./routes/update');
 const cors = require('cors');
 
 const { refValue, users } = require('./const');
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
 
 app.use('/api', api);
 app.use('/api/settings', settings);
+app.use('/api/update', update);
 app.use('/auth', auth);
 
 app.get('/*', (req, res) => {

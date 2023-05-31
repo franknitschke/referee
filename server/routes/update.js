@@ -47,6 +47,7 @@ async function gitPull() {
 
 router.get('/status', async (req, res) => {
   const status = await gitStatus();
+  console.log(status);
 
   if (status.behind === 0) {
     return res.status(200).send({

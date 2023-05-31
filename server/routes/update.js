@@ -47,7 +47,7 @@ async function gitPull() {
 
 router.get('/status', async (req, res) => {
   const status = await gitStatus();
-  console.log(status);
+  console.log('Status: ', status);
 
   if (status.behind === 0) {
     return res.status(200).send({
@@ -86,24 +86,31 @@ router.post('/', async (req, res) => {
   const status = await gitPull();
   console.log('Git Pull: ', status);
 
-  if (status) {
-    exec('npm i', (error, stdout, stderr) => {
-      if (error) {
-        console.log(`Error: ${error}`);
-        return res.status(500).send({ msg: 'Es ist ein Fehler aufgetreten!' });
-      }
-      if (stdout) {
-        console.log(`Konsole: ${stdout}`);
-        return res.status(200).send({ msg: 'Update erfolgreich!' });
-      }
-      if (stderr) {
-        console.log(`Error: ${stderr}`);
-        return res.status(500).send({ msg: 'Es ist ein Fehler aufgetreten!' });
-      }
-    });
+  try {
+    if (status) {
+      exec('npm i', (error, stdout, stderr) => {
+        if (error) {
+          console.log(`Error: ${error}`);
+          return res
+            .status(500)
+            .send({ msg: 'Es ist ein Fehler aufgetreten!' });
+        }
+        if (stdout) {
+          console.log(`Konsole: ${stdout}`);
+          return res.status(200).send({ msg: 'Update erfolgreich!' });
+        }
+        if (stderr) {
+          console.log(`Error: ${stderr}`);
+          return res
+            .status(500)
+            .send({ msg: 'Es ist ein Fehler aufgetreten!' });
+        }
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ msg: 'Es ist ein Fehler aufgetreten' });
   }
-
-  res.status(500).send({ msg: 'Es ist ein Fehler aufgetreten' });
 });
 
 module.exports = router;

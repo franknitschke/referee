@@ -21,8 +21,8 @@ function Ref({ rating, id }) {
     if (searchParams.get('token')) {
       setToken(searchParams.get('token'));
       //handleSubmit();
-    } else if (localStorage.getItem('token')) {
-      setToken(localStorage.getItem('token'));
+    } else if (localStorage.getItem('refToken')) {
+      setToken(localStorage.getItem('refToken'));
       //handleSubmit();
     }
     //setToken(localStorage.getItem('token'));
@@ -47,7 +47,7 @@ function Ref({ rating, id }) {
         console.log('Res: ', res);
         setRef(res);
         socket.emit('users', { user: ref?._id });
-        localStorage.setItem('token', token);
+        localStorage.setItem('refToken', token);
       }
     } catch (error) {}
   }
@@ -63,7 +63,7 @@ function Ref({ rating, id }) {
       ) : (
         <div className='h-screen'>
           <div className='flex flex-col justify-center space-y-4 m-auto p-6 h-full'>
-            <div className='flex flex-row w-full space-x-6 justify-center border border-gray-400 bg-gray-300 rounded p-1'>
+            <div className='flex flex-row w-full lg:w-1/2 space-x-6 justify-center border border-gray-400 bg-gray-300 rounded p-1 m-auto'>
               <div className='w-full flex-grow'>
                 <Light
                   color={showRating(rating, 'left')}

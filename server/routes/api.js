@@ -20,8 +20,8 @@ router.get('/ref', async (req, res) => {
   const settings = await dbGet(dbMemory, 'settings');
   const position = role[0]?._id;
 
-  if (!role || !position) return res.status(403).send('Unauthorized');
-  if (refValue?.lock) return res.status(200).send('No more changes');
+  if (!role || !position) return res.status(403).send({ msg: 'Unauthorized' });
+  if (refValue?.lock) return res.status(200).send({ msg: 'No more changes' });
 
   switch (light) {
     case 'white':
@@ -39,7 +39,7 @@ router.get('/ref', async (req, res) => {
       break;
 
     default:
-      return res.status(403).send('Unauthorized');
+      return res.status(403).send({ msg: 'Unauthorized' });
   }
 
   res.io.emit('rating', cleanObject(refValue));
@@ -54,7 +54,7 @@ router.get('/ref', async (req, res) => {
     }, settings?.autoResetTimer * 1000 || 15000);
   }
 
-  res.status(200).send('OK');
+  res.status(200).send({ msg: 'OK' });
 });
 
 //reset rating
@@ -62,14 +62,14 @@ router.post('/ref/reset', async (req, res) => {
   const { token, position } = req.query;
   const ref = await dbGet(dbMemory, position);
   if (ref?.token !== token) {
-    return res.status(403).send('Unauthorized');
+    return res.status(403).send({ msg: 'Unauthorized' });
   } else {
     refValue.clearTimer();
     refValue.clearResetTimer();
     res.io.emit('lastRating', cleanObject(refValue));
     refValue.reset();
     res.io.emit('rating', cleanObject(refValue));
-    res.status(200).send('OK');
+    res.status(200).send({ msg: 'OK' });
   }
 });
 
@@ -77,7 +77,8 @@ router.post('/ref/reset', async (req, res) => {
 router.post('/timer', async (req, res) => {
   const { token, position } = req.query;
   const ref = await dbGet(dbMemory, position);
-  if (ref?.token !== token) return res.status(403).send('Unauthorized');
+  if (ref?.token !== token)
+    return res.status(403).send({ msg: 'Unauthorized' });
 
   //if timer allready running
   if (refValue.timerRef) {
@@ -89,7 +90,7 @@ router.post('/timer', async (req, res) => {
       res.io.emit('rating', cleanObject(refValue));
     }, 1000);
   }
-  res.status(200).send('OK');
+  res.status(200).send({ msg: 'OK' });
 });
 
 //for testing in dev

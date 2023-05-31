@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 function Navbar({ location, settings }) {
+  const navigate = useNavigate();
+
   return (
     <div
       className={`${
@@ -53,6 +56,16 @@ function Navbar({ location, settings }) {
             </li>
             <li>
               <Link to={'/test'}>Test</Link>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  localStorage.clear();
+                  navigate('/');
+                }}
+              >
+                Logout
+              </button>
             </li>
           </ul>
         </div>

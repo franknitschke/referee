@@ -29,14 +29,20 @@ async function gitStatus() {
 
 router.get('/status', async (req, res) => {
   const status = await gitStatus();
-  /* const child = execFile('node', ['--version'], (error, stdout, stderr) => {
+  console.log(new Date());
+  /* const child = execFile('npm', ['install'], (error, stdout, stderr) => {
     if (error) {
       throw error;
     }
     console.log(stdout);
+    console.log(stderr);
   }); */
+  spawn('npm', ['install'], {
+    cwd: __dirname, // <---
+    shell: true,
+    stdio: 'inherit',
+  });
 
-  var npm = spawn('npm', ['install'], { cwd: __dirname });
   //console.log(npm);
 
   //console.log(JSON.stringify(process.env.npm_package_version));

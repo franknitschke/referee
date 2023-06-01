@@ -15,7 +15,7 @@ function SettingsUpdateCard({ accessToken }) {
   }
 
   async function handleSubmit() {
-    const update = await fetchData('/api/update', 'POST', null, accessToken);
+    const update = await fetchData('/api/update', 'POST', {}, accessToken);
     if (update) setUpdateMsg(update);
   }
 
@@ -66,7 +66,7 @@ function SettingsUpdateCard({ accessToken }) {
             <div class='alert alert-success my-4'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
-                class='stroke-current shrink-0 h-6 w-6'
+                className='stroke-current shrink-0 h-6 w-6'
                 fill='none'
                 viewBox='0 0 24 24'
               >
@@ -82,7 +82,6 @@ function SettingsUpdateCard({ accessToken }) {
           )}
         </>
       )}
-      {/*  {JSON.stringify(updates)} */}
     </>
   );
 }

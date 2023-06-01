@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import Loading from '../components/Loading';
 import SettingsTokenCard from '../components/SettingsTokenCard';
 import SettingsAdminCard from '../components/SettingsAdminCard';
+import SettingsUpdateCard from '../components/SettingsUpdateCard';
 
 const refTitle = {
   left: 'Seitenkampfrichter links',
@@ -142,6 +143,9 @@ function Settings({ ip, settings }) {
 
           <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
             <SettingsAdminCard accessToken={accessToken} />
+          </div>
+          <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
+            <SettingsUpdateCard accessToken={accessToken} />
           </div>
         </div>
       )}

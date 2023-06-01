@@ -33,3 +33,23 @@ export function handelSubmit(e) {
   }
   return body;
 }
+
+export async function getData(url, method, accessToken) {
+  try {
+    const req = await fetch(url, {
+      method: method,
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    if (req.ok) {
+      return await req.json();
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}

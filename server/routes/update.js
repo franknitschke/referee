@@ -36,6 +36,15 @@ async function gitStatus() {
   }
 }
 
+async function gitFetch() {
+  try {
+    return await git.fetch();
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+}
+
 async function gitPull() {
   try {
     return await git.pull();
@@ -46,18 +55,22 @@ async function gitPull() {
 }
 
 router.get('/status', async (req, res) => {
+  const fetch = await gitFetch();
+  console.log('Fetch: ', fetch);
   const status = await gitStatus();
   console.log('Status: ', status);
 
   if (status.behind === 0) {
     return res.status(200).send({
       msg: 'Keine Updates Verfügbar',
+      flag: false,
       v: process.env.npm_package_version,
       link: 'https://github.com/franknitschke/referee/releases',
     });
   } else {
     return res.status(200).send({
       msg: 'Neues Updates Verfügbar',
+      flag: true,
       v: process.env.npm_package_version,
       link: 'https://github.com/franknitschke/referee/releases',
     });

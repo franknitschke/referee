@@ -11,7 +11,7 @@ lerna-debug.log*
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Readme
-*.md
+README.md
 
 # Runtime data
 pids

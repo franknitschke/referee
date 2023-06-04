@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 class DefaultRefValue {
   constructor() {
     this.reset();
@@ -89,6 +91,6 @@ const refValue = new DefaultRefValue();
 const users = new Map();
 
 //jwt secret
-const jwtSecret = 'secret';
+const jwtSecret = uuidv4();
 
 module.exports = { refValue, users, jwtSecret };

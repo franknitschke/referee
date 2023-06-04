@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { refValue } = require('../const');
 
-const { db, dbMemory } = require('../db/db');
+const { dbMemory } = require('../db/db');
 const { dbFind, dbGet, dbAll, cleanObject } = require('../helper');
 
 //referee submit

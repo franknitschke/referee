@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('./const');
 
-console.log(jwtSecret);
-
 //db find helper
 async function dbFind(db, field, value) {
   try {

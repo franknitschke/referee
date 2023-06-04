@@ -24,7 +24,7 @@ function useSubmit() {
           'content-type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify(body),
+        body: method === 'GET' ? null : JSON.stringify(body),
       });
       const res = await req.json();
 

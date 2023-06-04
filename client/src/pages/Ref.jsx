@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { socket } from '../socket';
 
 import RefButton from '../components/RefButton';
@@ -8,55 +7,43 @@ import RefButtonLogin from '../components/RefButtonLogin';
 import Loading from '../components/Loading';
 import Light from '../components/Light';
 import { showRating, checkRatingSubmit } from '../helper/helper';
-import { CheckIcon, ChevronDoubleUpIcon } from '@heroicons/react/24/solid';
+import { ChevronDoubleUpIcon } from '@heroicons/react/24/solid';
 
 function Ref({ rating, id }) {
   const [token, setToken] = useState(null);
   const [ref, setRef] = useState(null);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    console.log(searchParams.get('token'));
-    if (searchParams.get('token')) {
-      setToken(searchParams.get('token'));
-      //handleSubmit();
-    } else if (localStorage.getItem('refToken')) {
-      setToken(localStorage.getItem('refToken'));
-      //handleSubmit();
-    }
-    //setToken(localStorage.getItem('token'));
-  }, [searchParams]);
-
-  useEffect(() => {
+  /* useEffect(() => {
     console.log('Token ', token);
-    token && handleSubmit();
-  }, [token]);
+    //token && handleSubmit();
+  }, [token]); */
 
   useEffect(() => {
     ref && socket.emit('users', { user: ref?._id });
-    console.log('socket id: ', id);
-    console.log('Ref: ', ref);
+    /* console.log('socket id: ', id);
+    console.log('Ref: ', ref); */
   }, [ref]);
 
-  async function handleSubmit() {
+  /* async function handleSubmit(fetchData) {
     try {
-      const req = await fetch(`http://localhost:3030/auth/ref?token=${token}`);
-      if (req.ok) {
-        const res = await req.json();
+      const res = await fetchData();
+      if (res) {
+        //const res = await req.json();
         console.log('Res: ', res);
         setRef(res);
-        socket.emit('users', { user: ref?._id });
+        socket.emit('users', { user: res?._id });
         localStorage.setItem('refToken', token);
       }
-    } catch (error) {}
-  }
+    } catch (error) {
+      console.error(error);
+    }
+  } */
 
   return (
     <>
       {!ref ? (
         <div className='min-h-full min-w-full flex items-center'>
-          <RefButtonLogin handleSubmit={handleSubmit} setToken={setToken} />
+          <RefButtonLogin setToken={setToken} token={token} setRef={setRef} />
         </div>
       ) : !ref ? (
         <Loading />

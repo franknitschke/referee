@@ -4,14 +4,12 @@ const simpleGit = require('simple-git');
 
 const path = require('path');
 
-const { exec, execFile, spawn } = require('node:child_process');
+const { exec } = require('node:child_process');
 
 const { middleware } = require('../helper');
-//const { error } = require('node:console');
-//const { stdout, stderr } = require('node:process');
 
 //protect routes
-//router.use(middleware);
+router.use(middleware);
 
 router.use((req, res, next) => {
   res.append('content-type', 'application/json');
@@ -75,24 +73,6 @@ router.get('/status', async (req, res) => {
       link: 'https://github.com/franknitschke/referee/releases',
     });
   }
-
-  //GEHT
-  /* exec('npm i', (error, stdout, stderr) => {
-    if (error) console.log(`Error: ${error}`);
-    if (stdout) console.log(`Konsole: ${stdout}`);
-    if (stderr) console.log(`Error: ${stderr}`);
-  }); */
-
-  //console.log(JSON.stringify(process.env.npm_package_version));
-
-  //GEHT
-  /* exec(path.join(__dirname, '..', 'script.sh'), function (err, stdout, stderr) {
-    if (err) console.log(`Error: `, err);
-    if (stdout) console.log(`Konsole: `, stdout);
-    if (stderr) console.log(`Error: `, stderr);
-  }); */
-
-  //res.status(200).send(JSON.stringify(status.behind, null, 4));
 });
 
 router.post('/', async (req, res) => {

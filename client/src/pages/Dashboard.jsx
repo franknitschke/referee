@@ -19,7 +19,6 @@ function Dashboard({ ip, isConnected, rating }) {
 
   useEffect(() => {
     function getUsers(value) {
-      console.log('From Dashboard: ', value);
       setUsers(value);
     }
 

@@ -3,14 +3,7 @@ const router = express.Router();
 const { refValue } = require('../const');
 
 const { db, dbMemory } = require('../db/db');
-const {
-  dbFind,
-  dbGet,
-  dbAll,
-  dbUpdate,
-  cleanObject,
-  cleanSettingsBody,
-} = require('../helper');
+const { dbFind, dbGet, dbAll, cleanObject } = require('../helper');
 
 //referee submit
 router.get('/ref', async (req, res) => {
@@ -94,11 +87,11 @@ router.post('/timer', async (req, res) => {
 });
 
 //for testing in dev
-router.get('/db', async (req, res) => {
+/* router.get('/db', async (req, res) => {
   const data = await dbAll(dbMemory);
 
   res.header({ 'content-type': 'application/json' });
   res.status(200).send(JSON.stringify(data, null, 4));
-});
+}); */
 
 module.exports = router;

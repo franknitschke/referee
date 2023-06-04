@@ -21,7 +21,6 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    console.log('Location: ', location);
     isConnected && socket.emit('users', { user: location?.pathname });
   }, [location, isConnected]);
 

@@ -13,16 +13,16 @@ function Login() {
     for (let [key, value] of formData.entries()) {
       body[key] = value;
     }
-    console.log(body);
+
     const res = await fetchData('/auth/admin', 'POST', body);
     if (res) {
       localStorage.setItem('token', res.token);
       navigate('/settings');
     }
 
-    console.log(res);
     return body;
   }
+
   return (
     <form onSubmit={handleSubmit}>
       <div className='min-w-full min-h-screen flex items-center justify-center'>

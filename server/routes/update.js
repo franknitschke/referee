@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const simpleGit = require('simple-git');
 
-const path = require('path');
-
 const { exec } = require('node:child_process');
 
 const { middleware } = require('../helper');
@@ -52,6 +50,7 @@ async function gitPull() {
   }
 }
 
+//check for updates
 router.get('/status', async (req, res) => {
   const fetch = await gitFetch();
   console.log('Fetch: ', fetch);
@@ -75,6 +74,7 @@ router.get('/status', async (req, res) => {
   }
 });
 
+//update
 router.post('/', async (req, res) => {
   const status = await gitPull();
   console.log('Git Pull: ', status);

@@ -51,7 +51,6 @@ app.get('/*', (req, res) => {
 
 io.on('connection', async (socket) => {
   console.log(`🍻 a user connected ID: ${socket.id} - ${new Date()}`);
-  //console.log('Socket Obj: ', socket);
 
   //send host ip to clients
   socket.emit('ip', `http://${ip.address()}:${port}`);
@@ -67,7 +66,6 @@ io.on('connection', async (socket) => {
   socket.emit('settings', settings);
 
   socket.on('users', (data) => {
-    console.log('Läuft', new Date());
     users.set(socket.id, data);
     const usersOnline = Array.from(users.values());
 
@@ -88,10 +86,10 @@ io.on('connection', async (socket) => {
   });
 });
 
-io.on('disconnect', (socket) => {
+/* io.on('disconnect', (socket) => {
   users.delete(socket.id);
   console.log(`Client disconnected - ID: ${socket.id} - ${new Date()}`);
-});
+}); */
 
 server.listen(port, () => {
   console.log(`listening on: http://${ip.address()}:${port}`);

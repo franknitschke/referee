@@ -30,21 +30,30 @@ router.post('/', async (req, res) => {
   cleanSettingsBody(body);
   const updatedDoc = await dbUpdate(db, 'settings', body);
 
-  if (!updatedDoc) return res.status(500).send('Error');
+  if (!updatedDoc) return res.status(500).send({ msg: 'Error' });
   res.io.emit('settings', updatedDoc);
-  res.status(200).send('OK');
+  res.status(200).send({ msg: 'OK' });
 });
 
 //edit ref tokens
 router.post('/update/ref', async (req, res) => {
   const { id, token } = req.body;
-  const payload = { token: token };
-  //check if token allready exists - sanitize
-  const data = await dbUpdate(db, id, payload);
-  if (!data) return res.status(403).send('Unauthorized');
+
+  if (token.length < 4)
+    return res.status(500).send({ msg: 'Token to short! Min. 4 Chars!' });
+  const payload = { token: `${token?.trim()}` };
+
+  //check if token allready exists - for each ref we need unique token
+  const tokenExists = await dbFind(dbMemory, 'token', `${token}`);
+  if (tokenExists)
+    return res.status(500).send({ msg: 'Token allready exists!' });
+
+  const data = await dbUpdate(db, `${id}`, payload);
+  if (!data)
+    return res.status(500).send({ msg: 'Es ist ein Fehler aufgetreten' });
 
   res.header({ 'content-type': 'application/json' });
-  res.status(200).send(JSON.stringify(data, null, 4));
+  res.status(200).send(data);
 });
 
 //edit admin account
@@ -52,13 +61,13 @@ router.post('/update/admin', async (req, res) => {
   const { name, password } = req.body;
 
   if (name.length < 4 || password.length < 6) {
-    return res.status(500).send('Error');
+    return res.status(500).send({ msg: 'Error' });
   }
   const hashPassword = await bcrypt.hash(password.trim(), saltRounds);
   const payload = { name: name.trim(), password: hashPassword };
 
   const updateAdmin = await dbUpdate(db, 'admin', payload);
-  if (!updateAdmin) return res.status(500).send('Error');
+  if (!updateAdmin) return res.status(500).send({ msg: 'Error' });
 
   res.header({ 'content-type': 'application/json' });
   res.status(200).send({ msg: 'Admin updated!' });

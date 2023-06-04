@@ -101,7 +101,7 @@ function middleware(req, res, next) {
     if (decoded) next();
   } catch (err) {
     console.error(err);
-    return res.status(403).send('Unauthorized');
+    return res.status(403).send({ msg: 'Unauthorized' });
   }
 }
 

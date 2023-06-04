@@ -9,35 +9,13 @@ import Light from '../components/Light';
 import { showRating, checkRatingSubmit } from '../helper/helper';
 import { ChevronDoubleUpIcon } from '@heroicons/react/24/solid';
 
-function Ref({ rating, id }) {
+function Ref({ rating }) {
   const [token, setToken] = useState(null);
   const [ref, setRef] = useState(null);
 
-  /* useEffect(() => {
-    console.log('Token ', token);
-    //token && handleSubmit();
-  }, [token]); */
-
   useEffect(() => {
     ref && socket.emit('users', { user: ref?._id });
-    /* console.log('socket id: ', id);
-    console.log('Ref: ', ref); */
   }, [ref]);
-
-  /* async function handleSubmit(fetchData) {
-    try {
-      const res = await fetchData();
-      if (res) {
-        //const res = await req.json();
-        console.log('Res: ', res);
-        setRef(res);
-        socket.emit('users', { user: res?._id });
-        localStorage.setItem('refToken', token);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  } */
 
   return (
     <>

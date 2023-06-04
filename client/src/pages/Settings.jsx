@@ -36,16 +36,9 @@ function Settings({ ip, settings }) {
     } else {
       navigate('/login');
     }
-
-    console.log('Settings: ', settings);
   }, []);
 
-  useEffect(() => {
-    console.log('Settings Token: ', data);
-  }, [data]);
-
   function handleChange(e) {
-    console.log(e.target.checked);
     fetch('/api/settings', {
       headers: {
         'content-type': 'application/json',

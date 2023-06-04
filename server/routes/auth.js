@@ -13,7 +13,7 @@ const { dbFind, dbGet } = require('../helper');
 router.get('/ref', async function (req, res) {
   const { token } = req.query;
   const ref = await dbFind(dbMemory, 'token', token);
-  //console.log('log ref: ', ref);
+
   if (!ref) return res.status(401).send({ msg: 'Unauthorized' });
   return res.status(200).send(ref[0]);
 });

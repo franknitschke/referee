@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 function Navbar({ location, settings }) {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = location?.pathname.replace('/', '') || 'home';
+  }, [location]);
 
   return (
     <div

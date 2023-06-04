@@ -38,7 +38,7 @@ function Dashboard({ ip, isConnected, rating }) {
 
   return (
     <div className=' grid grid-cols-4 gap-4 p-4'>
-      <div className='col-span-1'>
+      <div className='col-span-1 w-52'>
         <div className='stats shadow'>
           <div className='stat'>
             <div className='stat-title'>Verbindung</div>
@@ -63,7 +63,7 @@ function Dashboard({ ip, isConnected, rating }) {
         ))}
       </div>
       <div className='col-span-3'>
-        <div className='grid grid-cols-3 gap-4'>
+        <div className='grid grid-cols-3 gap-4 w-1/2 m-auto justify-center'>
           <div className='col-span-3 text-center text-xl font-black'>
             Aktuelle Wertung
           </div>

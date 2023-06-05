@@ -5,7 +5,7 @@ function RefButton({ color, title, url, method }) {
   const { loading, error, success, fetchData } = useSubmit();
   return (
     <button
-      className={`w-full h-full text-3xl text-gray-900 hover:cursor-pointer border-2 border-gray-700 btn disabled:bg-gray-200 ${
+      className={`w-full h-full text-3xl text-gray-900 border-2 border-gray-700 hover:opacity-75 disabled:bg-gray-200 ${
         color === 'blue' && 'bg-blue-600'
       } ${color === 'red' && 'bg-red-600'} ${
         color === 'yellow' && 'bg-yellow-600'

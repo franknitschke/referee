@@ -81,7 +81,10 @@ io.on('connection', async (socket) => {
 
   socket.on('disconnect', (reason) => {
     users.delete(socket.id);
-    //console.log('Map: ', Array.from(users.entries()));
+
+    const usersOnline = Array.from(users.values());
+    io.emit('getUsers', usersOnline);
+
     console.log(`😪 Disconnect: ${socket.id}`, reason);
   });
 });

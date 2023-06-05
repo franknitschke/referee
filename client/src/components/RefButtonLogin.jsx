@@ -19,7 +19,7 @@ function RefButtonLogin({ setToken, token, setRef }) {
 
   async function handleSubmit(refToken) {
     const data = await fetchData(
-      `http://localhost:3030/auth/ref?token=${refToken}`,
+      `/auth/ref?token=${refToken}`,
       'GET',
       null,
       null

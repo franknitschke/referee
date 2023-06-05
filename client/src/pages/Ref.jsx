@@ -26,10 +26,10 @@ function Ref({ rating }) {
       ) : !ref ? (
         <Loading />
       ) : (
-        <div className='h-screen'>
+        <div className='h-4/5'>
           <div className='flex flex-col justify-center space-y-4 m-auto p-6 h-full'>
-            <div className='flex flex-row w-full lg:w-1/2 space-x-6 justify-center border border-gray-400 bg-gray-300 rounded p-1 m-auto'>
-              <div className='w-full flex-grow'>
+            <div className='flex flex-row w-3/4 lg:w-1/2 space-x-6 justify-center border border-gray-400 bg-gray-300 rounded p-1 mx-auto'>
+              <div className='w-full'>
                 <Light
                   color={showRating(rating, 'left')}
                   ratingSubmit={checkRatingSubmit(rating, 'left')}
@@ -39,7 +39,7 @@ function Ref({ rating }) {
                   <ChevronDoubleUpIcon className='w-6 h-6 text-center m-auto' />
                 )}
               </div>
-              <div className='w-full flex-grow'>
+              <div className='w-full'>
                 <Light
                   color={showRating(rating, 'main')}
                   ratingSubmit={checkRatingSubmit(rating, 'main')}
@@ -49,7 +49,7 @@ function Ref({ rating }) {
                   <ChevronDoubleUpIcon className='w-6 h-6 text-center m-auto' />
                 )}
               </div>
-              <div className='w-full flex-grow'>
+              <div className='w-full'>
                 <Light
                   color={showRating(rating, 'right')}
                   ratingSubmit={checkRatingSubmit(rating, 'right')}
@@ -60,7 +60,8 @@ function Ref({ rating }) {
                 )}
               </div>
             </div>
-            <div className='w-full'>
+            <div className=' space-y-4'>
+            <div className='w-full mb-14 mt-2'>
               <RefButton
                 color={'white'}
                 title={'Weiß'}
@@ -91,6 +92,7 @@ function Ref({ rating }) {
                 url={`/api/ref/?token=${token}&light=yellow`}
                 method={'GET'}
               />
+            </div>
             </div>
             {ref?._id === 'main' && (
               <div className='flex flex-row w-full space-x-6'>

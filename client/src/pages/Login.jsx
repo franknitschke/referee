@@ -49,7 +49,7 @@ function Login() {
                       <span className='label-text'>Passwort</span>
                     </label>
                     <input
-                      type='text'
+                      type='password'
                       name='password'
                       id='password'
                       className='input input-bordered w-full max-w-xs'

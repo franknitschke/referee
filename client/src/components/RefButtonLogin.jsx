@@ -26,7 +26,7 @@ function RefButtonLogin({ setToken, token, setRef }) {
     );
     if (data) {
       setRef(data);
-      localStorage.setItem('refToken', token);
+      localStorage.setItem('refToken', refToken);
     }
     if (!data) localStorage.removeItem('refToken');
   }

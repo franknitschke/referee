@@ -27,6 +27,7 @@ router.get('/', async (req, res) => {
 // change settings
 router.post('/', async (req, res) => {
   const body = req.body;
+  
   cleanSettingsBody(body);
   const updatedDoc = await dbUpdate(db, 'settings', body);
 

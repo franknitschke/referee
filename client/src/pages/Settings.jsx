@@ -51,6 +51,7 @@ function Settings({ ip, settings }) {
         }`,
       }),
     });
+    console.log('Läuft')
   }
 
   return (
@@ -110,8 +111,7 @@ function Settings({ ip, settings }) {
                   min='5'
                   max='45'
                   defaultValue={`${settings?.autoResetTimer}`}
-                  onTouchEnd={() => {}}
-                  onMouseUp={handleChange}
+                  onChange={handleChange}
                   name={'autoResetTimer'}
                   className='range range-accent range-xs'
                   step='5'

@@ -86,6 +86,13 @@ router.post('/timer', async (req, res) => {
   res.status(200).send({ msg: 'OK' });
 });
 
+//test for competition program
+router.post('/competition', (req, res) => {
+  console.log(req.body);
+  res.status(200).send('OK');
+})
+
+
 //for testing in dev
 /* router.get('/db', async (req, res) => {
   const data = await dbAll(dbMemory);

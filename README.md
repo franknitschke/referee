@@ -20,6 +20,7 @@ Please change all default passwords and tokens immediately after installation.**
 
 1. `cd yourFolder/server`
 2. `npm start`
+3. `http://localhost:3030`
 
 ## Default credentials
 

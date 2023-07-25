@@ -50,6 +50,15 @@ async function gitPull() {
   }
 }
 
+async function gitReset() {
+  try {
+    return await git.reset('hard', ['origin/main']);
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+}
+
 //check for updates
 router.get('/status', async (req, res) => {
   const fetch = await gitFetch();
@@ -76,7 +85,7 @@ router.get('/status', async (req, res) => {
 
 //update
 router.post('/', async (req, res) => {
-  const status = await gitPull();
+  const status = await gitReset();
   console.log('Git Pull: ', status);
 
   try {

@@ -34,7 +34,7 @@ function Display({ isConnected, rating, ip }) {
       </div>
 
       {!isConnected && (
-        <div>
+        <div className='col-span-3 absolute bottom-8 left-2'>
           <Alert />
         </div>
       )}

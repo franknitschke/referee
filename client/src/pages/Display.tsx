@@ -4,7 +4,7 @@ import Light from '../components/Light';
 
 import { showRating, checkRatingSubmit } from '../helper/helper';
 
-function Display({ isConnected, rating, ip }) {
+function Display({ isConnected, rating, ip } : PropTypes) {
   return (
     <div className='h-screen w-full bg-black text-red-600 text-8xl font-semibold justify-center grid grid-cols-3 gap-2 items-center px-4'>
       <div className='col-span-3 m-auto'>

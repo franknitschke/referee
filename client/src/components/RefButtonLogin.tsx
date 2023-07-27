@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import useSubmit from '../hooks/useSubmit';
 
-function RefButtonLogin({ setToken, token, setRef }) {
+type RefButtonLoginProps = {
+  setToken: React.Dispatch<React.SetStateAction<string | null>>;
+  token: string | null;
+  setRef: React.Dispatch<React.SetStateAction<RefObject | null>>
+}
+
+function RefButtonLogin({ setToken, token, setRef }: RefButtonLoginProps) {
   const { loading, error, success, fetchData } = useSubmit();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,7 +23,7 @@ function RefButtonLogin({ setToken, token, setRef }) {
     }
   }, [searchParams]);
 
-  async function handleSubmit(refToken) {
+  async function handleSubmit(refToken: any): Promise<void> {
     const data = await fetchData(
       `/auth/ref?token=${refToken}`,
       'GET',
@@ -48,7 +54,7 @@ function RefButtonLogin({ setToken, token, setRef }) {
                   type='text'
                   placeholder='Token eingeben'
                   className='mt-20 input input-bordered w-full max-w-xs m-auto'
-                  onInput={(e) => {
+                  onInput={(e: any) => {
                     e.preventDefault();
                     setToken(e.target.value);
                   }}

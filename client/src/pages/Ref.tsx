@@ -9,9 +9,13 @@ import Light from '../components/Light';
 import { showRating, checkRatingSubmit } from '../helper/helper';
 import { ChevronDoubleUpIcon } from '@heroicons/react/24/solid';
 
-function Ref({ rating }) {
-  const [token, setToken] = useState(null);
-  const [ref, setRef] = useState(null);
+
+
+function Ref({rating}: any) {
+  const [token, setToken] = useState<string | null>(null);
+  const [ref, setRef] = useState<RefObject | null>(null);
+
+  //console.log('Ref: ', rating)
 
   useEffect(() => {
     ref && socket.emit('users', { user: ref?._id });

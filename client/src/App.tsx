@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import { socket } from './socket';
 
@@ -9,14 +9,14 @@ import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import Ref from './pages/Ref';
 import Login from './pages/Login';
-import Test from './pages/Test';
+
 
 function App() {
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [ip, setIp] = useState(null);
-  const [rating, setRating] = useState(null);
-  const [settings, setSettings] = useState(null);
-  const [competitionData, setCompetitionData] = useState(null);
+  const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
+  const [ip, setIp] = useState<string | null>(null);
+  const [rating, setRating] = useState<RatingObject>(null);
+  const [settings, setSettings] = useState<SettingsObject>(null);
+  const [competitionData, setCompetitionData] = useState<object | null>(null);
 
   const location = useLocation();
 
@@ -25,27 +25,27 @@ function App() {
   }, [location, isConnected]);
 
   useEffect(() => {
-    function onConnect() {
+    function onConnect(): void {
       setIsConnected(true);
     }
 
-    function onDisconnect() {
+    function onDisconnect(): void {
       setIsConnected(false);
     }
 
-    function getIp(value) {
+    function getIp(value: string): void {
       setIp(value);
     }
 
-    function getRating(value) {
+    function getRating(value: RatingObject): void {
       setRating(value);
     }
 
-    function getSettings(value) {
+    function getSettings(value: SettingsObject): void {
       setSettings(value);
     }
 
-    function getCompetitionData(value) {
+    function getCompetitionData(value: object): void {
       setCompetitionData(value);
     }
 
@@ -87,21 +87,7 @@ function App() {
             <Dashboard ip={ip} isConnected={isConnected} rating={rating} />
           }
         />
-        <Route
-          path='/ref'
-          element={
-            <Ref
-              ip={ip}
-              isConnected={isConnected}
-              rating={rating}
-              id={socket.id}
-            />
-          }
-        />
-        <Route
-          path='/test'
-          element={<Test competitionData={competitionData} />}
-        />
+        <Route path='/ref' element={<Ref rating={rating} />} />
         <Route path='/login' element={<Login />} />
       </Routes>
     </div>

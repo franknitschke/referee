@@ -20,7 +20,7 @@ export function showRating(rating, position) {
   ) {
     return 'red';
   } else {
-    return false;
+    return '';
   }
 }
 

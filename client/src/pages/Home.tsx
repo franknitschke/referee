@@ -1,6 +1,9 @@
-import React from 'react';
+type propTypes = {
+  ip: null | string;
+  isConnected: boolean;
+};
 
-function Home({ ip, isConnected }) {
+function Home({ ip, isConnected }: propTypes) {
   return (
     <div className='flex justify-center items-center text-gray-800 text-3xl h-screen'>
       <div className='flex-col m-auto text-center text-gray-600'>

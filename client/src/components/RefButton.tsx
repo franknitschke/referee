@@ -1,7 +1,13 @@
-import React from 'react';
 import useSubmit from '../hooks/useSubmit';
 
-function RefButton({ color, title, url, method }) {
+type propTypes = {
+  color: 'red' | 'blue' | 'yellow' | 'white' | 'gray';
+  title: 'Weiß' | 'Rot' | 'Gelb' | 'Blau' | 'Start' | 'Reset';
+  url: string;
+  method: 'POST' | 'GET';
+};
+
+function RefButton({ color, title, url, method }: propTypes) {
   const { loading, error, success, fetchData } = useSubmit();
   return (
     <button
@@ -22,8 +28,3 @@ function RefButton({ color, title, url, method }) {
 }
 
 export default RefButton;
-
-RefButton.defaultProps = {
-  color: 'red',
-  title: 'button',
-};

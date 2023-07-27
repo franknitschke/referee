@@ -1,4 +1,12 @@
-import React from 'react';
+type LightProps = {
+  color: 'white' | 'red' | '';
+  ratingSubmit: boolean;
+  ratingColor: any;
+  width: number;
+  widthSubmit: number;
+  paddingBottom: string;
+  paddingBottomSubmit: string;
+};
 
 function Light({
   color,
@@ -8,7 +16,7 @@ function Light({
   widthSubmit,
   paddingBottom,
   paddingBottomSubmit,
-}) {
+}: LightProps) {
   return (
     <>
       {ratingSubmit && (

@@ -2,7 +2,12 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 
-function Navbar({ location, settings }) {
+type NavbarProps = {
+  location: Record<'pathname', string>;
+  settings: SettingsObject
+}
+
+function Navbar({ location, settings }: NavbarProps) {
   const navigate = useNavigate();
 
   useEffect(() => {

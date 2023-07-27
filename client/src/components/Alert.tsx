@@ -1,6 +1,8 @@
-import React from 'react';
+type AlertProps = {
+  msg: string | null
+}
 
-function Alert({ msg }) {
+function Alert({msg}: AlertProps) {
   return (
     <div className='alert alert-error shadow-lg'>
       <div>
@@ -26,5 +28,5 @@ function Alert({ msg }) {
 export default Alert;
 
 Alert.defaultProps = {
-  msg: 'Anzeige nicht verbunden',
-};
+  msg: 'Anzeige nicht verbunden'
+}

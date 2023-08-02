@@ -38,9 +38,21 @@ function Display({ isConnected, rating, ip }) {
           <Alert />
         </div>
       )}
-      <div className='absolute left-0 bottom-0 text-base text-gray-200 opacity-25'>
-        {ip}
+      
+      <div className="flex items-center absolute left-0 bottom-0 mb-4 ml-2">
+        <div className="text-base text-gray-200 opacity-25 mr-4">
+          {ip}
+        </div>
+
+        <div className="text-base text-gray-200 opacity-25">
+          <a href="/home">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Home
+            </button>
+          </a>
+        </div>
       </div>
+    
     </div>
   );
 }

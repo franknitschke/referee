@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import Timer from '../components/Timer';
 import Alert from '../components/Alert';
 import Light from '../components/Light';
@@ -45,11 +47,7 @@ function Display({ isConnected, rating, ip }) {
         </div>
 
         <div className="text-base text-gray-200 opacity-25">
-          <a href="/home">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Home
-            </button>
-          </a>
+          <Link to="/" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Home</Link>
         </div>
       </div>
     

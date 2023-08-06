@@ -6,12 +6,16 @@ import RefButton from '../components/RefButton';
 import RefButtonLogin from '../components/RefButtonLogin';
 import Loading from '../components/Loading';
 import Light from '../components/Light';
+import OnlineStatus from '../components/OnlineStatus';
 import { showRating, checkRatingSubmit } from '../helper/helper';
 import { ChevronDoubleUpIcon } from '@heroicons/react/24/solid';
 
+type Props = {
+  isConnected: boolean;
+  rating: RatingObject
+}
 
-
-function Ref({rating}: any) {
+function Ref({rating, isConnected}: Props) {
   const [token, setToken] = useState<string | null>(null);
   const [ref, setRef] = useState<RefObject | null>(null);
 
@@ -29,6 +33,7 @@ function Ref({rating}: any) {
         <Loading />
       ) : (
         <div className='h-3/5'>
+          <div><OnlineStatus isConnected={isConnected} /></div>
           <div className='flex flex-col justify-center space-y-2 m-auto px-6 py-2 h-full'>
             <div className='flex flex-row w-2/4 lg:w-1/2 space-x-6 justify-center border border-gray-400 bg-gray-300 rounded p-1 mx-auto'>
               <div className='flex flex-col items-center justify-center w-full m-auto'>

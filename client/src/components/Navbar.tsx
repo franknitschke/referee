@@ -65,9 +65,6 @@ function Navbar({ location, settings }: NavbarProps) {
               <Link to={'/ref'}>Wertung</Link>
             </li>
             <li>
-              <Link to={'/test'}>Test</Link>
-            </li>
-            <li>
               <button
                 onClick={() => {
                   localStorage.clear();

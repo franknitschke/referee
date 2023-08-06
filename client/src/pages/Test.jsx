@@ -1,7 +1,8 @@
 import React from 'react';
+import OnlineStatus from '../components/OnlineStatus';
 
 function Test({ competitionData }) {
-  return <div>{JSON.stringify(competitionData, null, 4)}</div>;
+  return <div><OnlineStatus /></div>;
 }
 
 export default Test;

@@ -10,7 +10,6 @@ import Settings from './pages/Settings';
 import Ref from './pages/Ref';
 import Login from './pages/Login';
 
-
 function App() {
   const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
   const [ip, setIp] = useState<string | null>(null);
@@ -87,7 +86,10 @@ function App() {
             <Dashboard ip={ip} isConnected={isConnected} rating={rating} />
           }
         />
-        <Route path='/ref' element={<Ref rating={rating} />} />
+        <Route
+          path='/ref'
+          element={<Ref rating={rating} isConnected={isConnected} />}
+        />
         <Route path='/login' element={<Login />} />
       </Routes>
     </div>

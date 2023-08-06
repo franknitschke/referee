@@ -1,10 +1,10 @@
-export function checkRatingSubmit(rating, position) {
+export function checkRatingSubmit(rating: RatingObject, position: RatingKeys): boolean | null | undefined {
   if (rating?.main?.submit && rating?.left?.submit && rating?.right?.submit)
     return false;
   return rating?.[position]?.submit;
 }
 
-export function showRating(rating, position) {
+export function showRating(rating: RatingObject, position: RatingKeys) {
   if (
     rating?.main?.submit &&
     rating?.left?.submit &&
@@ -24,17 +24,17 @@ export function showRating(rating, position) {
   }
 }
 
-export function handelSubmit(e) {
+export function handelSubmit(e:any): object {
   e.preventDefault();
   const formData = new FormData(e.currentTarget);
-  const body = {};
+  const body:Record<string, any> = {};
   for (let [key, value] of formData.entries()) {
     body[key] = value;
   }
   return body;
 }
 
-export async function getData(url, method, accessToken) {
+export async function getData(url: string, method: Method, accessToken: string): Promise<Record<string, string> | null> {
   try {
     const req = await fetch(url, {
       method: method,

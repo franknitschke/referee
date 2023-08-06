@@ -1,9 +1,21 @@
 import { useEffect, useState, useRef } from 'react';
 
-function useSubmit() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+type ReturnValue = {
+  loading: boolean;
+  error: boolean;
+  success: boolean;
+  fetchData: (
+    url: string,
+    method: Method,
+    body?: object | null,
+    accessToken?: string | null
+  ) => Promise<Record<string, string> | null>;
+};
+
+function useSubmit(): ReturnValue {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const isMounted = useRef(false);
 
@@ -15,7 +27,12 @@ function useSubmit() {
     };
   }, []);
 
-  async function fetchData(url, method, body, accessToken) {
+  async function fetchData(
+    url: string,
+    method: Method,
+    body?: object | null,
+    accessToken?: string | null
+  ): Promise<Record<string, string> | null> {
     try {
       setLoading(true);
       const req = await fetch(url, {

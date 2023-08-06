@@ -3,35 +3,21 @@ import { socket } from '../socket';
 import Light from '../components/Light';
 import { showRating, checkRatingSubmit } from '../helper/helper';
 
-const names = {
-  display: 'Anzeige',
-  main: 'Haupt KaRi',
-  left: 'KaRi links',
-  right: 'KaRi rechts',
-  settings: 'Einstellungen',
-  dashboard: 'Dashboard',
-  ref: 'KaRi',
-} as const;
-
-
-
-
-
 type users = Record<'user', string>[] | null;
 
-function Dashboard({ ip, isConnected, rating } : PropTypes) {
+function Dashboard({ ip, isConnected, rating }: PropTypes) {
   const [users, setUsers] = useState<users>(null);
-  const [lastRating, setLastRating] = useState<Record<RatingKeys, RatingValues> | null>(null);
+  const [lastRating, setLastRating] = useState<RatingObject | null>(null);
 
   console.log('Users: ', users);
   console.log('Ratings: ', rating);
 
   useEffect(() => {
-    function getUsers(value : users) {
+    function getUsers(value: users) {
       setUsers(value);
     }
 
-    function getLastRating(value : Record<RatingKeys, RatingValues> | null) {
+    function getLastRating(value: RatingObject | null) {
       setLastRating(value);
     }
 
@@ -58,14 +44,11 @@ function Dashboard({ ip, isConnected, rating } : PropTypes) {
         </div>
 
         <div className='my-4'>Verbundene User</div>
-        {users?.map((el:Record<'user', string>, id:number) => (
-          
+        {users?.map((el: Record<'user', string>, id: number) => (
           <div key={id} className='stats shadow mb-2'>
             <div className='stat'>
               <div className='stat-title'>Verbunden</div>
-              <div className='stat-value'>
-                {el.user.replace('/', '')}
-              </div>
+              <div className='stat-value'>{el.user.replace('/', '')}</div>
               <div className='stat-desc'>{`Server: ${ip}`}</div>
             </div>
           </div>

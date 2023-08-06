@@ -24,7 +24,7 @@ function RefButtonLogin({ setToken, token, setRef }: RefButtonLoginProps) {
   }, [searchParams]);
 
   async function handleSubmit(refToken: any): Promise<void> {
-    const data = await fetchData(
+    const data: any = await fetchData(
       `/auth/ref?token=${refToken}`,
       'GET',
       null,

@@ -5,9 +5,13 @@ import { handelSubmit } from '../helper/helper';
 import Loading from './Loading';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
-function SettingsAdminCard({ accessToken }) {
-  const [hide, setHide] = useState(true);
-  const [admin, setAdmin] = useState(null);
+type Props = {
+  accessToken: string;
+};
+
+function SettingsAdminCard({ accessToken }: Props) {
+  const [hide, setHide] = useState<boolean>(true);
+  const [admin, setAdmin] = useState<Record<string, string> | null>(null);
   const { loading, error, success, fetchData } = useSubmit();
 
   useEffect(() => {
@@ -50,7 +54,7 @@ function SettingsAdminCard({ accessToken }) {
               </label>
               <input
                 required
-                minLength={'4'}
+                minLength={4}
                 id={'name'}
                 name='name'
                 type='text'
@@ -79,7 +83,7 @@ function SettingsAdminCard({ accessToken }) {
 
               <input
                 required
-                minLength={'6'}
+                minLength={6}
                 id={`password`}
                 name='password'
                 type={hide ? 'password' : 'text'}

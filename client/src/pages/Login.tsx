@@ -6,15 +6,15 @@ function Login() {
 
   const navigate = useNavigate();
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e:any) {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const body = {};
+    const body: Record<string, any> = {};
     for (let [key, value] of formData.entries()) {
       body[key] = value;
     }
 
-    const res = await fetchData('/auth/admin', 'POST', body);
+    const res: null | Record<string, string> = await fetchData('/auth/admin', 'POST', body);
     if (res) {
       localStorage.setItem('token', res.token);
       navigate('/settings');

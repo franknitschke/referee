@@ -4,8 +4,16 @@ import { useState } from 'react';
 import { handelSubmit } from '../helper/helper';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
-function SettingsTokenCard({ data, position, title, ip, accessToken }) {
-  const [hide, setHide] = useState(true);
+type Props = {
+  data: string;
+  position: RatingKeys;
+  title: string;
+  ip: string;
+  accessToken: string;
+};
+
+function SettingsTokenCard({ data, position, title, ip, accessToken }: Props) {
+  const [hide, setHide] = useState<boolean>(true);
   const { loading, error, success, fetchData } = useSubmit();
 
   return (

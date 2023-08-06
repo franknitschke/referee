@@ -1,11 +1,11 @@
+import React from "react";
+
 export {};
 
 declare global {
-  /**
-   * Now declare things that go in the global namespace,
-   * or augment existing declarations in the global namespace.
-   */
-  type RatingKeys = 'left' | 'main' | 'right' | 'timer';
+  
+  type RatingKeys = 'left' | 'main' | 'right';
+
   type RatingValues = {
     submit: boolean;
     valid: boolean;
@@ -14,14 +14,15 @@ declare global {
     red: boolean;
     yellow: boolean;
     white: boolean;
-    
   };
+
   type RatingObject = {
     left: RatingValues;
     main: RatingValues;
     right: RatingValues;
     timer: number
   } | null;
+  
   type PropTypes = {
     ip: null | string;
     isConnected: boolean;
@@ -39,5 +40,14 @@ declare global {
     position: string;
     token: string;
     role: string;
+  }
+
+  type Method = 'POST' | 'GET';
+}
+
+declare module "react" {
+  // augment CSSProperties here
+  interface CSSProperties {
+    "--value"?: number;
   }
 }

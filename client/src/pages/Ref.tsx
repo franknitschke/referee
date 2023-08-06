@@ -15,8 +15,6 @@ function Ref({rating}: any) {
   const [token, setToken] = useState<string | null>(null);
   const [ref, setRef] = useState<RefObject | null>(null);
 
-  //console.log('Ref: ', rating)
-
   useEffect(() => {
     ref && socket.emit('users', { user: ref?._id });
   }, [ref]);

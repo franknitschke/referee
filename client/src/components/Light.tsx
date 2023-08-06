@@ -1,6 +1,6 @@
 type LightProps = {
   color: 'white' | 'red' | '';
-  ratingSubmit: boolean;
+  ratingSubmit: boolean | undefined | null;
   ratingColor: any;
   width: number;
   widthSubmit: number;

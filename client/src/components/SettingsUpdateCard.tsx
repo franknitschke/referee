@@ -3,14 +3,18 @@ import { getData } from '../helper/helper';
 import useSubmit from '../hooks/useSubmit';
 import Loading from './Loading';
 
-function SettingsUpdateCard({ accessToken }) {
-  const [updates, setUpdates] = useState(null);
-  const [updateMsg, setUpdateMsg] = useState(null);
+type Props = {
+  accessToken: string;
+}
+
+function SettingsUpdateCard({ accessToken }: Props) {
+  const [updates, setUpdates] = useState<Record<string, string>  | null>(null);
+  const [updateMsg, setUpdateMsg] = useState<Record<string, string> | null>(null);
 
   const { loading, error, success, fetchData } = useSubmit();
 
   async function getUpdateData() {
-    const data = await getData('/api/update/status', 'GET', accessToken);
+    const data: Record<string, string> | null = await getData('/api/update/status', 'GET', accessToken);
     setUpdates(data);
   }
 

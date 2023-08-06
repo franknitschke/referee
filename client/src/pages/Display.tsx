@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import Timer from '../components/Timer';
 import Alert from '../components/Alert';
 import Light from '../components/Light';
@@ -38,9 +40,17 @@ function Display({ isConnected, rating, ip } : PropTypes) {
           <Alert />
         </div>
       )}
-      <div className='absolute left-0 bottom-0 text-base text-gray-200 opacity-25'>
-        {ip}
+      
+      <div className="flex items-center absolute left-0 bottom-0 mb-4 ml-2">
+        <div className="text-base text-gray-200 opacity-25 mr-4">
+          {ip}
+        </div>
+
+        <div className="text-base text-gray-200 opacity-25">
+          <Link to="/" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Home</Link>
+        </div>
       </div>
+    
     </div>
   );
 }

@@ -52,7 +52,7 @@ function SettingsTokenCard({ data, position, title, ip, accessToken }: Props) {
             id={position}
             name='token'
             type='text'
-            min={'4'}
+            minLength={4}
             defaultValue={data}
             className=' input input-bordered w-full max-w-xs'
           />

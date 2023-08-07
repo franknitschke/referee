@@ -5,16 +5,22 @@ import Loading from './Loading';
 
 type Props = {
   accessToken: string | null;
-}
+};
 
 function SettingsUpdateCard({ accessToken }: Props) {
-  const [updates, setUpdates] = useState<Record<string, string>  | null>(null);
-  const [updateMsg, setUpdateMsg] = useState<Record<string, string> | null>(null);
+  const [updates, setUpdates] = useState<Record<string, string> | null>(null);
+  const [updateMsg, setUpdateMsg] = useState<Record<string, string> | null>(
+    null
+  );
 
   const { loading, error, success, fetchData } = useSubmit();
 
   async function getUpdateData() {
-    const data: Record<string, string> | null = await getData('/api/update/status', 'GET', accessToken);
+    const data: Record<string, string> | null = await getData(
+      '/api/update/status',
+      'GET',
+      accessToken
+    );
     setUpdates(data);
   }
 

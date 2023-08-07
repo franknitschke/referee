@@ -7,16 +7,16 @@ import SettingsAdminCard from '../components/SettingsAdminCard';
 import SettingsUpdateCard from '../components/SettingsUpdateCard';
 
 type Props = {
-ip: string | null;
-settings: SettingsObject;
-}
+  ip: string | null;
+  settings: SettingsObject;
+};
 
 type Data = {
   position: RatingKeys;
   token: string;
   role: string;
   _id: string;
-}
+};
 
 const refTitle = {
   left: 'Seitenkampfrichter links',
@@ -50,7 +50,7 @@ function Settings({ ip, settings }: Props) {
     }
   }, []);
 
-  function handleChange(e:any) {
+  function handleChange(e: any) {
     fetch('/api/settings', {
       headers: {
         'content-type': 'application/json',
@@ -63,7 +63,7 @@ function Settings({ ip, settings }: Props) {
         }`,
       }),
     });
-    console.log('Läuft')
+    console.log('Läuft');
   }
 
   return (

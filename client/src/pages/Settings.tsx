@@ -6,20 +6,32 @@ import SettingsTokenCard from '../components/SettingsTokenCard';
 import SettingsAdminCard from '../components/SettingsAdminCard';
 import SettingsUpdateCard from '../components/SettingsUpdateCard';
 
+type Props = {
+ip: string | null;
+settings: SettingsObject;
+}
+
+type Data = {
+  position: RatingKeys;
+  token: string;
+  role: string;
+  _id: string;
+}
+
 const refTitle = {
   left: 'Seitenkampfrichter links',
   main: 'Hauptkampfrichter',
   right: 'Seitenkampfrichter rechts',
 };
 
-function Settings({ ip, settings }) {
-  const [data, setData] = useState(null);
-  const [accessToken, setAccessToken] = useState(null);
+function Settings({ ip, settings }: Props) {
+  const [data, setData] = useState<Data[] | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function getToken(token) {
+    async function getToken(token: string) {
       const req = await fetch('/api/settings?field=role&value=ref', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -38,7 +50,7 @@ function Settings({ ip, settings }) {
     }
   }, []);
 
-  function handleChange(e) {
+  function handleChange(e:any) {
     fetch('/api/settings', {
       headers: {
         'content-type': 'application/json',

@@ -34,7 +34,7 @@ export function handelSubmit(e:any): object {
   return body;
 }
 
-export async function getData(url: string, method: Method, accessToken: string): Promise<Record<string, string> | null> {
+export async function getData(url: string, method: Method, accessToken: string | null): Promise<Record<string, string> | null> {
   try {
     const req = await fetch(url, {
       method: method,

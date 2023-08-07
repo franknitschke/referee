@@ -4,7 +4,7 @@ import useSubmit from '../hooks/useSubmit';
 import Loading from './Loading';
 
 type Props = {
-  accessToken: string;
+  accessToken: string | null;
 }
 
 function SettingsUpdateCard({ accessToken }: Props) {

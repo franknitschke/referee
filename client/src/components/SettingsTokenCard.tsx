@@ -7,9 +7,9 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 type Props = {
   data: string;
   position: RatingKeys;
-  title: string;
-  ip: string;
-  accessToken: string;
+  title: string | null;
+  ip: string | null;
+  accessToken: string | null;
 };
 
 function SettingsTokenCard({ data, position, title, ip, accessToken }: Props) {

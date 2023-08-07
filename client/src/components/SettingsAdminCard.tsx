@@ -6,7 +6,7 @@ import Loading from './Loading';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 type Props = {
-  accessToken: string;
+  accessToken: string | null;
 };
 
 function SettingsAdminCard({ accessToken }: Props) {

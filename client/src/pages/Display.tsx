@@ -13,21 +13,21 @@ function Display({ isConnected, rating, ip } : PropTypes) {
         <Timer time={rating?.timer} />
       </div>
 
-      <div className='col-span-1'>
+      <div className='col-span-1 z-10'>
         <Light
           color={showRating(rating, 'left')}
           ratingSubmit={checkRatingSubmit(rating, 'left')}
           ratingColor={rating?.left}
         />
       </div>
-      <div className='col-span-1'>
+      <div className='col-span-1 z-10'>
         <Light
           color={showRating(rating, 'main')}
           ratingSubmit={checkRatingSubmit(rating, 'main')}
           ratingColor={rating?.main}
         />
       </div>
-      <div className='col-span-1'>
+      <div className='col-span-1 z-10'>
         <Light
           color={showRating(rating, 'right')}
           ratingSubmit={checkRatingSubmit(rating, 'right')}
@@ -41,7 +41,7 @@ function Display({ isConnected, rating, ip } : PropTypes) {
         </div>
       )}
       
-      <div className="flex items-center absolute left-0 bottom-0 mb-4 ml-2">
+      <div className="flex items-center absolute left-0 bottom-0 mb-2 ml-2">
         <div className="text-base text-gray-200 opacity-25 mr-4">
           {ip}
         </div>

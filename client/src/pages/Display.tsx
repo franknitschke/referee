@@ -8,7 +8,7 @@ import { showRating, checkRatingSubmit } from '../helper/helper';
 
 function Display({ isConnected, rating, ip } : PropTypes) {
   return (
-    <div className='h-screen w-full bg-black text-red-600 text-8xl font-semibold justify-center grid grid-cols-3 gap-2 items-center px-4'>
+    <div className='h-screen w-full bg-black text-red-600 text-8xl font-semibold justify-center grid grid-cols-3 gap-2 items-center px-4 cursor-none'>
       <div className='col-span-3 m-auto'>
         <Timer time={rating?.timer} />
       </div>
@@ -41,7 +41,7 @@ function Display({ isConnected, rating, ip } : PropTypes) {
         </div>
       )}
       
-      <div className="flex items-center absolute left-0 bottom-0 mb-2 ml-2">
+      <div className="flex items-center absolute left-0 bottom-0 mb-2 ml-2 cursor-pointer">
         <div className="text-base text-gray-200 opacity-25 mr-4">
           {ip}
         </div>

@@ -7,6 +7,7 @@ const api = require('./routes/api');
 const auth = require('./routes/auth');
 const settings = require('./routes/settings');
 const update = require('./routes/update');
+const vportal = require('./routes/vportal');
 const cors = require('cors');
 
 const { refValue, users } = require('./const');
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 app.use('/api', api);
 app.use('/api/settings', settings);
 app.use('/api/update', update);
+app.use('/api/vportal', vportal);
 app.use('/auth', auth);
 
 app.get('/*', (req, res) => {
@@ -96,4 +98,5 @@ io.on('connection', async (socket) => {
 
 server.listen(port, () => {
   console.log(`listening on: http://${ip.address()}:${port}`);
+  console.log(`Node Version: ${process.version}`);
 });

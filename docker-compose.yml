@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: ref-app
+    command: npm run dev
+    #network_mode: host
+    ports:
+      - 3030:3030
+    volumes:
+      - .:/home/app
+      - /home/app/server/node_modules

@@ -1,0 +1,8 @@
+client/.git
+server/.git
+server/db/database/
+server/node_modules
+client/node_modules
+server/.env
+client/.env
+.env

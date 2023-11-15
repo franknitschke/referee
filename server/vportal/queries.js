@@ -121,7 +121,157 @@ const queryAthlets = JSON.stringify({
 });
 
 //Get Groups
-const queryGroups = JSON.stringify({
+function queryGroups(competitionId, competitionStageId) {
+  return JSON.stringify({
+    query: `
+                query competitionGroupList($competitionId: ID!, $competitionGroupListParams: CompetitionGroupListParams) {
+                    competitionGroupList(
+                        competitionId: $competitionId
+                        params: $competitionGroupListParams
+                        ) {
+                            total
+                            competitionGroups {
+                                id
+                                insert
+                                update
+                                name
+                                sortId
+                                active
+                                __typename
+                            }
+                            __typename
+                        }
+                    }
+                    `,
+    variables: {
+      competitionId: competitionId,
+      competitionAthleteAttemptListParams: {
+        filter: {
+          competitionGroupId: ['672'],
+          competitionStageId: competitionStageId,
+        },
+        limit: 10,
+      },
+    },
+  });
+}
+
+//Get active Groups !!!!!!!
+const queryActiveGroups = JSON.stringify({
+  query: `
+    query competitionGroupList($competitionId: ID!, $competitionGroupListParams: CompetitionGroupListParams) {
+        competitionGroupList(
+            competitionId: $competitionId
+            params: $competitionGroupListParams
+            ) {
+                total
+                competitionGroups {
+                    id
+                    insert
+                    update
+                    name
+                    sortId
+                    active
+                    __typename
+                }
+                __typename
+            }
+        }
+    `,
+  variables: {
+    competitionId: '266',
+    competitionGroupListParams: {
+      filter: {
+        competitionStageId: '274',
+        active: true,
+      },
+    },
+  },
+});
+
+//Get next athlets
+const queryAthletSequence = JSON.stringify({
+  query: `
+        query competitionAthleteAttemptList($competitionId: ID!, $competitionAthleteAttemptListParams: CompetitionAthleteAttemptListParams) {
+            competitionAthleteAttemptList(
+                competitionId: $competitionId
+                params: $competitionAthleteAttemptListParams
+                ) {
+                    total
+                    competitionAthleteAttempts {
+                        id
+                        index
+                        attempt
+                        discipline
+                        weight
+                        status
+                        competitionAthlete {
+                            id
+                            firstName
+                            lastName
+                            club {
+                                id
+                                name
+                                __typename
+                            }
+                            team {
+                                id
+                                name
+                                __typename
+                            }
+                            squatRackHeight
+                            squatRackSetup
+                            benchPressRackHeight
+                            benchPressSafetyHeight
+                            benchPressLiftIn
+                            benchPressBlocks
+                            squatTotal
+                            benchPressTotaldeadliftTotal
+                            calcTotal
+                            competitionGroup {
+                                id
+                                name
+                                __typename
+                            }
+                            competitionAthleteAttempts {
+                                id
+                                index
+                                attempt
+                                discipline
+                                weightstatus
+                                __typename
+                            }
+                            bodyWeightCategory {
+                                id
+                                name
+                                __typename
+                            }
+                            ageCategory {
+                                id
+                                name
+                                __typename
+                            }
+                                __typename
+                            }
+                                __typename
+                            }
+                                __typename
+                            }
+                        }
+                        `,
+  variables: {
+    competitionId: '266',
+    competitionAthleteAttemptListParams: {
+      filter: {
+        competitionGroupId: ['673'],
+        competitionStageId: '274',
+      },
+      limit: 10,
+    },
+  },
+});
+
+/* const queryGroups = JSON.stringify({
   query: `
           query competitionGroupList($competitionId: ID!, $competitionGroupListParams: CompetitionGroupListParams) {
               competitionGroupList(
@@ -152,12 +302,12 @@ const queryGroups = JSON.stringify({
       limit: 10,
     },
   },
-});
+}); */
 
 //Query Stages
 function queryStages(competitionId) {
-    return JSON.stringify({
-        query: `
+  return JSON.stringify({
+    query: `
               query ($competitionId: ID!, $params: CompetitionStageListParams) {
                   competitionStageList(competitionId: $competitionId, params: $params) {
                       total
@@ -177,15 +327,14 @@ function queryStages(competitionId) {
                   }
               }
               `,
-        variables: {
-          competitionId: competitionId,
-          params: {
-            limit: 25,
-            start: 0,
-          },
-        },
-      });
-
+    variables: {
+      competitionId: competitionId,
+      params: {
+        limit: 25,
+        start: 0,
+      },
+    },
+  });
 }
 /* const getStages = JSON.stringify({
   query: `

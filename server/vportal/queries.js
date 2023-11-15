@@ -154,9 +154,73 @@ const queryGroups = JSON.stringify({
   },
 });
 
+//Query Stages
+function queryStages(competitionId) {
+    return JSON.stringify({
+        query: `
+              query ($competitionId: ID!, $params: CompetitionStageListParams) {
+                  competitionStageList(competitionId: $competitionId, params: $params) {
+                      total
+                      competitionStages {
+                          id
+                          insert
+                          update
+                          name
+                          competitionClub {
+                              id
+                              name
+                              __typename
+                          }
+                          __typename
+                      }
+                      __typename
+                  }
+              }
+              `,
+        variables: {
+          competitionId: competitionId,
+          params: {
+            limit: 25,
+            start: 0,
+          },
+        },
+      });
+
+}
+/* const getStages = JSON.stringify({
+  query: `
+        query ($competitionId: ID!, $params: CompetitionStageListParams) {
+            competitionStageList(competitionId: $competitionId, params: $params) {
+                total
+                competitionStages {
+                    id
+                    insert
+                    update
+                    name
+                    competitionClub {
+                        id
+                        name
+                        __typename
+                    }
+                    __typename
+                }
+                __typename
+            }
+        }
+        `,
+  variables: {
+    competitionId: '266',
+    params: {
+      limit: 25,
+      start: 0,
+    },
+  },
+}); */
+
 module.exports = {
   queryAthlets,
   queryCompetitionId,
   queryGroups,
+  queryStages,
   mutate,
 };

@@ -1,7 +1,7 @@
 const { db, dbMemory } = require('../db/db');
 const { dbUpdate, dbGet } = require('../helper');
 
-const { queryCompetitionId } = require('./queries');
+const { queryCompetitionId, queryStages } = require('./queries');
 
 const vportalUrl = 'https://dev.vportal-online.de';
 const login = '/account/login';
@@ -31,6 +31,33 @@ async function getEventId(token) {
     console.error('Error WK ID: ', error);
     return null;
   }
+}
+
+async function getStages(competitionId, token) {
+  try {
+    const req = await fetch(vportalUrl + apiUrl, {
+      headers: {
+        'content-type': 'application/json',
+        'Accept-Language': 'de',
+        Authorization: `Bearer ${token}`,
+      },
+      body: queryStages(competitionId),
+      method: 'POST',
+    });
+
+    if (req?.ok) {
+      const res = await req.json();
+      //await dbUpdate(db, 'vportalToken', res?.data?.profile);
+      console.log('Stages: ', res);
+      return res;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+
 }
 
 async function getVportalToken(body) {
@@ -65,7 +92,7 @@ async function getVportalToken(body) {
 
     return loginTokenRes;
   } catch (error) {
-    console.error('Error Login: ', error);
+    console.error(error);
     return null;
   }
 }
@@ -73,4 +100,5 @@ async function getVportalToken(body) {
 module.exports = {
   getVportalToken,
   getEventId,
+  getStages
 };

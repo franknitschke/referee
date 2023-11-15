@@ -46,24 +46,21 @@ async function dbAll(db) {
   }
 }
 
-//db update doc
+//db update or create doc if not exists
 async function dbUpdate(db, id, payload) {
   try {
-    //const data = await db.get(id);
-    const data = await dbGet(db, id)
+    const data = await dbGet(db, id);
 
     //if there is no key in db
-    if(!data){
-      Object.assign(payload, {_id: `${id}`});
+    if (!data) {
+      Object.assign(payload, { _id: `${id}` });
       const response = await db.put(payload);
-      if(response.ok) {
+      if (response.ok) {
         return await db.get(id);
-      }else {
+      } else {
         throw new Error('Failure');
       }
-
     }
-    console.log('Find Data: ', data)
     Object.assign(data, payload);
     const response = await db.put(data);
     if (response.ok) {

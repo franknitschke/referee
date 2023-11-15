@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getVportalToken, getEventId } = require('../vportal/vportalHelper');
+const { getVportalToken, getEventId, getStages } = require('../vportal/vportalHelper');
 
 router.use((req, res, next) => {
   res.append('content-type', 'application/json');
@@ -17,9 +17,10 @@ router.post('/login', async (req, res) => {
 
   const token = await getVportalToken(body);
   const eventId = await getEventId(token?.access_token);
+  const stages = await getStages(eventId?.data?.profile?.competition?.id, token?.access_token)
 
   if (token && eventId) {
-    return res.status(200).send({ token, eventId });
+    return res.status(200).send({ token, eventId, stages });
   } else {
     res.status(403).send({ msg: 'Unauthorized' });
   }

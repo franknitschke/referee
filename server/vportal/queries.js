@@ -12,29 +12,31 @@ const queryCompetitionId = JSON.stringify({
 });
 
 //Send Ref Result
-const mutate = JSON.stringify({
-  query: `
-          mutation updateCompetitionAthleteAttempt($competitionAthleteAttemptId: ID!, $input: CompetitionAthleteAttemptUpdate!) {
-              updateCompetitionAthleteAttempt(
-                  competitionAthleteAttemptId: $competitionAthleteAttemptId
-                  input: $input
-                  ) {
-                      id
-                      discipline
-                      attempt
-                      weight
-                      status
-                      __typename
-                  }
-              }
-              `,
-  variables: {
-    competitionAthleteAttemptId: '35296',
-    input: {
-      status: 'valid',
+function setResult(competitionAthleteAttemptId, result) {
+  return JSON.stringify({
+    query: `
+                mutation updateCompetitionAthleteAttempt($competitionAthleteAttemptId: ID!, $input: CompetitionAthleteAttemptUpdate!) {
+                    updateCompetitionAthleteAttempt(
+                        competitionAthleteAttemptId: $competitionAthleteAttemptId
+                        input: $input
+                        ) {
+                            id
+                            discipline
+                            attempt
+                            weight
+                            status
+                            __typename
+                        }
+                    }
+                    `,
+    variables: {
+      competitionAthleteAttemptId: competitionAthleteAttemptId,
+      input: {
+        status: result,
+      },
     },
-  },
-});
+  });
+}
 
 //Get Athletes
 const queryAthlets = JSON.stringify({
@@ -157,122 +159,9 @@ function queryGroups(competitionId, competitionStageId) {
 }
 
 //Get active Groups !!!!!!!
-const queryActiveGroups = JSON.stringify({
-  query: `
-    query competitionGroupList($competitionId: ID!, $competitionGroupListParams: CompetitionGroupListParams) {
-        competitionGroupList(
-            competitionId: $competitionId
-            params: $competitionGroupListParams
-            ) {
-                total
-                competitionGroups {
-                    id
-                    insert
-                    update
-                    name
-                    sortId
-                    active
-                    __typename
-                }
-                __typename
-            }
-        }
-    `,
-  variables: {
-    competitionId: '266',
-    competitionGroupListParams: {
-      filter: {
-        competitionStageId: '274',
-        active: true,
-      },
-    },
-  },
-});
-
-//Get next athlets
-const queryAthletSequence = JSON.stringify({
-  query: `
-        query competitionAthleteAttemptList($competitionId: ID!, $competitionAthleteAttemptListParams: CompetitionAthleteAttemptListParams) {
-            competitionAthleteAttemptList(
-                competitionId: $competitionId
-                params: $competitionAthleteAttemptListParams
-                ) {
-                    total
-                    competitionAthleteAttempts {
-                        id
-                        index
-                        attempt
-                        discipline
-                        weight
-                        status
-                        competitionAthlete {
-                            id
-                            firstName
-                            lastName
-                            club {
-                                id
-                                name
-                                __typename
-                            }
-                            team {
-                                id
-                                name
-                                __typename
-                            }
-                            squatRackHeight
-                            squatRackSetup
-                            benchPressRackHeight
-                            benchPressSafetyHeight
-                            benchPressLiftIn
-                            benchPressBlocks
-                            squatTotal
-                            benchPressTotaldeadliftTotal
-                            calcTotal
-                            competitionGroup {
-                                id
-                                name
-                                __typename
-                            }
-                            competitionAthleteAttempts {
-                                id
-                                index
-                                attempt
-                                discipline
-                                weightstatus
-                                __typename
-                            }
-                            bodyWeightCategory {
-                                id
-                                name
-                                __typename
-                            }
-                            ageCategory {
-                                id
-                                name
-                                __typename
-                            }
-                                __typename
-                            }
-                                __typename
-                            }
-                                __typename
-                            }
-                        }
-                        `,
-  variables: {
-    competitionId: '266',
-    competitionAthleteAttemptListParams: {
-      filter: {
-        competitionGroupId: ['673'],
-        competitionStageId: '274',
-      },
-      limit: 10,
-    },
-  },
-});
-
-/* const queryGroups = JSON.stringify({
-  query: `
+function queryActiveGroup(competitionId, competitionStageId) {
+  return JSON.stringify({
+    query: `
           query competitionGroupList($competitionId: ID!, $competitionGroupListParams: CompetitionGroupListParams) {
               competitionGroupList(
                   competitionId: $competitionId
@@ -291,18 +180,106 @@ const queryAthletSequence = JSON.stringify({
                       __typename
                   }
               }
-              `,
-  variables: {
-    competitionId: '231',
-    competitionAthleteAttemptListParams: {
-      filter: {
-        competitionGroupId: ['672'],
-        competitionStageId: '227',
+          `,
+    variables: {
+      competitionId: competitionId,
+      competitionGroupListParams: {
+        filter: {
+          competitionStageId: competitionStageId,
+          active: true,
+        },
       },
-      limit: 10,
     },
-  },
-}); */
+  });
+}
+
+//Get next athlets
+function queryNextAthlet(
+  competitionId,
+  competitionGroupId,
+  competitionStageId
+) {
+  return JSON.stringify({
+    query: `
+              query competitionAthleteAttemptList($competitionId: ID!, $competitionAthleteAttemptListParams: CompetitionAthleteAttemptListParams) {
+                  competitionAthleteAttemptList(
+                      competitionId: $competitionId
+                      params: $competitionAthleteAttemptListParams
+                      ) {
+                          total
+                          competitionAthleteAttempts {
+                              id
+                              index
+                              attempt
+                              discipline
+                              weight
+                              status
+                              competitionAthlete {
+                                  id
+                                  firstName
+                                  lastName
+                                  club {
+                                      id
+                                      name
+                                      __typename
+                                  }
+                                  team {
+                                      id
+                                      name
+                                      __typename
+                                  }
+                                  squatRackHeight
+                                  squatRackSetup
+                                  benchPressRackHeight
+                                  benchPressSafetyHeight
+                                  benchPressLiftIn
+                                  benchPressBlocks
+                                  squatTotal
+                                  benchPressTotaldeadliftTotal
+                                  calcTotal
+                                  competitionGroup {
+                                      id
+                                      name
+                                      __typename
+                                  }
+                                  competitionAthleteAttempts {
+                                      id
+                                      index
+                                      attempt
+                                      discipline
+                                      weightstatus
+                                      __typename
+                                  }
+                                  bodyWeightCategory {
+                                      id
+                                      name
+                                      __typename
+                                  }
+                                  ageCategory {
+                                      id
+                                      name
+                                      __typename
+                                  }
+                                      __typename
+                                  }
+                                      __typename
+                                  }
+                                      __typename
+                                  }
+                              }
+                              `,
+    variables: {
+      competitionId: competitionId,
+      competitionAthleteAttemptListParams: {
+        filter: {
+          competitionGroupId: competitionGroupId,
+          competitionStageId: competitionStageId,
+        },
+        limit: 10,
+      },
+    },
+  });
+}
 
 //Query Stages
 function queryStages(competitionId) {
@@ -336,40 +313,13 @@ function queryStages(competitionId) {
     },
   });
 }
-/* const getStages = JSON.stringify({
-  query: `
-        query ($competitionId: ID!, $params: CompetitionStageListParams) {
-            competitionStageList(competitionId: $competitionId, params: $params) {
-                total
-                competitionStages {
-                    id
-                    insert
-                    update
-                    name
-                    competitionClub {
-                        id
-                        name
-                        __typename
-                    }
-                    __typename
-                }
-                __typename
-            }
-        }
-        `,
-  variables: {
-    competitionId: '266',
-    params: {
-      limit: 25,
-      start: 0,
-    },
-  },
-}); */
 
 module.exports = {
   queryAthlets,
   queryCompetitionId,
   queryGroups,
   queryStages,
-  mutate,
+  queryActiveGroup,
+  queryNextAthlet,
+  setResult
 };

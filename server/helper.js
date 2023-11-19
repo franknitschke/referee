@@ -46,7 +46,7 @@ async function dbAll(db) {
   }
 }
 
-//db update or create doc if not exists
+//db update and assign or create doc if not exists
 async function dbUpdate(db, id, payload) {
   try {
     const data = await dbGet(db, id);
@@ -72,6 +72,20 @@ async function dbUpdate(db, id, payload) {
     console.error(error);
     return null;
   }
+}
+
+async function dbRemoveDoc(db, id) {
+  try {
+    const doc = await db.get(id)
+    return await db.remove(doc);
+    
+    
+  } catch (error) {
+    console.error(error);
+    return false
+    
+  }
+
 }
 
 //check if db has admin account => false init db
@@ -125,4 +139,5 @@ module.exports = {
   cleanObject,
   cleanSettingsBody,
   middleware,
+  dbRemoveDoc
 };

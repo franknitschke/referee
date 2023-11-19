@@ -10,6 +10,8 @@ const update = require('./routes/update');
 const vportal = require('./routes/vportal');
 const cors = require('cors');
 
+
+
 const { refValue, users } = require('./const');
 
 const { dbMemory } = require('./db/db');
@@ -19,11 +21,15 @@ const ip = require('ip');
 
 const { Server } = require('socket.io');
 
+//declare as global Var???? 
 const io = new Server(server, {
   cors: {
     origin: '*', //'http://localhost:3000',
   },
 });
+
+//console.log('IO: ', io);
+
 
 const port = process.env.PORT || 3030;
 
@@ -96,7 +102,14 @@ io.on('connection', async (socket) => {
   console.log(`Client disconnected - ID: ${socket.id} - ${new Date()}`);
 }); */
 
+
+
+
+
 server.listen(port, () => {
   console.log(`listening on: http://${ip.address()}:${port}`);
   console.log(`Node Version: ${process.version}`);
 });
+
+const socketIoObject = io;
+module.exports.ioObject = socketIoObject;

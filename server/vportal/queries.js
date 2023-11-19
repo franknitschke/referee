@@ -38,8 +38,9 @@ function setResult(competitionAthleteAttemptId, result) {
   });
 }
 
-//Get Athletes
-const queryAthlets = JSON.stringify({
+//Get Athletes competitionGroupId is array
+function queryAthlets(competitionId, competitionStageId, competitionGroupId) {
+  return JSON.stringify({
   query: `
           query competitionAthleteAttemptList($competitionId: ID!, $competitionAthleteAttemptListParams: CompetitionAthleteAttemptListParams) {
               competitionAthleteAttemptList(
@@ -111,16 +112,16 @@ const queryAthlets = JSON.stringify({
               }
               `,
   variables: {
-    competitionId: '231',
+    competitionId: competitionId,
     competitionAthleteAttemptListParams: {
       filter: {
-        competitionGroupId: ['672'],
-        competitionStageId: '227',
+        competitionGroupId: competitionGroupId,
+        competitionStageId: competitionStageId,
       },
-      limit: 1,
+      limit: 3,
     },
   },
-});
+})};
 
 //Get Groups
 function queryGroups(competitionId, competitionStageId) {
@@ -196,8 +197,9 @@ function queryActiveGroup(competitionId, competitionStageId) {
 //Get next athlets
 function queryNextAthlet(
   competitionId,
-  competitionGroupId,
-  competitionStageId
+  competitionStageId,
+  competitionGroupId
+  
 ) {
   return JSON.stringify({
     query: `
@@ -321,5 +323,6 @@ module.exports = {
   queryStages,
   queryActiveGroup,
   queryNextAthlet,
+  queryAthlets,
   setResult
 };

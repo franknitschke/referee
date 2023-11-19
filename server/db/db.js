@@ -10,6 +10,9 @@ const db = new PouchDB('./db/database');
 //clone from database above as in memory cache
 const dbMemory = new PouchDB('myDB', { adapter: 'memory' });
 
+//db for competition stuff from vportal
+//const dbCompetition = new PouchDB('competitionDB', { adapter: 'memory' });
+
 db.replicate.to(dbMemory, {
   live: true,
   retry: true,
@@ -50,5 +53,8 @@ const doc = [
 
 //Init DB if empty
 dbInit(db, doc);
+
+//init empty in memory db for competition stuff
+//dbInit(dbCompetition, []);
 
 module.exports = { db, dbMemory };

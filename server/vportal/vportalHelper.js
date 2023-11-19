@@ -1,7 +1,7 @@
-const { db, dbMemory } = require('../db/db');
-const { dbUpdate, dbGet } = require('../helper');
+const { db, dbMemory,  } = require('../db/db');
+const { dbUpdate, dbGet, dbRemoveDoc } = require('../helper');
 
-const { queryCompetitionId, queryStages } = require('./queries');
+const { queryCompetitionId, queryStages, queryActiveGroup, queryAthlets } = require('./queries');
 
 const vportalUrl = 'https://dev.vportal-online.de';
 const login = '/account/login';
@@ -45,10 +45,72 @@ async function getStages(competitionId, token) {
       method: 'POST',
     });
 
+    //console.log('Stages Query: ', req);
+
     if (req?.ok) {
       const res = await req.json();
-      //await dbUpdate(db, 'vportalToken', res?.data?.profile);
-      console.log('Stages: ', res);
+      await dbUpdate(db, 'vportalToken', res?.data);
+      await dbUpdate(db, 'vportalToken', {defaultStage: res?.data?.competitionStageList?.competitionStages[0]?.id});
+      //await dbUpdate(dbCompetition, 'stages', res?.data?.profile);
+      //console.log('Stages: ', req.text());
+      return res;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+
+}
+
+async function getActiveGroups(competitionId, competitionStageId, token) {
+  try {
+    const req = await fetch(vportalUrl + apiUrl, {
+      headers: {
+        'content-type': 'application/json',
+        'Accept-Language': 'de',
+        Authorization: `Bearer ${token}`,
+      },
+      body: queryActiveGroup(competitionId, competitionStageId),
+      method: 'POST',
+    });
+
+    //console.log('Stages Query: ', req);
+
+    if (req?.ok) {
+      const res = await req.json();
+      //await dbUpdate(dbCompetition, 'stages', res?.data?.profile);
+      //console.log('Stages: ', req.text());
+      return res;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+
+}
+
+async function getActiveAthlets(competitionId, competitionStageId, competitionGroupId, token) {
+  try {
+    const req = await fetch(vportalUrl + apiUrl, {
+      headers: {
+        'content-type': 'application/json',
+        'Accept-Language': 'de',
+        Authorization: `Bearer ${token}`,
+      },
+      body: queryAthlets(competitionId, competitionStageId, competitionGroupId),
+      method: 'POST',
+    });
+
+    //console.log('Stages Query: ', req);
+
+    if (req?.ok) {
+      const res = await req.json();
+      //await dbUpdate(dbCompetition, 'stages', res?.data?.profile);
+      //console.log('Stages: ', req.text());
       return res;
     } else {
       return null;
@@ -64,6 +126,9 @@ async function getVportalToken(body) {
   const loginCredentials = new FormData();
   loginCredentials.append('identity', body?.identity);
   loginCredentials.append('credential', body?.credential);
+
+  //remove existing token in db
+  await dbRemoveDoc(db, 'vportalToken')
 
   try {
     const loginReq = await fetch(vportalUrl + login, {
@@ -100,5 +165,7 @@ async function getVportalToken(body) {
 module.exports = {
   getVportalToken,
   getEventId,
-  getStages
+  getStages,
+  getActiveGroups,
+  getActiveAthlets
 };

@@ -53,7 +53,7 @@ function App() {
     socket.on('ip', getIp);
     socket.on('rating', getRating);
     socket.on('settings', getSettings);
-    socket.on('competitionData', getCompetitionData);
+    socket.on('intervall', getCompetitionData);
 
     return () => {
       socket.off('connect', onConnect);
@@ -61,7 +61,7 @@ function App() {
       socket.off('ip', getIp);
       socket.off('rating', getRating);
       socket.off('settings', getSettings);
-      socket.off('competitionData', getCompetitionData);
+      socket.on('intervall', getCompetitionData);
     };
   }, []);
 
@@ -69,7 +69,7 @@ function App() {
     <div className='min-h-screen bg-gray-200'>
       <Navbar location={location} settings={settings} />
       <Routes>
-        <Route path='/' element={<Home ip={ip} isConnected={isConnected} />} />
+        <Route path='/' element={<Home ip={ip} isConnected={isConnected} compData={competitionData} />} />
         <Route
           path='/display'
           element={

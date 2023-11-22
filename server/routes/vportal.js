@@ -13,7 +13,7 @@ const {
 } = require('../vportal/vportalHelper');
 
 //run intervall fetch
-//getCompetitionData();
+getCompetitionData();
 
 //protect routes
 //router.use(middleware);
@@ -34,11 +34,11 @@ router.get('/', async (req, res) => {
 router.post('/settings', async (req, res) => {
   const body = req.body;
 
-  //set sendRating to false if !shouldFetchData to send no rating if there is no fetching
-  if (!shouldFetchData) body.sendRating = false;
+  //set sendRating to false if !getVportalData to send no rating if there is no fetching
+  if (!body?.getVportalData) body.sendRating = false;
 
-  //activate intrvall fetch if shouldFetchData
-  if (shouldFetchData) getCompetitionData();
+  //activate intervall fetch if getVportalData
+  if (body?.getVportalData) getCompetitionData();
 
   const settings = await dbUpdate(db, 'settings', body);
 

@@ -105,7 +105,7 @@ async function getActiveAthlets(competitionId, competitionStageId, competitionGr
       method: 'POST',
     });
 
-    //console.log('Stages Query: ', req);
+    //console.log('Groups: ', competitionGroupId);
 
     if (req?.ok) {
       const res = await req.json();

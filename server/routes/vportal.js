@@ -10,10 +10,14 @@ const {
   getVportalToken,
   getEventId,
   getStages,
+  checkTokenExp
 } = require('../vportal/vportalHelper');
 
 //run intervall fetch
 getCompetitionData();
+
+//check if vportalToken is expired
+checkTokenExp();
 
 //protect routes
 //router.use(middleware);
@@ -24,11 +28,8 @@ router.use((req, res, next) => {
 });
 
 router.get('/', async (req, res) => {
-  //socket();
-  socket.ioObject.sockets.emit('intervall', 'how are you');
-  //console.log('IO: ', test.io);
-  //io.socket.emit('test', {test: 'test'})
-  res.status(200).send('hallo welt');
+  
+  res.status(200).send(await checkTokenExp());
 });
 
 router.post('/settings', async (req, res) => {

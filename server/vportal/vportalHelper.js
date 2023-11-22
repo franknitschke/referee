@@ -1,5 +1,6 @@
 const { db, dbMemory,  } = require('../db/db');
 const { dbUpdate, dbGet, dbRemoveDoc } = require('../helper');
+const jwt = require('jsonwebtoken');
 
 const { queryCompetitionId, queryStages, queryActiveGroup, queryAthlets } = require('./queries');
 
@@ -162,10 +163,25 @@ async function getVportalToken(body) {
   }
 }
 
+//Delete Token from db if competition is over
+async function checkTokenExp() {
+  const vportalToken = await dbGet(db, 'vportalToken');
+
+  if(vportalToken?.access_token) {
+    const time = new Date(jwt.decode(vportalToken?.access_token)?.exp * 1000)
+    const isExpired = new Date() >= time;
+    if(isExpired) return await dbRemoveDoc(db, 'vportalToken');
+    return isExpired;
+  }else {
+    return null;
+  }
+}
+
 module.exports = {
   getVportalToken,
   getEventId,
   getStages,
   getActiveGroups,
-  getActiveAthlets
+  getActiveAthlets, 
+  checkTokenExp
 };

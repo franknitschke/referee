@@ -4,8 +4,8 @@ const getCompetitionData = require('../vportal/getCompetitionData');
 
 const socket = require('../app'); //import object
 
-const { middleware, dbUpdate } = require('../helper');
-const { db } = require('../db/db');
+const { middleware, dbUpdate, dbGet } = require('../helper');
+const { db, dbMemory } = require('../db/db');
 const {
   getVportalToken,
   getEventId,
@@ -43,6 +43,32 @@ router.post('/settings', async (req, res) => {
   const settings = await dbUpdate(db, 'settings', body);
 
   res.status(200).send(settings);
+});
+
+//set stage
+router.post('/stage', async (req, res) => {
+  const { defaultStage } = req.body;
+
+  const stage = await dbUpdate(db, 'vportalToken', {
+    defaultStage: `${defaultStage}`,
+  });
+
+  res.status(200).send(stage);
+});
+
+//get stages
+router.get('/stage', async (req, res) => {
+  const vportalToken = await dbGet(dbMemory, 'vportalToken');
+
+  const stages = await getStages(
+    vportalToken?.competition?.id,
+    vportalToken?.access_token
+  );
+  if (stages) {
+    res.status(200).send(stages);
+  } else {
+    res.status(500).send({ msg: 'Es ist ein Fehler aufgetreten!' });
+  }
 });
 
 router.post('/login', async (req, res) => {

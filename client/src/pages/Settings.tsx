@@ -5,6 +5,7 @@ import Loading from '../components/Loading';
 import SettingsTokenCard from '../components/SettingsTokenCard';
 import SettingsAdminCard from '../components/SettingsAdminCard';
 import SettingsUpdateCard from '../components/SettingsUpdateCard';
+import SettingsOptions from '../components/SettingsOptions';
 
 type Props = {
   ip: string | null;
@@ -63,7 +64,6 @@ function Settings({ ip, settings }: Props) {
         }`,
       }),
     });
-    console.log('Läuft');
   }
 
   return (
@@ -86,7 +86,8 @@ function Settings({ ip, settings }: Props) {
               />
             </div>
           ))}
-          <div className='col-span-3 bg-white rounded-lg p-8'>
+          <SettingsOptions settings={settings} handleChange={handleChange} />
+          {/* <div className='col-span-3 bg-white rounded-lg p-8'>
             <div className='text-xl font-medium text-center py-2'>Settings</div>
             <div className='grid grid-cols-6 gap-12'>
               <div className='col-span-6 lg:col-span-2'>
@@ -144,7 +145,7 @@ function Settings({ ip, settings }: Props) {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
             <SettingsAdminCard accessToken={accessToken} />

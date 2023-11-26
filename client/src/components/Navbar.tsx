@@ -21,7 +21,7 @@ function Navbar({ location, settings }: NavbarProps) {
         (location?.pathname === '/ref' && !settings?.refMenu)
           ? 'hidden'
           : ''
-      } navbar bg-base-100`}
+      } navbar bg-base-100 z-50`}
     >
       <div className='navbar-start'>
         <div className='dropdown'>
@@ -43,7 +43,7 @@ function Navbar({ location, settings }: NavbarProps) {
           </label>
           <ul
             tabIndex={0}
-            className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52'
+            className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-50'
           >
             <li>
               <Link to={'/'}>Home</Link>

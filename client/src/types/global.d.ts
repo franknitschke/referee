@@ -33,6 +33,9 @@ declare global {
     refMenu: boolean;
     autoReset: boolean;
     autoResetTimer: number;
+    hideCountdown: boolean;
+    getVportalData: boolean;
+    sendRating: boolean;
   } | null;
 
   type RefObject = {

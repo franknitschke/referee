@@ -18,6 +18,7 @@ function Navbar({ location, settings }: NavbarProps) {
     <div
       className={`${
         location?.pathname === '/display' ||
+        location?.pathname === '/countdown' ||
         (location?.pathname === '/ref' && !settings?.refMenu)
           ? 'hidden'
           : ''
@@ -51,6 +52,10 @@ function Navbar({ location, settings }: NavbarProps) {
 
             <li>
               <Link to={'/display'}>Display</Link>
+            </li>
+
+            <li>
+              <Link to={'/countdown'}>Countdown</Link>
             </li>
 
             <li>

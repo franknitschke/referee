@@ -5,6 +5,7 @@ import { socket } from './socket';
 
 import Home from './pages/Home';
 import Display from './pages/Display';
+import Countdown from './pages/Countdown';
 import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import Ref from './pages/Ref';
@@ -73,7 +74,13 @@ function App() {
         <Route
           path='/display'
           element={
-            <Display isConnected={isConnected} rating={rating} ip={ip} />
+            <Display isConnected={isConnected} rating={rating} ip={ip} settings={settings} />
+          }
+        />
+        <Route
+          path='/countdown'
+          element={
+            <Countdown isConnected={isConnected} rating={rating} />
           }
         />
         <Route

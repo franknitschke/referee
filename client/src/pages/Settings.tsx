@@ -7,6 +7,7 @@ import SettingsAdminCard from '../components/SettingsAdminCard';
 import SettingsUpdateCard from '../components/SettingsUpdateCard';
 import SettingsOptions from '../components/SettingsOptions';
 
+
 type Props = {
   ip: string | null;
   settings: SettingsObject;
@@ -87,6 +88,7 @@ function Settings({ ip, settings }: Props) {
             </div>
           ))}
           <SettingsOptions settings={settings} handleChange={handleChange} />
+         
           {/* <div className='col-span-3 bg-white rounded-lg p-8'>
             <div className='text-xl font-medium text-center py-2'>Settings</div>
             <div className='grid grid-cols-6 gap-12'>

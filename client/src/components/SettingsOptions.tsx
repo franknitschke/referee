@@ -1,5 +1,3 @@
-import React from 'react'
-
 type Props = {
     settings: SettingsObject;
     handleChange: (e: any) => void
@@ -62,6 +60,48 @@ function SettingsOptions({settings, handleChange}: Props) {
                 </div>
                 <div className='text-center text-xs'>
                   Auto Reset in Sekunden
+                </div>
+              </div>
+              <div className='col-span-6 lg:col-span-2'>
+                <div className='form-control w-52'>
+                  <label className='cursor-pointer label'>
+                    <span className='label-text'>Timer ausblenden</span>
+                    <input
+                      type='checkbox'
+                      name={'hideCountdown'}
+                      className='toggle toggle-accent'
+                      checked={settings?.hideCountdown}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </div>
+              </div>
+              <div className='col-span-6 lg:col-span-2'>
+                <div className='form-control w-52'>
+                  <label className='cursor-pointer label'>
+                    <span className='label-text'>VPortal Daten abrufen</span>
+                    <input
+                      type='checkbox'
+                      name={'getVportalData'}
+                      className='toggle toggle-accent'
+                      checked={settings?.getVportalData}
+                      onChange={handleChange}//Wertung abrufen api Request
+                    />
+                  </label>
+                </div>
+              </div>
+              <div className='col-span-6 lg:col-span-2'>
+                <div className='form-control w-52'>
+                  <label className='cursor-pointer label'>
+                    <span className='label-text'>Wertung senden</span>
+                    <input
+                      type='checkbox'
+                      name={'sendRating'}
+                      className='toggle toggle-accent'
+                      checked={settings?.sendRating}
+                      onChange={handleChange}// ohne api call wird immer vor dem senden gecheckt
+                    />
+                  </label>
                 </div>
               </div>
             </div>

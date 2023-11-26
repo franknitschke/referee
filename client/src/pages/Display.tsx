@@ -6,12 +6,19 @@ import Light from '../components/Light';
 
 import { showRating, checkRatingSubmit } from '../helper/helper';
 
-function Display({ isConnected, rating, ip } : PropTypes) {
+type Props = {
+  ip: null | string;
+  isConnected: boolean;
+  rating: RatingObject;
+  settings: SettingsObject;
+}
+
+function Display({ isConnected, rating, ip, settings } : Props) {
   return (
     <div className='h-screen w-full bg-black text-red-600 text-8xl font-semibold justify-center grid grid-cols-3 gap-2 items-center px-4 cursor-none'>
-      <div className='col-span-3 m-auto'>
+      {!settings?.hideCountdown && <div className='col-span-3 m-auto'>
         <Timer time={rating?.timer} />
-      </div>
+      </div>}
 
       <div className='col-span-1 z-10'>
         <Light

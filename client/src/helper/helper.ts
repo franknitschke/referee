@@ -30,6 +30,7 @@ export function showRating(rating: RatingObject, position: RatingKeys) {
 export function handelSubmit(e: any): object {
   e.preventDefault();
   const formData = new FormData(e.currentTarget);
+  console.log(formData);
   const body: Record<string, any> = {};
   for (let [key, value] of formData.entries()) {
     body[key] = value;

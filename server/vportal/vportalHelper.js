@@ -34,7 +34,8 @@ async function getEventId(token) {
   }
 }
 
-async function getStages(competitionId, token) {
+//get all stages from login and set first stage as default
+async function setStageLogin(competitionId, token) {
   try {
     const req = await fetch(vportalUrl + apiUrl, {
       headers: {
@@ -54,6 +55,32 @@ async function getStages(competitionId, token) {
       await dbUpdate(db, 'vportalToken', {defaultStage: res?.data?.competitionStageList?.competitionStages[0]?.id});
       //await dbUpdate(dbCompetition, 'stages', res?.data?.profile);
       //console.log('Stages: ', req.text());
+      return res;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+
+}
+
+//fetch stages for changing stages
+async function getStages(competitionId, token) {
+  try {
+    const req = await fetch(vportalUrl + apiUrl, {
+      headers: {
+        'content-type': 'application/json',
+        'Accept-Language': 'de',
+        Authorization: `Bearer ${token}`,
+      },
+      body: queryStages(competitionId),
+      method: 'POST',
+    });
+
+    if (req?.ok) {
+      const res = await req.json();
       return res;
     } else {
       return null;
@@ -183,5 +210,6 @@ module.exports = {
   getStages,
   getActiveGroups,
   getActiveAthlets, 
-  checkTokenExp
+  checkTokenExp,
+  setStageLogin
 };

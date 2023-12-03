@@ -10,6 +10,7 @@ const {
   getVportalToken,
   getEventId,
   getStages,
+  setStageLogin,
   checkTokenExp
 } = require('../vportal/vportalHelper');
 
@@ -27,9 +28,16 @@ router.use((req, res, next) => {
   next();
 });
 
+//get VPortal Data for settings Card
 router.get('/', async (req, res) => {
-  
-  res.status(200).send(await checkTokenExp());
+  //res.status(200).send({msg: 'OK'});
+  const isExpired = await checkTokenExp();
+  const vportalToken = await dbGet(dbMemory, 'vportalToken');
+  if(!isExpired && vportalToken) {
+    return res.status(200).send(vportalToken);
+  }else {
+    return res.status(204).send({msg: 'Keine Daten vorhanden!'});
+  }
 });
 
 router.post('/settings', async (req, res) => {
@@ -49,10 +57,13 @@ router.post('/settings', async (req, res) => {
 //set stage
 router.post('/stage', async (req, res) => {
   const { defaultStage } = req.body;
+  console.log('Stage: ', defaultStage);
 
   const stage = await dbUpdate(db, 'vportalToken', {
     defaultStage: `${defaultStage}`,
   });
+
+  console.log('DB: ', stage);
 
   res.status(200).send(stage);
 });
@@ -77,7 +88,7 @@ router.post('/login', async (req, res) => {
 
   const token = await getVportalToken(body);
   const eventId = await getEventId(token?.access_token);
-  const stages = await getStages(
+  const stages = await setStageLogin(
     eventId?.data?.profile?.competition?.id,
     token?.access_token
   );

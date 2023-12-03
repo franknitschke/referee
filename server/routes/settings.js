@@ -12,6 +12,8 @@ const {
   middleware,
 } = require('../helper');
 
+const getCompetitionData = require('../vportal/getCompetitionData');
+
 //protect routes
 router.use(middleware);
 
@@ -27,6 +29,12 @@ router.get('/', async (req, res) => {
 // change settings
 router.post('/', async (req, res) => {
   const body = req.body;
+
+  //set sendRating to false if !getVportalData to send no rating if there is no fetching
+  if (!body?.getVportalData) body.sendRating = false;
+
+  //activate intervall fetch if getVportalData
+  if (body?.getVportalData) getCompetitionData();
   
   cleanSettingsBody(body);
   const updatedDoc = await dbUpdate(db, 'settings', body);

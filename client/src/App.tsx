@@ -6,17 +6,28 @@ import { socket } from './socket';
 import Home from './pages/Home';
 import Display from './pages/Display';
 import Countdown from './pages/Countdown';
+import Attempt from './pages/Attempt';
 import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import Ref from './pages/Ref';
 import Login from './pages/Login';
+
+type CompData = {
+  weight: string;
+  discipline: string;
+  attempt: string;
+  competitionAthlete: {
+    firstName: string;
+    lastName: string;
+  };
+};
 
 function App() {
   const [isConnected, setIsConnected] = useState<boolean>(socket.connected);
   const [ip, setIp] = useState<string | null>(null);
   const [rating, setRating] = useState<RatingObject>(null);
   const [settings, setSettings] = useState<SettingsObject>(null);
-  const [competitionData, setCompetitionData] = useState<object | null>(null);
+  const [competitionData, setCompetitionData] = useState<CompData[]>([]);
 
   const location = useLocation();
 
@@ -45,7 +56,7 @@ function App() {
       setSettings(value);
     }
 
-    function getCompetitionData(value: object): void {
+    function getCompetitionData(value: CompData[]): void {
       setCompetitionData(value);
     }
 
@@ -70,17 +81,41 @@ function App() {
     <div className='min-h-screen bg-gray-200'>
       <Navbar location={location} settings={settings} />
       <Routes>
-        <Route path='/' element={<Home ip={ip} isConnected={isConnected} compData={competitionData} />} />
+        <Route
+          path='/'
+          element={
+            <Home
+              ip={ip}
+              isConnected={isConnected}
+              compData={competitionData}
+            />
+          }
+        />
         <Route
           path='/display'
           element={
-            <Display isConnected={isConnected} rating={rating} ip={ip} settings={settings} />
+            <Display
+              isConnected={isConnected}
+              rating={rating}
+              ip={ip}
+              settings={settings}
+              competitionData={competitionData}
+            />
           }
         />
         <Route
           path='/countdown'
+          element={<Countdown isConnected={isConnected} rating={rating} />}
+        />
+        <Route
+          path='/versuch'
           element={
-            <Countdown isConnected={isConnected} rating={rating} />
+            <Attempt
+              isConnected={isConnected}
+              rating={rating}
+              ip={ip}
+              settings={settings}
+            />
           }
         />
         <Route

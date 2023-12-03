@@ -9,7 +9,7 @@ type Props = {
 function Countdown({ isConnected, rating }: Props) {
   return (
     <div
-      className='h-screen w-full bg-black text-red-600 font-semibold justify-center flex items-center px-4'
+      className='h-screen w-full bg-black text-red-600 font-semibold justify-center flex items-center px-4 cursor-none'
       style={{ fontSize: '31vw' }}
     >
       <div className='m-auto'>

@@ -63,6 +63,7 @@ async function getCompetitionData() {
         'intervall',
         athlets?.data?.competitionAthleteAttemptList?.competitionAthleteAttempts
       );
+      console.log('Athleten: ', athlets);
       console.log('N: ', n);
       n >= 4 && clearInterval(competitionData.get('intervall'));
       competitionData.set('fetchIsRunning', false);

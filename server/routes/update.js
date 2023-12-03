@@ -6,6 +6,12 @@ const { exec } = require('node:child_process');
 
 const { middleware } = require('../helper');
 
+const {isDocker} = require('../helper');
+const {db} = require('../db/db');
+
+//check if running in Docker
+isDocker(db);
+
 //protect routes
 router.use(middleware);
 
@@ -13,6 +19,8 @@ router.use((req, res, next) => {
   res.append('content-type', 'application/json');
   next();
 });
+
+console.log('isDocker: ', process.env?.DOCKER_RUNNING)
 
 const options = {
   baseDir: process.cwd(),

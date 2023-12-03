@@ -11,3 +11,5 @@ services:
     volumes:
       - .:/home/app
       - /home/app/server/node_modules
+    environment:
+      DOCKER_RUNNING: true

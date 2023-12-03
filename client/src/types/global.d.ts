@@ -36,6 +36,7 @@ declare global {
     hideCountdown: boolean;
     getVportalData: boolean;
     sendRating: boolean;
+    isDocker: boolean;
   } | null;
 
   type RefObject = {

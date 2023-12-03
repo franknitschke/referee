@@ -87,6 +87,7 @@ function SettingsAdminCard({ accessToken }: Props) {
                 id={`password`}
                 name='password'
                 type={hide ? 'password' : 'text'}
+                placeholder='******'
                 className=' input input-bordered w-full max-w-xs'
               />
             </div>

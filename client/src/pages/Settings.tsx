@@ -97,9 +97,9 @@ function Settings({ ip, settings }: Props) {
           <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
             <SettingsVPortalCard accessToken={accessToken} />
           </div>
-          <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
+          {settings?.isDocker ?? <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
             <SettingsUpdateCard accessToken={accessToken} />
-          </div>
+          </div>}
         </div>
       )}
     </div>

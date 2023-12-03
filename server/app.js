@@ -28,7 +28,7 @@ const io = new Server(server, {
   },
 });
 
-//console.log('IO: ', io);
+//console.log('ENV: ', process.env?.DOCKER_RUNNING);
 
 
 const port = process.env.PORT || 3030;

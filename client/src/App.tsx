@@ -19,7 +19,18 @@ type CompData = {
   competitionAthlete: {
     firstName: string;
     lastName: string;
+    team: string;
+    bodyWeightCategory: {
+      name: string;
+    }
+    club: {
+      name: string;
+    }
+    ageCategory: {
+      name: string;
+    }
   };
+  
 };
 
 function App() {
@@ -115,6 +126,7 @@ function App() {
               rating={rating}
               ip={ip}
               settings={settings}
+              competitionData={competitionData}
             />
           }
         />

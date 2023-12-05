@@ -1,3 +1,5 @@
+import { translateDiscipline } from '../helper/helper';
+
 type Props = {
   competitionData: {
     weight: string;
@@ -21,9 +23,7 @@ function Attempt({ competitionData }: Props) {
           )}. ${competitionData[0]?.competitionAthlete?.lastName?.toUpperCase()}`}</div>
           <div className='col-span-1'>{`${
             competitionData[0]?.attempt
-          }. ${competitionData[0]?.discipline
-            ?.slice(0, 2)
-            .toUpperCase()}`}</div>
+          }. ${translateDiscipline(competitionData[0]?.discipline)}`}</div>
           <div className='col-span-1'>{`${competitionData[0]?.weight} KG`}</div>
         </div>
       ) : (

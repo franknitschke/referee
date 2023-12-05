@@ -61,3 +61,17 @@ export async function getData(
     return null;
   }
 }
+
+export function translateDiscipline(discipline: string):string {
+  switch (discipline) {
+    case 'squat':
+      return 'KB'
+    case 'benchPress':
+      return 'BP'
+    case 'deadlift':
+      return 'KH'
+    default:
+      return ''
+
+}
+}

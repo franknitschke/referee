@@ -96,6 +96,7 @@ function SettingsVPortalCard({ accessToken }: Props) {
             msg={
               'Bitte nutzen Sie die Zugangsdaten eines temporären Wettkampf-Accounts. Nicht ihr reguläres Vereinsportal Konto!'
             }
+            alert='alert-warning'
           />
           <div className={`grid grid-cols-2 gap-1`}>
             <div className='form-control w-full max-w-xs col-span-2'>

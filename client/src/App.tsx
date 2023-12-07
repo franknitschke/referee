@@ -122,10 +122,7 @@ function App() {
           path='/versuch'
           element={
             <Attempt
-              isConnected={isConnected}
               rating={rating}
-              ip={ip}
-              settings={settings}
               competitionData={competitionData}
             />
           }
@@ -134,12 +131,12 @@ function App() {
           path='/settings'
           element={<Settings ip={ip} settings={settings} />}
         />
-        <Route
+        {/* <Route
           path='/dashboard'
           element={
             <Dashboard ip={ip} isConnected={isConnected} rating={rating} />
           }
-        />
+        /> */}
         <Route
           path='/ref'
           element={<Ref rating={rating} isConnected={isConnected} />}

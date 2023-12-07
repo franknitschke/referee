@@ -67,9 +67,9 @@ function Navbar({ location, settings }: NavbarProps) {
               <Link to={'/settings'}>Settings</Link>
             </li>
 
-            <li>
+            {/* <li>
               <Link to={'/dashboard'}>Dashboard</Link>
-            </li>
+            </li> */}
 
             <li>
               <Link to={'/ref'}>Wertung</Link>

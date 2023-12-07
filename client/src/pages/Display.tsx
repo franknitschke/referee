@@ -67,8 +67,8 @@ function Display({
         />
       </div>
 
-      {!isConnected && (
-        <div className='col-span-3 absolute bottom-8 left-2'>
+      {isConnected && (
+        <div className='col-span-3 absolute bottom-8 left-2 w-full px-2 text-5xl text-white'>
           <Alert />
         </div>
       )}

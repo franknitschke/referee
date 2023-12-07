@@ -17,7 +17,7 @@ function Home({ ip, isConnected, compData }: propTypes) {
             <span className='text-red-600'>Nicht Verbunden</span>
           )}
         </div>
-        <div className='text-base'>{JSON.stringify(compData)}</div>
+        {/* <div className='text-base'>{JSON.stringify(compData)}</div> */}
       </div>
     </div>
   );

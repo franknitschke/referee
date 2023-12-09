@@ -5,11 +5,13 @@ const socket = require('../app'); //import object
 
 const competitionData = new Map();
 
+const fetchInterval = +process.env?.FETCH_INTERVAL || 2000;
+
 async function getCompetitionData() {
   //check if there is allready a setIntervall running to prevent multiple intervall functions
   if (competitionData.get('intervall')) return;
 
-  let n = 0;
+  /* let n = 0; */
 
   const fetchIntervall = setInterval(async () => {
     const { getVportalData } = await dbGet(dbMemory, 'settings');
@@ -18,11 +20,9 @@ async function getCompetitionData() {
     if (!getVportalData) {
       clearInterval(competitionData.get('intervall'));
       competitionData.delete('intervall');
-      //console.log('Intervall Object after clear: ',competitionData.get('intervall'))
       return;
     }
 
-    //console.log('getVportalData: ', getVportalData);
     const vportalAuth = await dbGet(dbMemory, 'vportalToken');
     const token = vportalAuth?.access_token;
     const competitionId = vportalAuth?.competition?.id;
@@ -57,20 +57,20 @@ async function getCompetitionData() {
         )
       );
 
-      n++;
+      /* n++; */
 
       socket.ioObject.sockets.emit(
         'intervall',
         athlets?.data?.competitionAthleteAttemptList?.competitionAthleteAttempts
       );
-      console.log('Athleten: ', athlets);
+      /* console.log('Athleten: ', athlets);
       console.log('N: ', n);
-      n >= 4 && clearInterval(competitionData.get('intervall'));
+      n >= 4 && clearInterval(competitionData.get('intervall')); */
       competitionData.set('fetchIsRunning', false);
       console.timeEnd('Timer 1');
       return athlets;
     }
-  }, 10000);
+  }, fetchInterval);
   competitionData.set('intervall', fetchIntervall);
 }
 

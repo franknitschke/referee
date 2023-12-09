@@ -10,11 +10,10 @@ const update = require('./routes/update');
 const vportal = require('./routes/vportal');
 const cors = require('cors');
 
-
-
 const { refValue, users } = require('./const');
 
 const { dbMemory } = require('./db/db');
+const { competitionData } = require('./vportal/getCompetitionData');
 const { dbGet, cleanObject } = require('./helper');
 
 const ip = require('ip');
@@ -23,7 +22,6 @@ const hostIp = process.env.HOST_IP || ip.address();
 
 const { Server } = require('socket.io');
 
-//declare as global Var???? 
 const io = new Server(server, {
   cors: {
     origin: '*', //'http://localhost:3000',
@@ -72,6 +70,9 @@ io.on('connection', async (socket) => {
   const settings = await dbGet(dbMemory, 'settings');
   socket.emit('settings', settings);
 
+  //send competition data
+  socket.emit('intervall', competitionData.get('athletes'));
+
   socket.on('users', (data) => {
     users.set(socket.id, data);
     const usersOnline = Array.from(users.values());
@@ -88,7 +89,6 @@ io.on('connection', async (socket) => {
     console.log(`😪 Disconnect: ${socket.id}`, reason);
   });
 });
-
 
 server.listen(port, () => {
   console.log(`listening on: http://${hostIp}:${port}`);

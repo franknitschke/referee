@@ -14,3 +14,5 @@ services:
     environment:
       DOCKER_RUNNING: true
       HOST_IP: 
+      SECRET: xyz
+      FETCH_INTERVAL: 10000

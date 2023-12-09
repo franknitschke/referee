@@ -98,6 +98,6 @@ const refValue = new DefaultRefValue();
 const users = new Map();
 
 //jwt secret
-const jwtSecret = uuidv4();
+const jwtSecret = process.env?.SECRET || uuidv4();
 
 module.exports = { refValue, users, jwtSecret };

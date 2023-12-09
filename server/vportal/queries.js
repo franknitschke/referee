@@ -124,7 +124,7 @@ function queryAthlets(competitionId, competitionStageId, competitionGroupId) {
 })};
 
 //Get Groups
-function queryGroups(competitionId, competitionStageId) {
+/* function queryGroups(competitionId, competitionStageId) {
   return JSON.stringify({
     query: `
                 query competitionGroupList($competitionId: ID!, $competitionGroupListParams: CompetitionGroupListParams) {
@@ -157,7 +157,7 @@ function queryGroups(competitionId, competitionStageId) {
       },
     },
   });
-}
+} */
 
 //Get active Groups !!!!!!!
 function queryActiveGroup(competitionId, competitionStageId) {
@@ -195,7 +195,7 @@ function queryActiveGroup(competitionId, competitionStageId) {
 }
 
 //Get next athlets
-function queryNextAthlet(
+/* function queryNextAthlet(
   competitionId,
   competitionStageId,
   competitionGroupId
@@ -281,7 +281,7 @@ function queryNextAthlet(
       },
     },
   });
-}
+} */
 
 //Query Stages
 function queryStages(competitionId) {
@@ -309,7 +309,7 @@ function queryStages(competitionId) {
     variables: {
       competitionId: competitionId,
       params: {
-        limit: 25,
+        limit: 30,
         start: 0,
       },
     },
@@ -319,10 +319,10 @@ function queryStages(competitionId) {
 module.exports = {
   queryAthlets,
   queryCompetitionId,
-  queryGroups,
+  //queryGroups,
   queryStages,
   queryActiveGroup,
-  queryNextAthlet,
+  //queryNextAthlet,
   queryAthlets,
   setResult
 };

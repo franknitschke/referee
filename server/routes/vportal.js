@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { getCompetitionData } = require('../vportal/getCompetitionData');
-
-const socket = require('../app'); //import object
-
 const { middleware, dbUpdate, dbGet } = require('../helper');
 const { db, dbMemory } = require('../db/db');
 const {
@@ -21,7 +18,7 @@ getCompetitionData();
 checkTokenExp();
 
 //protect routes
-//router.use(middleware);
+router.use(middleware);
 
 router.use((req, res, next) => {
   res.append('content-type', 'application/json');
@@ -30,7 +27,6 @@ router.use((req, res, next) => {
 
 //get VPortal Data for settings Card
 router.get('/', async (req, res) => {
-  //res.status(200).send({msg: 'OK'});
   const isExpired = await checkTokenExp();
   const vportalToken = await dbGet(dbMemory, 'vportalToken');
   if (!isExpired && vportalToken) {
@@ -57,7 +53,6 @@ router.post('/settings', async (req, res) => {
 //set stage
 router.post('/stage', async (req, res) => {
   const { defaultStage } = req.body;
-  console.log('Stage: ', defaultStage);
 
   const stage = await dbUpdate(db, 'vportalToken', {
     defaultStage: `${defaultStage}`,

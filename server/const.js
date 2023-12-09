@@ -83,6 +83,13 @@ class DefaultRefValue {
   get lock() {
     return this.main.submit && this.left.submit && this.right.submit;
   }
+  get ratingValid() {
+    if(this.main.valid && this.left.valid && this.right.valid) {
+      return 'valid'
+    }else {
+      return 'invalid'
+    }
+  }
 }
 
 const refValue = new DefaultRefValue();

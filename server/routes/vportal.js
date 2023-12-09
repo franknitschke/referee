@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const getCompetitionData = require('../vportal/getCompetitionData');
+const { getCompetitionData } = require('../vportal/getCompetitionData');
 
 const socket = require('../app'); //import object
 
@@ -11,7 +11,7 @@ const {
   getEventId,
   getStages,
   setStageLogin,
-  checkTokenExp
+  checkTokenExp,
 } = require('../vportal/vportalHelper');
 
 //run intervall fetch
@@ -33,10 +33,10 @@ router.get('/', async (req, res) => {
   //res.status(200).send({msg: 'OK'});
   const isExpired = await checkTokenExp();
   const vportalToken = await dbGet(dbMemory, 'vportalToken');
-  if(!isExpired && vportalToken) {
+  if (!isExpired && vportalToken) {
     return res.status(200).send(vportalToken);
-  }else {
-    return res.status(204).send({msg: 'Keine Daten vorhanden!'});
+  } else {
+    return res.status(204).send({ msg: 'Keine Daten vorhanden!' });
   }
 });
 

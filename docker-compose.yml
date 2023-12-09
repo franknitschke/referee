@@ -13,3 +13,4 @@ services:
       - /home/app/server/node_modules
     environment:
       DOCKER_RUNNING: true
+      HOST_IP: 

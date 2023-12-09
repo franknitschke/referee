@@ -74,4 +74,4 @@ async function getCompetitionData() {
   competitionData.set('intervall', fetchIntervall);
 }
 
-module.exports = getCompetitionData;
+module.exports = { getCompetitionData, competitionData };

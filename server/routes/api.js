@@ -4,6 +4,8 @@ const { refValue } = require('../const');
 
 const { dbMemory } = require('../db/db');
 const { dbFind, dbGet, dbAll, cleanObject } = require('../helper');
+const {sendRating} = require('../vportal/vportalHelper');
+const { competitionData } = require('../vportal/getCompetitionData');
 
 //referee submit
 router.get('/ref', async (req, res) => {
@@ -36,6 +38,11 @@ router.get('/ref', async (req, res) => {
   }
 
   res.io.emit('rating', cleanObject(refValue));
+  //send rating to vportal
+  if(refValue.lock) {
+    sendRating(competitionData, refValue.ratingValid)
+
+  }
   if (settings?.autoReset && refValue.lock) {
     refValue.resetTimerRef = setTimeout(() => {
       console.log('Timeout läuft');

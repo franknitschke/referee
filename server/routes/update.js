@@ -20,7 +20,7 @@ router.use((req, res, next) => {
   next();
 });
 
-console.log('isDocker: ', process.env?.DOCKER_RUNNING)
+//console.log('isDocker: ', process.env?.DOCKER_RUNNING)
 
 const options = {
   baseDir: process.cwd(),

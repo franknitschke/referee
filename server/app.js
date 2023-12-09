@@ -19,6 +19,8 @@ const { dbGet, cleanObject } = require('./helper');
 
 const ip = require('ip');
 
+const hostIp = process.env.HOST_IP || ip.address();
+
 const { Server } = require('socket.io');
 
 //declare as global Var???? 
@@ -27,9 +29,6 @@ const io = new Server(server, {
     origin: '*', //'http://localhost:3000',
   },
 });
-
-//console.log('ENV: ', process.env?.DOCKER_RUNNING);
-
 
 const port = process.env.PORT || 3030;
 
@@ -61,7 +60,7 @@ io.on('connection', async (socket) => {
   console.log(`🍻 a user connected ID: ${socket.id} - ${new Date()}`);
 
   //send host ip to clients
-  socket.emit('ip', `http://${ip.address()}:${port}`);
+  socket.emit('ip', `http://${hostIp}:${port}`);
 
   //send rating to connecting clients
   socket.emit('rating', cleanObject(refValue));
@@ -80,13 +79,6 @@ io.on('connection', async (socket) => {
     io.emit('getUsers', usersOnline);
   });
 
-  //FABIO
-  socket.on('competition', (data) => {
-    console.log('Competition: ', data);
-
-    io.emit('competitionData', data);
-  });
-
   socket.on('disconnect', (reason) => {
     users.delete(socket.id);
 
@@ -97,17 +89,9 @@ io.on('connection', async (socket) => {
   });
 });
 
-/* io.on('disconnect', (socket) => {
-  users.delete(socket.id);
-  console.log(`Client disconnected - ID: ${socket.id} - ${new Date()}`);
-}); */
-
-
-
-
 
 server.listen(port, () => {
-  console.log(`listening on: http://${ip.address()}:${port}`);
+  console.log(`listening on: http://${hostIp}:${port}`);
   console.log(`Node Version: ${process.version}`);
 });
 

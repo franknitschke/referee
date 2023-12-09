@@ -2,7 +2,7 @@ const { db, dbMemory,  } = require('../db/db');
 const { dbUpdate, dbGet, dbRemoveDoc } = require('../helper');
 const jwt = require('jsonwebtoken');
 
-const { queryCompetitionId, queryStages, queryActiveGroup, queryAthlets } = require('./queries');
+const { queryCompetitionId, queryStages, queryActiveGroup, queryAthlets, setResult } = require('./queries');
 
 const vportalUrl = 'https://dev.vportal-online.de';
 const login = '/account/login';
@@ -53,8 +53,7 @@ async function setStageLogin(competitionId, token) {
       const res = await req.json();
       await dbUpdate(db, 'vportalToken', res?.data);
       await dbUpdate(db, 'vportalToken', {defaultStage: res?.data?.competitionStageList?.competitionStages[0]?.id});
-      //await dbUpdate(dbCompetition, 'stages', res?.data?.profile);
-      //console.log('Stages: ', req.text());
+      
       return res;
     } else {
       return null;
@@ -104,12 +103,9 @@ async function getActiveGroups(competitionId, competitionStageId, token) {
       method: 'POST',
     });
 
-    //console.log('Stages Query: ', req);
-
     if (req?.ok) {
       const res = await req.json();
-      //await dbUpdate(dbCompetition, 'stages', res?.data?.profile);
-      //console.log('Stages: ', req.text());
+      
       return res;
     } else {
       return null;
@@ -133,12 +129,9 @@ async function getActiveAthlets(competitionId, competitionStageId, competitionGr
       method: 'POST',
     });
 
-    //console.log('Groups: ', competitionGroupId);
-
     if (req?.ok) {
       const res = await req.json();
-      //await dbUpdate(dbCompetition, 'stages', res?.data?.profile);
-      //console.log('Stages: ', req.text());
+      
       return res;
     } else {
       return null;
@@ -204,6 +197,35 @@ async function checkTokenExp() {
   }
 }
 
+async function sendRating(compMap, result) {
+  try {
+    const send = await dbGet(dbMemory, 'settings');
+    const token = await dbGet(dbMemory, 'vportalToken');
+    if(send?.sendRating && token?.access_token) {
+      const competitionAthleteAttemptId = compMap.get('athlets')[0]?.id;
+      console.log('Versuchs ID: ', competitionAthleteAttemptId);
+      console.log('Gültig / Ungültig: ', result)
+
+      const req = await fetch(vportalUrl + apiUrl, {
+        headers: {
+          'content-type': 'application/json',
+          'Accept-Language': 'de',
+          Authorization: `Bearer ${token?.access_token}`,
+        },
+        body: setResult(competitionAthleteAttemptId, result),
+        method: 'POST',
+      });
+
+
+    }else return null;
+    
+  } catch (error) {
+    console.error(error);
+    
+  }
+
+}
+
 module.exports = {
   getVportalToken,
   getEventId,
@@ -211,5 +233,6 @@ module.exports = {
   getActiveGroups,
   getActiveAthlets, 
   checkTokenExp,
-  setStageLogin
+  setStageLogin,
+  sendRating
 };

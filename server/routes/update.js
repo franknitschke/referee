@@ -7,7 +7,9 @@ const { exec } = require('node:child_process');
 const { middleware } = require('../helper');
 
 const {isDocker} = require('../helper');
-const {db} = require('../db/db');
+const {db, dbMemory} = require('../db/db');
+
+const {dbGet} = require('../helper');
 
 //check if running in Docker
 isDocker(db);
@@ -69,6 +71,9 @@ async function gitReset() {
 
 //check for updates
 router.get('/status', async (req, res) => {
+  const isDocker = dbGet(dbMemory, 'settings');
+  if(isDocker?.isDocker) return res.status(204).send({msg: 'Ist Docker!'})
+
   const fetch = await gitFetch();
   console.log('Fetch: ', fetch);
   const status = await gitStatus();

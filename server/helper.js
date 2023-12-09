@@ -133,11 +133,14 @@ function middleware(req, res, next) {
 //check env if running in docker
 function isDocker(db) {
   try {
-    process.env?.DOCKER_RUNNING && dbUpdate(db, 'settings', {isDocker: true})  
+    if(process.env?.DOCKER_RUNNING) {
+      dbUpdate(db, 'settings', {isDocker: true})
+    }else{
+      dbUpdate(db, 'settings', {isDocker: false})
+    }
   } catch (error) {
     console.error(error)
   }
-  
 }
 
 module.exports = {

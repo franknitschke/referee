@@ -63,8 +63,6 @@ router.post('/stage', async (req, res) => {
     defaultStage: `${defaultStage}`,
   });
 
-  console.log('DB: ', stage);
-
   res.status(200).send(stage);
 });
 

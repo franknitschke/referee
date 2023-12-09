@@ -1,8 +1,14 @@
-const { db, dbMemory,  } = require('../db/db');
+const { db, dbMemory } = require('../db/db');
 const { dbUpdate, dbGet, dbRemoveDoc } = require('../helper');
 const jwt = require('jsonwebtoken');
 
-const { queryCompetitionId, queryStages, queryActiveGroup, queryAthlets, setResult } = require('./queries');
+const {
+  queryCompetitionId,
+  queryStages,
+  queryActiveGroup,
+  queryAthlets,
+  setResult,
+} = require('./queries');
 
 const vportalUrl = 'https://dev.vportal-online.de';
 const login = '/account/login';
@@ -47,13 +53,13 @@ async function setStageLogin(competitionId, token) {
       method: 'POST',
     });
 
-    //console.log('Stages Query: ', req);
-
     if (req?.ok) {
       const res = await req.json();
       await dbUpdate(db, 'vportalToken', res?.data);
-      await dbUpdate(db, 'vportalToken', {defaultStage: res?.data?.competitionStageList?.competitionStages[0]?.id});
-      
+      await dbUpdate(db, 'vportalToken', {
+        defaultStage: res?.data?.competitionStageList?.competitionStages[0]?.id,
+      });
+
       return res;
     } else {
       return null;
@@ -62,7 +68,6 @@ async function setStageLogin(competitionId, token) {
     console.error(error);
     return null;
   }
-
 }
 
 //fetch stages for changing stages
@@ -88,7 +93,6 @@ async function getStages(competitionId, token) {
     console.error(error);
     return null;
   }
-
 }
 
 async function getActiveGroups(competitionId, competitionStageId, token) {
@@ -105,7 +109,7 @@ async function getActiveGroups(competitionId, competitionStageId, token) {
 
     if (req?.ok) {
       const res = await req.json();
-      
+
       return res;
     } else {
       return null;
@@ -114,10 +118,14 @@ async function getActiveGroups(competitionId, competitionStageId, token) {
     console.error(error);
     return null;
   }
-
 }
 
-async function getActiveAthlets(competitionId, competitionStageId, competitionGroupId, token) {
+async function getActiveAthlets(
+  competitionId,
+  competitionStageId,
+  competitionGroupId,
+  token
+) {
   try {
     const req = await fetch(vportalUrl + apiUrl, {
       headers: {
@@ -131,7 +139,7 @@ async function getActiveAthlets(competitionId, competitionStageId, competitionGr
 
     if (req?.ok) {
       const res = await req.json();
-      
+
       return res;
     } else {
       return null;
@@ -140,7 +148,6 @@ async function getActiveAthlets(competitionId, competitionStageId, competitionGr
     console.error(error);
     return null;
   }
-
 }
 
 async function getVportalToken(body) {
@@ -149,7 +156,7 @@ async function getVportalToken(body) {
   loginCredentials.append('credential', body?.credential);
 
   //remove existing token in db
-  await dbRemoveDoc(db, 'vportalToken')
+  await dbRemoveDoc(db, 'vportalToken');
 
   try {
     const loginReq = await fetch(vportalUrl + login, {
@@ -187,12 +194,12 @@ async function getVportalToken(body) {
 async function checkTokenExp() {
   const vportalToken = await dbGet(db, 'vportalToken');
 
-  if(vportalToken?.access_token) {
-    const time = new Date(jwt.decode(vportalToken?.access_token)?.exp * 1000)
+  if (vportalToken?.access_token) {
+    const time = new Date(jwt.decode(vportalToken?.access_token)?.exp * 1000);
     const isExpired = new Date() >= time;
-    if(isExpired) return await dbRemoveDoc(db, 'vportalToken');
+    if (isExpired) return await dbRemoveDoc(db, 'vportalToken');
     return isExpired;
-  }else {
+  } else {
     return null;
   }
 }
@@ -201,10 +208,8 @@ async function sendRating(compMap, result) {
   try {
     const send = await dbGet(dbMemory, 'settings');
     const token = await dbGet(dbMemory, 'vportalToken');
-    if(send?.sendRating && token?.access_token) {
+    if (send?.sendRating && token?.access_token) {
       const competitionAthleteAttemptId = compMap.get('athlets')[0]?.id;
-      console.log('Versuchs ID: ', competitionAthleteAttemptId);
-      console.log('Gültig / Ungültig: ', result)
 
       const req = await fetch(vportalUrl + apiUrl, {
         headers: {
@@ -215,15 +220,10 @@ async function sendRating(compMap, result) {
         body: setResult(competitionAthleteAttemptId, result),
         method: 'POST',
       });
-
-
-    }else return null;
-    
+    } else return null;
   } catch (error) {
     console.error(error);
-    
   }
-
 }
 
 module.exports = {
@@ -231,8 +231,8 @@ module.exports = {
   getEventId,
   getStages,
   getActiveGroups,
-  getActiveAthlets, 
+  getActiveAthlets,
   checkTokenExp,
   setStageLogin,
-  sendRating
+  sendRating,
 };

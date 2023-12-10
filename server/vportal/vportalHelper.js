@@ -10,7 +10,26 @@ const {
   setResult,
 } = require('./queries');
 
-const vportalUrl = 'https://dev.vportal-online.de';
+function setVportalUrl() {
+  const url = process.env?.VPORTAL_URL;
+
+  switch (url) {
+    case 'dev':
+      return 'https://dev.vportal-online.de';
+    case 'staging':
+      return 'https://staging.vportal-online.de';
+    case 'bvdk':
+      return 'https://bvdk.vportal-online.de';
+    case 'oevk':
+      return 'https://oevk.vportal-online.de';
+
+    default:
+      return 'https://dev.vportal-online.de';
+  }
+}
+
+//const vportalUrl = 'https://dev.vportal-online.de';
+const vportalUrl = setVportalUrl();
 const login = '/account/login';
 const getToken = '/auth/token';
 const apiUrl = '/graphql';
@@ -168,7 +187,11 @@ async function getVportalToken(body) {
       body: loginCredentials,
     });
 
-    const cookie = loginReq.headers.getSetCookie().pop().split(';')[0];
+    //const cookie2 = loginReq.headers.getSetCookie().pop().split(';')[0];
+    //console.log('Cookie 2: ', cookie2)
+    const cookieHeader = loginReq.headers.getSetCookie().pop().split(';');
+    const cookie = cookieHeader.find((el) => el.includes('VPORTAL'));
+    //console.log('Cookie 1: ', cookie)
 
     const loginTokenReq = await fetch(vportalUrl + getToken, {
       method: 'GET',

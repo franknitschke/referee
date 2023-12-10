@@ -16,3 +16,4 @@ services:
       HOST_IP: 192.168.178.45
       SECRET: xyz
       FETCH_INTERVAL: 10000
+      VPORTAL_URL: dev

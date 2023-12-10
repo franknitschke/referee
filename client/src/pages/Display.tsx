@@ -73,7 +73,7 @@ function Display({
         </div>
       )}
 
-      <div className='flex items-center absolute left-0 bottom-0 mb-2 ml-2 cursor-pointer'>
+      <div className='flex items-center absolute left-0 bottom-0 mb-2 ml-2 cursor-pointer w-full'>
         <div className='text-base text-gray-200 opacity-25 mr-4'>{ip}</div>
 
         <div className='text-base text-gray-200 opacity-25'>

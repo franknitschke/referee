@@ -6,3 +6,6 @@ client/node_modules
 server/.env
 client/.env
 .env
+**.DS_Store
+.git
+.gitignore

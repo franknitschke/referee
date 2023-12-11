@@ -35,7 +35,7 @@ function Display({
       {!settings?.hideCountdown && (
         <>
           <div
-            className='col-span-3 m-auto text-8xl' /* style={{fontSize: '9vw'}} */
+            className='col-span-3 m-auto' style={{fontSize: '9vw'}}
           >
             <Timer time={rating?.timer} />
           </div>

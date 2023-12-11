@@ -51,6 +51,7 @@ app.use('/api/vportal', vportal);
 app.use('/auth', auth);
 
 app.get('/*', (req, res) => {
+  res.append('Cache-Control', 'no-cache');
   res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
 });
 

@@ -101,4 +101,9 @@ router.get('/db', async (req, res) => {
   res.status(200).send(JSON.stringify(data, null, 4));
 });
 
+router.get('/app-version', async (req, res) => {
+  res.header({ 'content-type': 'application/json' });
+  res.status(200).send({appVersion: process.env.npm_package_version});
+});
+
 module.exports = router;

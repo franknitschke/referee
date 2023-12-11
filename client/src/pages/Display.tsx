@@ -31,7 +31,7 @@ function Display({
   competitionData,
 }: Props) {
   return (
-    <div className='h-screen w-full bg-black text-red-600  font-semibold justify-center grid grid-cols-3 gap-2 items-center px-4 cursor-none'>
+    <div className='h-screen w-full bg-black text-red-600  font-semibold justify-center grid grid-cols-3 gap-2 items-center px-4 cursor-none overflow-hidden'>
       {!settings?.hideCountdown && (
         <>
           <div
@@ -68,12 +68,12 @@ function Display({
       </div>
 
       {!isConnected && (
-        <div className='col-span-3 absolute bottom-8 left-2 w-full px-2 text-5xl text-white'>
+        <div className='col-span-3 absolute bottom-8 left-2 w-10/12 px-2 text-5xl text-white'>
           <Alert />
         </div>
       )}
 
-      <div className='flex items-center absolute left-0 bottom-0 mb-2 ml-2 cursor-pointer w-full'>
+      <div className='flex items-center absolute left-0 bottom-0 pb-2 pl-2 cursor-pointer w-10/12'>
         <div className='text-base text-gray-200 opacity-25 mr-4'>{ip}</div>
 
         <div className='text-base text-gray-200 opacity-25'>

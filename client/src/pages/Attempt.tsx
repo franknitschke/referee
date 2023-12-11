@@ -30,13 +30,13 @@ function Attempt({ rating, competitionData }: Props) {
   return (
     <>
       {!competitionData || competitionData?.length === 0 ? (
-        <div className='h-screen w-full flex items-center justify-center bg-black text-white text-4xl'>
+        <div className='h-screen w-full flex items-center justify-center bg-black text-white text-4xl cursor-none'>
           <div className='w-10/12 text-white'>
             <Alert msg={'Keine Daten vorhanden!'} />
           </div>
         </div>
       ) : (
-        <div className='h-screen w-full bg-black text-white font-semibold grid grid-cols-12 gap-2 cursor-none'>
+        <div className='h-screen w-full bg-black text-white font-semibold grid grid-cols-12 gap-2 cursor-none overflow-hidden'>
           <div
             className='col-span-6 justify-end text-center items-start align-top'
             style={{ fontSize: '14vw' }}

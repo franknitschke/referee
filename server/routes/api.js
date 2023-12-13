@@ -7,6 +7,8 @@ const { dbFind, dbGet, dbAll, cleanObject } = require('../helper');
 const {sendRating} = require('../vportal/vportalHelper');
 const { competitionData } = require('../vportal/getCompetitionData');
 
+const version = require('../package.json').version;
+
 //referee submit
 router.get('/ref', async (req, res) => {
   const { token, light } = req.query;
@@ -103,7 +105,7 @@ router.get('/db', async (req, res) => {
 
 router.get('/app-version', async (req, res) => {
   res.header({ 'content-type': 'application/json' });
-  res.status(200).send({appVersion: process.env.npm_package_version});
+  res.status(200).send({appVersion: version});
 });
 
 module.exports = router;

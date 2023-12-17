@@ -45,7 +45,7 @@ function Display({
         </>
       )}
 
-      <div className='col-span-1 z-10 bg-red-600'>
+      <div className='col-span-1 z-10'>
         <Light
           color={showRating(rating, 'left')}
           ratingSubmit={checkRatingSubmit(rating, 'left')}

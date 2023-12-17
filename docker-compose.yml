@@ -11,6 +11,7 @@ services:
     volumes:
       - .:/home/app
       - /home/app/server/node_modules
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       DOCKER_RUNNING: true
       HOST_IP: 192.168.178.45

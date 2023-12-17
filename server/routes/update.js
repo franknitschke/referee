@@ -6,10 +6,10 @@ const { exec } = require('node:child_process');
 
 const { middleware } = require('../helper');
 
-const {isDocker} = require('../helper');
-const {db, dbMemory} = require('../db/db');
+const { isDocker } = require('../helper');
+const { db, dbMemory } = require('../db/db');
 
-const {dbGet} = require('../helper');
+const { dbGet } = require('../helper');
 
 //check if running in Docker
 isDocker(db);
@@ -72,7 +72,7 @@ async function gitReset() {
 //check for updates
 router.get('/status', async (req, res) => {
   const isDocker = dbGet(dbMemory, 'settings');
-  if(isDocker?.isDocker) return res.status(204).send({msg: 'Ist Docker!'})
+  if (isDocker?.isDocker) return res.status(204).send({ msg: 'Ist Docker!' });
 
   const fetch = await gitFetch();
   console.log('Fetch: ', fetch);
@@ -126,6 +126,23 @@ router.post('/', async (req, res) => {
     console.error(error);
     res.status(500).send({ msg: 'Es ist ein Fehler aufgetreten' });
   }
+});
+
+router.get('/test', async (req, res) => {
+  exec('docker', (error, stdout, stderr) => {
+    if (error) {
+      console.log(`Error: ${error}`);
+      return res.status(500).send({ msg: error });
+    }
+    if (stdout) {
+      console.log(`Konsole: ${stdout}`);
+      return res.status(200).send({ msg: stdout });
+    }
+    if (stderr) {
+      console.log(`Error: ${stderr}`);
+      return res.status(500).send({ msg: stderr });
+    }
+  });
 });
 
 module.exports = router;

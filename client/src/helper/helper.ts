@@ -30,7 +30,7 @@ export function showRating(rating: RatingObject, position: RatingKeys) {
 export function handelSubmit(e: any): object {
   e.preventDefault();
   const formData = new FormData(e.currentTarget);
-  
+
   const body: Record<string, any> = {};
   for (let [key, value] of formData.entries()) {
     body[key] = value;
@@ -62,16 +62,15 @@ export async function getData(
   }
 }
 
-export function translateDiscipline(discipline: string):string {
+export function translateDiscipline(discipline: string): string {
   switch (discipline) {
     case 'squat':
-      return 'KB'
+      return 'KB';
     case 'benchPress':
-      return 'BP'
+      return 'BP';
     case 'deadlift':
-      return 'KH'
+      return 'KH';
     default:
-      return ''
-
-}
+      return '';
+  }
 }

@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
   if (!isExpired && vportalToken) {
     return res.status(200).send(vportalToken);
   } else {
-    return res.status(204).send({ msg: 'Keine Daten vorhanden!' });
+    return res.status(200).send({ msg: 'Keine Daten vorhanden!' });
   }
 });
 
@@ -86,8 +86,9 @@ router.post('/login', async (req, res) => {
     token?.access_token
   );
 
-  if (token && eventId) {
-    return res.status(200).send({ token, eventId, stages });
+  if (token && eventId && stages) {
+    return res.status(200).send(await dbGet(db, 'vportalToken'));//use db and NOT dbMemory becaus sync is to slow
+    //return res.status(200).send({...token, ...eventId, ...stages });
   } else {
     res.status(403).send({ msg: 'Unauthorized' });
   }

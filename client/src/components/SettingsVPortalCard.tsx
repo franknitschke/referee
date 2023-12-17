@@ -59,6 +59,18 @@ function SettingsVPortalCard({ accessToken }: Props) {
     } else setTab('tab1');
   }, [vportal, success]);
 
+  async function handleLogin(e: any): Promise<void> {
+    const res: any = await fetchData(
+      '/api/vportal/login',
+      'POST',
+      handelSubmit(e),
+      accessToken
+    );
+    if (res) {
+      setVportal(res);
+    }
+  }
+
   return (
     <>
       <div role='tablist' className='tabs tabs-bordered mb-4'>
@@ -71,7 +83,9 @@ function SettingsVPortalCard({ accessToken }: Props) {
         </button>
         <button
           role='tab'
-          className={`tab ${tab === 'tab2' ? 'tab-active bg-gray-100 opacity-90' : ''}`}
+          className={`tab ${
+            tab === 'tab2' ? 'tab-active bg-gray-100 opacity-90' : ''
+          }`}
           onClick={() => setTab('tab2')}
           disabled={vportal?.access_token ? false : true}
         >
@@ -82,12 +96,13 @@ function SettingsVPortalCard({ accessToken }: Props) {
       {tab === 'tab1' ? (
         <form
           onSubmit={(e) =>
-            fetchData(
+            /* fetchData(
               '/api/vportal/login',
               'POST',
               handelSubmit(e),
               accessToken
-            )
+            ) */
+            handleLogin(e)
           }
           autoComplete='off'
         >
@@ -159,43 +174,45 @@ function SettingsVPortalCard({ accessToken }: Props) {
           <div className='font-medium text-lg col-span-1'>{`Event ID: `}</div>
           <div className='text-lg col-span-1'>{vportal?.competition?.id}</div>
           <div className='font-medium text-xl text-center col-span-2 badge badge-ghost p-5 m-auto'>{`Bühnen`}</div>
-          
-            
-             
-              {stages?.data?.competitionStageList?.competitionStages?.map(
-                (stage: any) => (
-                  
-                  <div className='form-control col-span-1' key={stage?.id}>
-                    <label className='label cursor-pointer'>
-                      <span className='label-text'>{stage?.name}</span>
-                      <input
-                        type='radio'
-                        name={stage?.id}
-                        id={stage?.id}
-                        className='radio radio-accent'
-                        onChange={async (e) => {
-                          e.preventDefault();
-                          const res: any = await fetchData(
-                            '/api/vportal/stage',
-                            'POST',
-                            { defaultStage: stage?.id },
-                            accessToken
-                          );
-                          setVportal(res)
-                        }}
-                        checked={
-                          vportal?.defaultStage === stage?.id ? true : false
-                        }
-                      />
-                    </label>
-                  </div>
-                  
-                )
-              )}
-            
-            
-            {stages?.data?.competitionStageList?.competitionStages?.some((e:any) => e.id === vportal?.defaultStage) ?? <div className='col-span-2'><Alert msg={'Bitte neue Bühne auswählen, die ausgewählte Bühne wurde gelöscht!'}/></div>}
-          
+
+          {stages?.data?.competitionStageList?.competitionStages?.map(
+            (stage: any) => (
+              <div className='form-control col-span-1' key={stage?.id}>
+                <label className='label cursor-pointer'>
+                  <span className='label-text'>{stage?.name}</span>
+                  <input
+                    type='radio'
+                    name={stage?.id}
+                    id={stage?.id}
+                    className='radio radio-accent'
+                    onChange={async (e) => {
+                      e.preventDefault();
+                      const res: any = await fetchData(
+                        '/api/vportal/stage',
+                        'POST',
+                        { defaultStage: stage?.id },
+                        accessToken
+                      );
+                      setVportal(res);
+                    }}
+                    checked={vportal?.defaultStage === stage?.id ? true : false}
+                  />
+                </label>
+              </div>
+            )
+          )}
+
+          {stages?.data?.competitionStageList?.competitionStages?.some(
+            (e: any) => e.id === vportal?.defaultStage
+          ) ?? (
+            <div className='col-span-2'>
+              <Alert
+                msg={
+                  'Bitte neue Bühne auswählen, die ausgewählte Bühne wurde gelöscht!'
+                }
+              />
+            </div>
+          )}
         </div>
       )}
     </>

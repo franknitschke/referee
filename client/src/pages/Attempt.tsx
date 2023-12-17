@@ -55,7 +55,7 @@ function Attempt({ rating, competitionData }: Props) {
           <div
             className='col-span-6 text-center align-middle m-auto bg-gray-800 w-full'
             style={{ fontSize: '10vw' }}
-          >{`${competitionData[0]?.weight},5 KG`}</div>
+          >{`${competitionData[0]?.weight} KG`}</div>
           <div className='col-span-6 text-7xl p-10'>
             <div className=''>{`${competitionData[0]?.competitionAthlete?.lastName?.toUpperCase()},`}</div>
             <div className=''>{`${competitionData[0]?.competitionAthlete?.firstName?.toLocaleUpperCase()}`}</div>

@@ -67,7 +67,7 @@ export function translateDiscipline(discipline: string): string {
     case 'squat':
       return 'KB';
     case 'benchPress':
-      return 'BP';
+      return 'BD';
     case 'deadlift':
       return 'KH';
     default:

@@ -4,7 +4,7 @@ const { refValue } = require('../const');
 
 const { dbMemory } = require('../db/db');
 const { dbFind, dbGet, dbAll, cleanObject } = require('../helper');
-const {sendRating} = require('../vportal/vportalHelper');
+const { sendRating } = require('../vportal/vportalHelper');
 const { competitionData } = require('../vportal/getCompetitionData');
 
 const version = require('../package.json').version;
@@ -41,18 +41,18 @@ router.get('/ref', async (req, res) => {
 
   res.io.emit('rating', cleanObject(refValue));
   //send rating to vportal
-  if(refValue.lock) {
-    sendRating(competitionData, refValue.ratingValid)
-
+  if (refValue.lock) {
+    sendRating(competitionData, refValue.ratingValid);
   }
   if (settings?.autoReset && refValue.lock) {
     refValue.resetTimerRef = setTimeout(() => {
-      console.log('Timeout läuft');
       res.io.emit('lastRating', cleanObject(refValue));
       refValue.clearTimer();
       refValue.reset();
-
       res.io.emit('rating', cleanObject(refValue));
+
+      //Send athlete data
+      res.io.emit('intervall', competitionData.get('athlets'));
     }, settings?.autoResetTimer * 1000 || 15000);
   }
 
@@ -71,6 +71,9 @@ router.post('/ref/reset', async (req, res) => {
     res.io.emit('lastRating', cleanObject(refValue));
     refValue.reset();
     res.io.emit('rating', cleanObject(refValue));
+
+    //Send athlete data
+    res.io.emit('intervall', competitionData.get('athlets'));
     res.status(200).send({ msg: 'OK' });
   }
 });
@@ -105,7 +108,7 @@ router.get('/db', async (req, res) => {
 
 router.get('/app-version', async (req, res) => {
   res.header({ 'content-type': 'application/json' });
-  res.status(200).send({appVersion: version});
+  res.status(200).send({ appVersion: version });
 });
 
 module.exports = router;

@@ -24,6 +24,7 @@ const refTitle = {
   left: 'Seitenkampfrichter links',
   main: 'Hauptkampfrichter',
   right: 'Seitenkampfrichter rechts',
+  timekeeper: 'Zeitnehmer'
 };
 
 function Settings({ ip, settings }: Props) {
@@ -73,6 +74,7 @@ function Settings({ ip, settings }: Props) {
         <Loading />
       ) : (
         <div className='grid grid-cols-3 gap-4 p-4 justify-center m-auto'>
+          <SettingsOptions settings={settings} handleChange={handleChange} />
           {data?.map((el) => (
             <div
               key={el._id}
@@ -87,10 +89,8 @@ function Settings({ ip, settings }: Props) {
               />
             </div>
           ))}
-          <SettingsOptions settings={settings} handleChange={handleChange} />
-
+         
           
-
           <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
             <SettingsAdminCard accessToken={accessToken} />
           </div>

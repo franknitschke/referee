@@ -20,12 +20,13 @@ function SettingsOptions({settings, handleChange}: Props) {
                       onChange={handleChange}
                     />
                   </label>
+                  <span className="text-xs font-thin text-gray-600">Menüleiste auf den KaRi Handys ein- / ausblenden</span>
                 </div>
               </div>
               <div className='col-span-6 lg:col-span-2'>
                 <div className='form-control w-52'>
                   <label className='cursor-pointer label'>
-                    <span className='label-text'>Wertung auto Reset</span>
+                    <span className='label-text tooltip' data-tip='Wertung automatisch zurücksetzen'>Wertung auto Reset</span>
                     <input
                       type='checkbox'
                       name={'autoReset'}
@@ -65,7 +66,23 @@ function SettingsOptions({settings, handleChange}: Props) {
               <div className='col-span-6 lg:col-span-2'>
                 <div className='form-control w-52'>
                   <label className='cursor-pointer label'>
-                    <span className='label-text'>Timer ausblenden</span>
+                    <span className='label-text'>Separater Zeitnehmer</span>
+                    <input
+                    title="Eigenständiger Zeitnehmer"
+                      type='checkbox'
+                      name={'timekeeper'}
+                      className='toggle toggle-accent'
+                      checked={settings?.timekeeper}
+                      onChange={handleChange}
+                    />
+                  </label>
+                  <span className="text-xs font-thin text-gray-600">Separater Zeitnehmer - blende Start / Reset beim Hauptkari aus</span>
+                </div>
+              </div>
+              <div className='col-span-6 lg:col-span-2'>
+                <div className='form-control w-52'>
+                  <label className='cursor-pointer label'>
+                    <span className='label-text tooltip' data-tip='Countdown auf Wertungsbildschirm ein- / ausblenden'>Timer ausblenden</span>
                     <input
                       type='checkbox'
                       name={'hideCountdown'}
@@ -74,12 +91,13 @@ function SettingsOptions({settings, handleChange}: Props) {
                       onChange={handleChange}
                     />
                   </label>
+                  <span className="text-xs font-thin text-gray-600">Countdown auf dem Wertungsdisplay ausblenden</span>
                 </div>
               </div>
               <div className='col-span-6 lg:col-span-2'>
                 <div className='form-control w-52'>
                   <label className='cursor-pointer label'>
-                    <span className='label-text'>VPortal Daten abrufen</span>
+                    <span className='label-text tooltip' data-tip='Athleten / Versuche aus dem Vereinsportal abrufen / anzeigen'>VPortal Daten abrufen</span>
                     <input
                       type='checkbox'
                       name={'getVportalData'}
@@ -88,12 +106,13 @@ function SettingsOptions({settings, handleChange}: Props) {
                       onChange={handleChange}//Wertung abrufen api Request
                     />
                   </label>
+                  <span className="text-xs font-thin text-gray-600">Aktuellen Versuch aus dem WK Programm abrufen</span>
                 </div>
               </div>
               <div className='col-span-6 lg:col-span-2'>
                 <div className='form-control w-52'>
                   <label className='cursor-pointer label'>
-                    <span className='label-text'>Wertung senden</span>
+                    <span className='label-text tooltip' data-tip='Kampfrichter-Wertung automatisch an Vereinsportal senden'>Wertung senden</span>
                     <input
                       type='checkbox'
                       name={'sendRating'}
@@ -102,6 +121,7 @@ function SettingsOptions({settings, handleChange}: Props) {
                       onChange={handleChange}// ohne api call wird immer vor dem senden gecheckt
                     />
                   </label>
+                  <span className="text-xs font-thin text-gray-600">KaRi Wertung an das WK Programm automatisch senden</span>
                 </div>
               </div>
             </div>

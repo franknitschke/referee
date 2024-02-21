@@ -9,6 +9,9 @@ const { competitionData } = require('../vportal/getCompetitionData');
 
 const version = require('../package.json').version;
 
+const judges = ['main', 'left', 'right'];
+const allowedTimekeeper = ['main', 'timekeeper'];
+
 //referee submit
 router.get('/ref', async (req, res) => {
   const { token, light } = req.query;
@@ -17,7 +20,8 @@ router.get('/ref', async (req, res) => {
   const settings = await dbGet(dbMemory, 'settings');
   const position = role[0]?._id;
 
-  if (!role || !position) return res.status(403).send({ msg: 'Unauthorized' });
+  if (!role || !judges.includes(position))
+    return res.status(403).send({ msg: 'Unauthorized' });
   if (refValue?.lock) return res.status(200).send({ msg: 'No more changes' });
 
   switch (light) {
@@ -63,9 +67,8 @@ router.get('/ref', async (req, res) => {
 router.post('/ref/reset', async (req, res) => {
   const { token, position } = req.query;
   const ref = await dbGet(dbMemory, position);
-  if (ref?.token !== token) {
-    return res.status(403).send({ msg: 'Unauthorized' });
-  } else {
+
+  if (ref?.token === token && allowedTimekeeper.includes(ref?.position)) {
     refValue.clearTimer();
     refValue.clearResetTimer();
     res.io.emit('lastRating', cleanObject(refValue));
@@ -75,6 +78,8 @@ router.post('/ref/reset', async (req, res) => {
     //Send athlete data
     res.io.emit('intervall', competitionData.get('athlets'));
     res.status(200).send({ msg: 'OK' });
+  } else {
+    return res.status(403).send({ msg: 'Unauthorized' });
   }
 });
 
@@ -82,29 +87,31 @@ router.post('/ref/reset', async (req, res) => {
 router.post('/timer', async (req, res) => {
   const { token, position } = req.query;
   const ref = await dbGet(dbMemory, position);
-  if (ref?.token !== token)
-    return res.status(403).send({ msg: 'Unauthorized' });
 
-  //if timer allready running
-  if (refValue.timerRef) {
-    refValue.clearTimer();
+  if (ref?.token === token && allowedTimekeeper.includes(ref?.position)) {
+    //if timer allready running
+    if (refValue.timerRef) {
+      refValue.clearTimer();
+    } else {
+      //start timer
+      refValue.timerRef = setInterval(() => {
+        refValue.startTimer();
+        res.io.emit('rating', cleanObject(refValue));
+      }, 1000);
+    }
+    res.status(200).send({ msg: 'OK' });
   } else {
-    //start timer
-    refValue.timerRef = setInterval(() => {
-      refValue.startTimer();
-      res.io.emit('rating', cleanObject(refValue));
-    }, 1000);
+    return res.status(403).send({ msg: 'Unauthorized' });
   }
-  res.status(200).send({ msg: 'OK' });
 });
 
 //for testing in dev
-router.get('/db', async (req, res) => {
+/* router.get('/db', async (req, res) => {
   const data = await dbAll(dbMemory);
 
   res.header({ 'content-type': 'application/json' });
   res.status(200).send(JSON.stringify(data, null, 4));
-});
+}); */
 
 router.get('/app-version', async (req, res) => {
   res.header({ 'content-type': 'application/json' });

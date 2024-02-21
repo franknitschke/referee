@@ -37,6 +37,7 @@ declare global {
     getVportalData: boolean;
     sendRating: boolean;
     isDocker: boolean;
+    timekeeper: boolean;
   } | null;
 
   type RefObject = {
@@ -53,5 +54,7 @@ declare module "react" {
   // augment CSSProperties here
   interface CSSProperties {
     "--value"?: number;
+    "--size"?: string;
+    "--thickness"?: string;
   }
 }

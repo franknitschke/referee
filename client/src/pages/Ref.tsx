@@ -4,6 +4,7 @@ import { socket } from '../socket';
 import RefButton from '../components/RefButton';
 
 import RefButtonLogin from '../components/RefButtonLogin';
+import Timekeeper from '../components/Timekeeper';
 import Loading from '../components/Loading';
 import Light from '../components/Light';
 import OnlineStatus from '../components/OnlineStatus';
@@ -12,16 +13,17 @@ import { ChevronDoubleUpIcon } from '@heroicons/react/24/solid';
 
 type Props = {
   isConnected: boolean;
-  rating: RatingObject
-}
+  rating: RatingObject;
+  settings: SettingsObject;
+};
 
-function Ref({rating, isConnected}: Props) {
+function Ref({ rating, isConnected, settings }: Props) {
   const [token, setToken] = useState<string | null>(null);
   const [ref, setRef] = useState<RefObject | null>(null);
 
-  useEffect(() => {
+  /* useEffect(() => {
     ref && socket.emit('users', { user: ref?._id });
-  }, [ref]);
+  }, [ref]); */
 
   return (
     <>
@@ -31,9 +33,13 @@ function Ref({rating, isConnected}: Props) {
         </div>
       ) : !ref ? (
         <Loading />
+      ) : ref?._id === 'timekeeper' ? (
+        <Timekeeper isConnected={isConnected} rating={rating} token={token} />
       ) : (
         <div className='h-3/5'>
-          <div><OnlineStatus isConnected={isConnected} /></div>
+          <div>
+            <OnlineStatus isConnected={isConnected} />
+          </div>
           <div className='flex flex-col justify-center space-y-2 m-auto px-6 py-2 h-full'>
             <div className='flex flex-row w-2/4 lg:w-1/2 space-x-6 justify-center border border-gray-400 bg-gray-300 rounded p-1 mx-auto'>
               <div className='flex flex-col items-center justify-center w-full m-auto'>
@@ -113,7 +119,7 @@ function Ref({rating, isConnected}: Props) {
                 />
               </div>
             </div>
-            {ref?._id === 'main' && (
+            {ref?._id === 'main' && !settings?.timekeeper ? (
               <div className='flex flex-row w-full space-x-6'>
                 <div className='w-full flex-grow'>
                   <RefButton
@@ -132,6 +138,8 @@ function Ref({rating, isConnected}: Props) {
                   />
                 </div>
               </div>
+            ) : (
+              ''
             )}
           </div>
         </div>

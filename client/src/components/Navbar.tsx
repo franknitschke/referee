@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 
 type NavbarProps = {
   location: Record<'pathname', string>;
-  settings: SettingsObject
-}
+  settings: SettingsObject;
+};
 
 function Navbar({ location, settings }: NavbarProps) {
   const navigate = useNavigate();
@@ -67,13 +67,10 @@ function Navbar({ location, settings }: NavbarProps) {
               <Link to={'/settings'}>Settings</Link>
             </li>
 
-            {/* <li>
-              <Link to={'/dashboard'}>Dashboard</Link>
-            </li> */}
-
             <li>
               <Link to={'/ref'}>Wertung</Link>
             </li>
+
             <li>
               <button
                 onClick={() => {

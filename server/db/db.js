@@ -2,16 +2,13 @@ const PouchDB = require('pouchdb');
 PouchDB.plugin(require('pouchdb-find'));
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
-const { dbInit } = require('../helper');
+const { dbInit, dbGet, dbUpdate, dbFind } = require('../helper');
 
 //persistent database
 const db = new PouchDB('./db/database');
 
 //clone from database above as in memory cache
 const dbMemory = new PouchDB('myDB', { adapter: 'memory' });
-
-//db for competition stuff from vportal
-//const dbCompetition = new PouchDB('competitionDB', { adapter: 'memory' });
 
 db.replicate.to(dbMemory, {
   live: true,
@@ -44,6 +41,12 @@ const doc = [
     role: 'ref',
   },
   {
+    _id: 'timekeeper',
+    position: 'timekeeper',
+    token: '7373',
+    role: 'ref',
+  },
+  {
     _id: 'settings',
     refMenu: false,
     autoReset: true,
@@ -54,7 +57,19 @@ const doc = [
 //Init DB if empty
 dbInit(db, doc);
 
-//init empty in memory db for competition stuff
-//dbInit(dbCompetition, []);
+//migration for older DBs => check if entries missing in existing DBs
+async function migrateDB() {
+  //check for new timer user
+  const timer = await dbFind(db, 'position', 'timekeeper');
+  !timer &&
+    dbUpdate(db, 'timekeeper', {
+      _id: 'timekeeper',
+      position: 'timekeeper',
+      token: '7373',
+      role: 'ref',
+    });
+}
+
+migrateDB();
 
 module.exports = { db, dbMemory };

@@ -7,7 +7,6 @@ import Home from './pages/Home';
 import Display from './pages/Display';
 import Countdown from './pages/Countdown';
 import Attempt from './pages/Attempt';
-import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import Ref from './pages/Ref';
 import Login from './pages/Login';
@@ -22,15 +21,14 @@ type CompData = {
     team: string;
     bodyWeightCategory: {
       name: string;
-    }
+    };
     club: {
       name: string;
-    }
+    };
     ageCategory: {
       name: string;
-    }
+    };
   };
-  
 };
 
 function App() {
@@ -121,26 +119,25 @@ function App() {
         <Route
           path='/versuch'
           element={
-            <Attempt
-              rating={rating}
-              competitionData={competitionData}
-            />
+            <Attempt rating={rating} competitionData={competitionData} />
           }
         />
         <Route
           path='/settings'
           element={<Settings ip={ip} settings={settings} />}
         />
-        {/* <Route
-          path='/dashboard'
-          element={
-            <Dashboard ip={ip} isConnected={isConnected} rating={rating} />
-          }
-        /> */}
+
         <Route
           path='/ref'
-          element={<Ref rating={rating} isConnected={isConnected} />}
+          element={
+            <Ref
+              rating={rating}
+              isConnected={isConnected}
+              settings={settings}
+            />
+          }
         />
+
         <Route path='/login' element={<Login />} />
       </Routes>
     </div>

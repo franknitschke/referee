@@ -5,7 +5,7 @@
 **The software is developed for use in a secure private network only (for security reasons). It is not recommended to use it on a public server!
 Please change all default passwords and tokens immediately after installation.**
 
-We recommend using the program as a Docker image.
+We recommend using the program as a Docker image. **If you run without Docker Node JS version >= 18.18.2 is required!**
 
 **If you would run the image on a Raspberry Pi, make sure to run an OS in 64 bit. Otherwise the image didn't start.**
 

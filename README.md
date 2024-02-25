@@ -5,130 +5,78 @@
 **The software is developed for use in a secure private network only (for security reasons). It is not recommended to use it on a public server!
 Please change all default passwords and tokens immediately after installation.**
 
+We recommend using the program as a Docker image. **If you run without Docker Node JS version >= 18.18.2 is required!**
+
+**If you would run the image on a Raspberry Pi, make sure to run an OS in 64 bit. Otherwise the image didn't start.**
+
 # Installation
 
-1. Install Node.js >= 18.xx
-2. Clone git repo
-3. `cd yourFolder/server`
-4. `npm i`
+1. Install Docker
+2. Create folder for docker compose file and the database folder (set correct folder permissions!)
+3. Run with docker compose file below (set the envs)
+4. Open http://localhost:3030
 
-## Start
-
-1. `cd referee/server`
-2. `npm start`
-3. `http://localhost:3030`
-
-
-
-# Installation on RaspberryPi
-
-Tested with Raspberry Pi OS 32-bit (Debian Bullseye) on a Pi 4.
-
-### 1. Update Raspberry Pi
-   
-```
-sudo apt-get update && sudo apt-get upgrade -y
-```
-
-### 2. Install Node.js
+# Docker Compose for Linux
 
 ```
-sudo apt-get install -y ca-certificates curl gnupg
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-```
-```
-NODE_MAJOR=18
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-```
-```
-sudo apt-get update
-sudo apt-get install nodejs -y
-```
-
-### 3. Clone Repo
-
-```
-git clone https://github.com/franknitschke/referee.git
+version: "3"
+services:
+  referee:
+    image: ghcr.io/franknitschke/referee:latest
+    restart: always
+    network_mode: host
+    volumes:
+      - ./database:/home/app/server/db/database
+    environment:
+      DOCKER_RUNNING: true
+      SECRET: My secure Secret
+      FETCH_INTERVAL: 2000
+      VPORTAL_URL: bvdk
 ```
 
-### 4. Installing PM2 for running app in background
+# Docker Compose for Windows / Mac OS
 
 ```
-sudo npm install pm2 -g
+version: "3"
+services:
+  referee:
+    image: ghcr.io/franknitschke/referee:latest
+    restart: always
+    ports:
+      - 3030:3030
+    volumes:
+      - ./database:/home/app/server/db/database
+    environment:
+      DOCKER_RUNNING: true
+      HOST_IP: your ip
+      SECRET: My secure Secret
+      FETCH_INTERVAL: 2000
+      VPORTAL_URL: bvdk
 ```
 
-### 5. Installing node modules
+# ENV Vars:
 
-```
-cd referee/server
-```
-```
-npm i
-```
+| ENV  | Value |
+| ------------- | ------------- |
+| DOCKER_RUNNING  | true / false => set true if running in docker will hide update function with git pull   |
+| HOST_IP  | leave blank if running on linux (PI) - otherwise set the ip from your host (to show correct ip)  |
+| FETCH_INTERVAL  | intervall to pull data from the vportal (default 2sec) => don't use any value below 2000  |
+| VPORTAL_URL  | set url to pull data from: `dev` `staging` `bvdk` `oevk` => dev is default  |
 
-### 6. Running app in background
+## Autostart chromium on Raspberry Pi and load the referee screen
+**Works with PI OS Bookworm only!**
 
-```
-sudo pm2 startup
-```
-```
-cd referee/server
-```
-```
-sudo pm2 start npm --name "referee" -- start
-```
-```
-sudo pm2 save
-```
+Edit the .config/wayfire.ini file and add the following code to autostart section:
 
-### 7. Load Chrome after Pi startet and show the display
+`sudo nano .config/wayfire.ini`
 
-7.1 Create a script file for loading Chrome with a delay of 30 sec. to make sure, that the server is allready running
+add text:
+`chromium = sleep 15;chromium-browser "http://localhost:3030/display" --kiosk --noerrdialogs --disable-infobars --no-first-run --ozone-platform=wayland --enable-features=OverlayScrollbar --start-maximized`
 
-```
-cd
-```
-```
-nano autostartchrome.sh
-```
-
-7.2 Add the following text
-
-```
-#!/bin/bash
-sleep 30
-chromium-browser --start-fullscreen --disable-infobars --app=http://localhost:3030/display
-```
-
-7.3 Save and exit.
-
-7.4 Make the file executable
-
-```
-chmod +x autostartchrome.sh
-```
-
-7.5 Add the script to the Pi autostart
-
-```
-sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
-```
-
-7.6 Add the following text to the end of the file
-
-```
-@/home/pi/autostartchrome.sh
-```
-
-7.7 Save and exit
-
-### 8. Reboot the Pi
+Chormium will start (with a delay of 15 sec.) and show the referee screen in kiosk mode.
 
 
-# Default credentials
-
-For /settings
+# Default credentials for /settings
 
 User: admin
 Pass: admin

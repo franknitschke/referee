@@ -87,7 +87,7 @@ router.post('/login', async (req, res) => {
   );
 
   if (token && eventId && stages) {
-    return res.status(200).send(await dbGet(db, 'vportalToken'));//use db and NOT dbMemory becaus sync is to slow
+    return res.status(200).send(await dbGet(db, 'vportalToken')); //use db and NOT dbMemory becaus sync is to slow
     //return res.status(200).send({...token, ...eventId, ...stages });
   } else {
     res.status(403).send({ msg: 'Unauthorized' });

@@ -34,7 +34,6 @@ router.get('/ref', async (req, res) => {
     case 'blue':
       refValue.blue = position;
       break;
-
     case 'yellow':
       refValue.yellow = position;
       break;
@@ -59,7 +58,6 @@ router.get('/ref', async (req, res) => {
       res.io.emit('intervall', competitionData.get('athlets'));
     }, settings?.autoResetTimer * 1000 || 15000);
   }
-
   res.status(200).send({ msg: 'OK' });
 });
 

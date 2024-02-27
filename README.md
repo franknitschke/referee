@@ -71,7 +71,11 @@ Edit the .config/wayfire.ini file and add the following code to autostart sectio
 `sudo nano .config/wayfire.ini`
 
 add text:
-`chromium = sleep 15;chromium-browser "http://localhost:3030/display" --kiosk --noerrdialogs --disable-infobars --no-first-run --ozone-platform=wayland --enable-features=OverlayScrollbar --start-maximized`
+
+```
+[autostart]
+chromium = sleep 15;chromium-browser "http://localhost:3030/display" --kiosk --noerrdialogs --disable-infobars --no-first-run --ozone-platform=wayland --enable-features=OverlayScrollbar --start-maximized
+```
 
 Chormium will start (with a delay of 15 sec.) and show the referee screen in kiosk mode.
 

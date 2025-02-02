@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.reactMarkdown {
+  white-space: pre-wrap;
+}
+
+.reactMarkdown h1 {
+  font-size: 1.5em;
+}
+
+.reactMarkdown h2 {
+  font-size: 1.5em;
+}
+
+.reactMarkdown h3 {
+  font-size: 1.5em;
+}
+
+.reactMarkdown ul {
+  list-style-type: circle;
+}
+
+.reactMarkdown a {
+  text-decoration: underline;
+}

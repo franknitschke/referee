@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import UpdateHistorie from "../components/UpdateHistorie";
 
 type propTypes = {
   ip: null | string;
@@ -12,27 +13,29 @@ function Home({ ip, isConnected, compData }: propTypes) {
   useEffect(() => {
     (async () => {
       try {
-        const req = await fetch('/api/app-version');
+        const req = await fetch("/api/app-version");
         if (req.ok) setVersion(await req.json());
       } catch (error) {}
     })();
   }, []);
   return (
     <>
-      <div className='flex justify-center items-center text-gray-800 text-3xl h-screen'>
-        <div className='flex-col m-auto text-center text-gray-600 gap-2'>
-          <div className='text-2xl font-extrabold'>Wertungsanlage</div>
-          <div className='mb-10 text-sm font-light'>
+      <div className="flex justify-center items-center text-gray-800 text-3xl h-screen">
+        <div className="flex-col m-auto text-center text-gray-600 gap-2 w-full h-full">
+          <div className="text-2xl font-extrabold mt-20">Wertungsanlage</div>
+          <div className="mb-10 text-sm font-light m-auto">
             {version && `V ${version?.appVersion}`}
           </div>
-          <div className='text-base'>{ip}</div>
-          <div className='text-base'>
+          <div className="text-base m-auto">{ip}</div>
+          <div className="text-base m-auto">
             {isConnected ? (
-              'Verbunden'
+              "Verbunden"
             ) : (
-              <span className='text-red-600'>Nicht Verbunden</span>
+              <span className="text-red-600">Nicht Verbunden</span>
             )}
           </div>
+
+          <UpdateHistorie />
         </div>
       </div>
     </>

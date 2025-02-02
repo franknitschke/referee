@@ -1,6 +1,6 @@
 # Referee software for powerlifting competitions
 
-##  ‼️Before use
+## ‼️Before use
 
 **The software is developed for use in a secure private network only (for security reasons). It is not recommended to use it on a public server!
 Please change all default passwords and tokens immediately after installation.**
@@ -19,7 +19,6 @@ We recommend using the program as a Docker image. **If you run without Docker No
 # Docker Compose for Linux
 
 ```
-version: "3"
 services:
   referee:
     image: ghcr.io/franknitschke/referee:latest
@@ -37,7 +36,6 @@ services:
 # Docker Compose for Windows / Mac OS
 
 ```
-version: "3"
 services:
   referee:
     image: ghcr.io/franknitschke/referee:latest
@@ -56,14 +54,15 @@ services:
 
 # ENV Vars:
 
-| ENV  | Value |
-| ------------- | ------------- |
-| DOCKER_RUNNING  | true / false => set true if running in docker will hide update function with git pull   |
-| HOST_IP  | leave blank if running on linux (PI) - otherwise set the ip from your host (to show correct ip)  |
-| FETCH_INTERVAL  | intervall to pull data from the vportal (default 2sec) => don't use any value below 2000  |
-| VPORTAL_URL  | set url to pull data from: `dev` `staging` `bvdk` `oevk` => dev is default  |
+| ENV            | Value                                                                                           |
+| -------------- | ----------------------------------------------------------------------------------------------- |
+| DOCKER_RUNNING | true / false => set true if running in docker will hide update function with git pull           |
+| HOST_IP        | leave blank if running on linux (PI) - otherwise set the ip from your host (to show correct ip) |
+| FETCH_INTERVAL | intervall to pull data from the vportal (default 2sec) => don't use any value below 2000        |
+| VPORTAL_URL    | set url to pull data from: `staging` `bvdk` `oevk` => staging is default                        |
 
 ## Autostart chromium on Raspberry Pi and load the referee screen
+
 **Works with PI OS Bookworm only!**
 
 Edit the .config/wayfire.ini file and add the following code to autostart section:
@@ -78,7 +77,6 @@ chromium = sleep 15;chromium-browser "http://localhost:3030/display" --kiosk --n
 ```
 
 Chormium will start (with a delay of 15 sec.) and show the referee screen in kiosk mode.
-
 
 # Default credentials for /settings
 

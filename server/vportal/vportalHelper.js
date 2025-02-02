@@ -26,7 +26,6 @@ function setVportalUrl() {
   }
 }
 
-//const vportalUrl = 'https://dev.vportal-online.de';
 const vportalUrl = setVportalUrl();
 const login = "/account/login";
 const getToken = "/auth/token";
@@ -185,11 +184,8 @@ async function getVportalToken(body) {
       body: loginCredentials,
     });
 
-    //const cookie2 = loginReq.headers.getSetCookie().pop().split(';')[0];
-    //console.log('Cookie 2: ', cookie2)
     const cookieHeader = loginReq.headers.getSetCookie().pop().split(";");
     const cookie = cookieHeader.find((el) => el.includes("VPORTAL"));
-    //console.log('Cookie 1: ', cookie)
 
     const loginTokenReq = await fetch(vportalUrl + getToken, {
       method: "GET",

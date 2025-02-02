@@ -84,7 +84,7 @@ class DefaultRefValue {
     return this.main.submit && this.left.submit && this.right.submit;
   }
   get ratingValid() {
-    if(this.main.valid && this.left.valid && this.right.valid) {
+    if([this.main.valid, this.left.valid, this.right.valid].filter(rating => rating).length > 1) {
       return 'valid'
     }else {
       return 'invalid'

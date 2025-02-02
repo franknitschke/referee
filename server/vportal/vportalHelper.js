@@ -184,8 +184,15 @@ async function getVportalToken(body) {
       body: loginCredentials,
     });
 
+<<<<<<< HEAD
     const cookieHeader = loginReq.headers.getSetCookie().pop().split(";");
     const cookie = cookieHeader.find((el) => el.includes("VPORTAL"));
+=======
+    
+    const cookieHeader = loginReq.headers.getSetCookie().pop().split(';');
+    const cookie = cookieHeader.find((el) => el.includes('VPORTAL'));
+    
+>>>>>>> main
 
     const loginTokenReq = await fetch(vportalUrl + getToken, {
       method: "GET",

@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
-import Loading from '../components/Loading';
-import SettingsTokenCard from '../components/SettingsTokenCard';
-import SettingsAdminCard from '../components/SettingsAdminCard';
-import SettingsUpdateCard from '../components/SettingsUpdateCard';
-import SettingsOptions from '../components/SettingsOptions';
-import SettingsVPortalCard from '../components/SettingsVPortalCard';
+import Loading from "../components/Loading";
+import SettingsTokenCard from "../components/SettingsTokenCard";
+import SettingsAdminCard from "../components/SettingsAdminCard";
+import SettingsUpdateCard from "../components/SettingsUpdateCard";
+import SettingsOptions from "../components/SettingsOptions";
+import SettingsVPortalCard from "../components/SettingsVPortalCard";
+import SettingsPause from "../components/SettingsPause";
 
 type Props = {
   ip: string | null;
@@ -21,10 +22,10 @@ type Data = {
 };
 
 const refTitle = {
-  left: 'Seitenkampfrichter links',
-  main: 'Hauptkampfrichter',
-  right: 'Seitenkampfrichter rechts',
-  timekeeper: 'Zeitnehmer'
+  left: "Seitenkampfrichter links",
+  main: "Hauptkampfrichter",
+  right: "Seitenkampfrichter rechts",
+  timekeeper: "Zeitnehmer",
 };
 
 function Settings({ ip, settings }: Props) {
@@ -35,50 +36,51 @@ function Settings({ ip, settings }: Props) {
 
   useEffect(() => {
     async function getToken(token: string) {
-      const req = await fetch('/api/settings?field=role&value=ref', {
+      const req = await fetch("/api/settings?field=role&value=ref", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!req.ok) return navigate('/login');
+      if (!req.ok) return navigate("/login");
       const res = await req.json();
       setData(res);
     }
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       setAccessToken(token);
       getToken(token);
     } else {
-      navigate('/login');
+      navigate("/login");
     }
   }, []);
 
   function handleChange(e: any) {
-    fetch('/api/settings', {
+    fetch("/api/settings", {
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         [e.target.name]: `${
-          e.target.type === 'checkbox' ? e.target.checked : e.target.value
+          e.target.type === "checkbox" ? e.target.checked : e.target.value
         }`,
       }),
     });
   }
 
   return (
-    <div className='min-h-screen'>
+    <div className="min-h-screen">
       {!data ? (
         <Loading />
       ) : (
-        <div className='grid grid-cols-3 gap-4 p-4 justify-center m-auto'>
+        <div className="grid grid-cols-3 gap-4 p-4 justify-center m-auto">
+          <SettingsPause settings={settings} handleChange={handleChange} />
           <SettingsOptions settings={settings} handleChange={handleChange} />
           {data?.map((el) => (
             <div
               key={el._id}
-              className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'
+              className="col-span-3 lg:col-span-1 bg-white rounded-lg p-8"
             >
               <SettingsTokenCard
                 data={el.token}
@@ -89,17 +91,18 @@ function Settings({ ip, settings }: Props) {
               />
             </div>
           ))}
-         
-          
-          <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
+
+          <div className="col-span-3 lg:col-span-1 bg-white rounded-lg p-8">
             <SettingsAdminCard accessToken={accessToken} />
           </div>
-          <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
+          <div className="col-span-3 lg:col-span-1 bg-white rounded-lg p-8">
             <SettingsVPortalCard accessToken={accessToken} />
           </div>
-          {settings?.isDocker ?? <div className='col-span-3 lg:col-span-1 bg-white rounded-lg p-8'>
-            <SettingsUpdateCard accessToken={accessToken} />
-          </div>}
+          {settings?.isDocker ?? (
+            <div className="col-span-3 lg:col-span-1 bg-white rounded-lg p-8">
+              <SettingsUpdateCard accessToken={accessToken} />
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -3,8 +3,7 @@ import React from "react";
 export {};
 
 declare global {
-  
-  type RatingKeys = 'left' | 'main' | 'right';
+  type RatingKeys = "left" | "main" | "right";
 
   type RatingValues = {
     submit: boolean;
@@ -20,9 +19,9 @@ declare global {
     left: RatingValues;
     main: RatingValues;
     right: RatingValues;
-    timer: number
+    timer: number;
   } | null;
-  
+
   type PropTypes = {
     ip: null | string;
     isConnected: boolean;
@@ -38,6 +37,8 @@ declare global {
     sendRating: boolean;
     isDocker: boolean;
     timekeeper: boolean;
+    pauseModus: boolean;
+    pauseTimer: number;
   } | null;
 
   type RefObject = {
@@ -45,9 +46,9 @@ declare global {
     position: string;
     token: string;
     role: string;
-  }
+  };
 
-  type Method = 'POST' | 'GET';
+  type Method = "POST" | "GET";
 }
 
 declare module "react" {

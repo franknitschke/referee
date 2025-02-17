@@ -1,15 +1,24 @@
-import { Route, Routes, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Navbar from "./components/Navbar";
+import "./App.css";
 import { socket } from "./socket";
 
-import Home from "./pages/Home";
-import Display from "./pages/Display";
-import Countdown from "./pages/Countdown";
-import Attempt from "./pages/Attempt";
-import Settings from "./pages/Settings";
-import Ref from "./pages/Ref";
-import Login from "./pages/Login";
+import { Routes, Route } from "react-router";
+import { useLocation } from "react-router-dom";
+
+import Navbar from "../components/Navbar";
+import Home from "../pages/Home";
+import Display from "../pages/Display";
+import Countdown from "../pages/Countdown";
+import Attempt from "../pages/Attempt";
+import Settings from "../pages/Settings";
+import Ref from "../pages/Ref";
+import Login from "../pages/Login";
+
+import type {
+  RatingObject,
+  SettingsObject,
+  BreakTimerObject,
+} from "../types/types";
 
 type CompData = {
   weight: string;
@@ -47,6 +56,7 @@ function App() {
   }, [socket.connected]);
 
   useEffect(() => {
+    console.log("Läuft");
     function onConnect(): void {
       setIsConnected(true);
     }
@@ -97,6 +107,64 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-200">
+      <Navbar location={location} settings={settings} />
+      <Routes>
+        <Route
+          index
+          element={
+            <Home
+              ip={ip}
+              isConnected={isConnected}
+            />
+          }
+        />
+        <Route
+          path="/display"
+          element={
+            <Display
+              isConnected={isConnected}
+              rating={rating}
+              ip={ip}
+              settings={settings}
+              competitionData={competitionData}
+              breakTimer={breakTimer}
+            />
+          }
+        />
+        <Route
+          path="/countdown"
+          element={<Countdown isConnected={isConnected} rating={rating} />}
+        />
+        <Route
+          path="/versuch"
+          element={
+            <Attempt rating={rating} competitionData={competitionData} />
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <Settings ip={ip} settings={settings} breakTimer={breakTimer} />
+          }
+        />
+
+        <Route
+          path="/ref"
+          element={
+            <Ref
+              rating={rating}
+              isConnected={isConnected}
+              settings={settings}
+            />
+          }
+        />
+
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </div>
+
+    /*   <div className="min-h-screen bg-gray-200">
+      
       <Navbar location={location} settings={settings} />
       <Routes>
         <Route
@@ -152,7 +220,7 @@ function App() {
 
         <Route path="/login" element={<Login />} />
       </Routes>
-    </div>
+   </div> */
   );
 }
 

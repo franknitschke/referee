@@ -8,13 +8,14 @@ const auth = require("./routes/auth");
 const settings = require("./routes/settings");
 const update = require("./routes/update");
 const vportal = require("./routes/vportal");
+const breakRoute = require("./routes/break");
 const cors = require("cors");
 
-const { refValue, users } = require("./const");
+const { refValue, users, breakTimer } = require("./const");
 
 const { dbMemory } = require("./db/db");
 const { competitionData } = require("./vportal/getCompetitionData");
-const { dbGet, cleanObject } = require("./helper");
+const { dbGet, cleanObject, cleanBreakObject } = require("./helper");
 
 const ip = require("ip");
 
@@ -54,6 +55,7 @@ app.use("/api", api);
 app.use("/api/settings", settings);
 app.use("/api/update", update);
 app.use("/api/vportal", vportal);
+app.use("/api/break", breakRoute);
 app.use("/auth", auth);
 
 app.get("/*", (req, res) => {
@@ -76,6 +78,9 @@ io.on("connection", async (socket) => {
   //send settings
   const settings = await dbGet(dbMemory, "settings");
   socket.emit("settings", settings);
+
+  //send breakSetting
+  socket.emit("breaktimer", cleanBreakObject(breakTimer));
 
   //send competition data
   socket.emit("intervall", competitionData.get("athletes"));

@@ -52,7 +52,6 @@ const doc = [
     autoReset: true,
     autoResetTimer: 20,
     pauseModus: false,
-    pauseTimer: 20,
   },
 ];
 
@@ -69,13 +68,6 @@ async function migrateDB() {
       position: "timekeeper",
       token: "7373",
       role: "ref",
-    });
-
-  const pauseTimer = await dbGet(db, "settings");
-
-  !pauseTimer?.pauseTimer &&
-    dbUpdate(db, "settings", {
-      pauseTimer: 20,
     });
 }
 

@@ -1,15 +1,15 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import { socket } from './socket';
+import { Route, Routes, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Navbar from "./components/Navbar";
+import { socket } from "./socket";
 
-import Home from './pages/Home';
-import Display from './pages/Display';
-import Countdown from './pages/Countdown';
-import Attempt from './pages/Attempt';
-import Settings from './pages/Settings';
-import Ref from './pages/Ref';
-import Login from './pages/Login';
+import Home from "./pages/Home";
+import Display from "./pages/Display";
+import Countdown from "./pages/Countdown";
+import Attempt from "./pages/Attempt";
+import Settings from "./pages/Settings";
+import Ref from "./pages/Ref";
+import Login from "./pages/Login";
 
 type CompData = {
   weight: string;
@@ -36,13 +36,15 @@ function App() {
   const [ip, setIp] = useState<string | null>(null);
   const [rating, setRating] = useState<RatingObject>(null);
   const [settings, setSettings] = useState<SettingsObject>(null);
+  const [breakTimer, setBreakTimer] = useState<BreakTimerObject>(null);
   const [competitionData, setCompetitionData] = useState<CompData[]>([]);
 
   const location = useLocation();
 
   useEffect(() => {
-    isConnected && socket.emit('users', { user: location?.pathname });
-  }, [location, isConnected]);
+    console.log("Socket: ", socket);
+    console.log("Connected: ", isConnected);
+  }, [socket.connected]);
 
   useEffect(() => {
     function onConnect(): void {
@@ -69,29 +71,36 @@ function App() {
       setCompetitionData(value);
     }
 
-    socket.on('connect', onConnect);
-    socket.on('disconnect', onDisconnect);
-    socket.on('ip', getIp);
-    socket.on('rating', getRating);
-    socket.on('settings', getSettings);
-    socket.on('intervall', getCompetitionData);
+    function getBreakData(value: BreakTimerObject): void {
+      setBreakTimer(value);
+    }
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+    socket.on("ip", getIp);
+    socket.on("rating", getRating);
+    socket.on("settings", getSettings);
+    socket.on("intervall", getCompetitionData);
+    socket.on("breaktimer", getBreakData);
+    console.log("UE Läuft");
 
     return () => {
-      socket.off('connect', onConnect);
-      socket.off('disconnect', onDisconnect);
-      socket.off('ip', getIp);
-      socket.off('rating', getRating);
-      socket.off('settings', getSettings);
-      socket.on('intervall', getCompetitionData);
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+      socket.off("ip", getIp);
+      socket.off("rating", getRating);
+      socket.off("settings", getSettings);
+      socket.off("intervall", getCompetitionData);
+      socket.off("breaktimer", getBreakData);
     };
   }, []);
 
   return (
-    <div className='min-h-screen bg-gray-200'>
+    <div className="min-h-screen bg-gray-200">
       <Navbar location={location} settings={settings} />
       <Routes>
         <Route
-          path='/'
+          path="/"
           element={
             <Home
               ip={ip}
@@ -101,7 +110,7 @@ function App() {
           }
         />
         <Route
-          path='/display'
+          path="/display"
           element={
             <Display
               isConnected={isConnected}
@@ -109,26 +118,29 @@ function App() {
               ip={ip}
               settings={settings}
               competitionData={competitionData}
+              breakTimer={breakTimer}
             />
           }
         />
         <Route
-          path='/countdown'
+          path="/countdown"
           element={<Countdown isConnected={isConnected} rating={rating} />}
         />
         <Route
-          path='/versuch'
+          path="/versuch"
           element={
             <Attempt rating={rating} competitionData={competitionData} />
           }
         />
         <Route
-          path='/settings'
-          element={<Settings ip={ip} settings={settings} />}
+          path="/settings"
+          element={
+            <Settings ip={ip} settings={settings} breakTimer={breakTimer} />
+          }
         />
 
         <Route
-          path='/ref'
+          path="/ref"
           element={
             <Ref
               rating={rating}
@@ -138,7 +150,7 @@ function App() {
           }
         />
 
-        <Route path='/login' element={<Login />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );

@@ -1,7 +1,11 @@
 import Timer from "./Timer";
 import Alert from "./Alert";
 
-function Pause() {
+type Props = {
+  breakTimer: BreakTimerObject;
+};
+
+function Pause({ breakTimer }: Props) {
   return (
     <div
       className="flex flex-col items-center justify-center w-full h-screen bg-black text-white"
@@ -11,14 +15,13 @@ function Pause() {
         <h1>Pause</h1>
       </div>
       <div>
-        <Timer time={1200} />
+        <Timer time={breakTimer?.timer} />
       </div>
-      <div className="p-4">
-        <Alert
-          alert="alert-warning"
-          msg="Hier können Infos stehen - Test Test"
-        />
-      </div>
+      {breakTimer?.note && (
+        <div className="p-4">
+          <Alert alert="alert-warning" msg={breakTimer?.note} />
+        </div>
+      )}
     </div>
   );
 }

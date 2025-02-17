@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('./const');
+const jwt = require("jsonwebtoken");
+const { jwtSecret } = require("./const");
 
 //db find helper
 async function dbFind(db, field, value) {
@@ -58,7 +58,7 @@ async function dbUpdate(db, id, payload) {
       if (response.ok) {
         return await db.get(id);
       } else {
-        throw new Error('Failure');
+        throw new Error("Failure");
       }
     }
     Object.assign(data, payload);
@@ -66,7 +66,7 @@ async function dbUpdate(db, id, payload) {
     if (response.ok) {
       return await db.get(id);
     } else {
-      throw new Error('Failure');
+      throw new Error("Failure");
     }
   } catch (error) {
     console.error(error);
@@ -76,21 +76,17 @@ async function dbUpdate(db, id, payload) {
 
 async function dbRemoveDoc(db, id) {
   try {
-    const doc = await db.get(id)
+    const doc = await db.get(id);
     return await db.remove(doc);
-    
-    
   } catch (error) {
     console.error(error);
-    return false
-    
+    return false;
   }
-
 }
 
 //check if db has admin account => false init db
 async function dbInit(db, doc) {
-  const entry = await dbFind(db, 'name', 'admin');
+  const entry = await dbFind(db, "name", "admin");
 
   if (!entry) db.bulkDocs(doc);
 }
@@ -105,12 +101,20 @@ function cleanObject(data) {
   };
 }
 
+function cleanBreakObject(data) {
+  return {
+    timer: data.timer,
+    note: data.note,
+    defaultTimer: data.defaultTimer,
+  };
+}
+
 //clean settings body
 function cleanSettingsBody(body) {
   return Object.keys(body).map((key) => {
-    if (body[key] === 'true') {
+    if (body[key] === "true") {
       body[key] = true;
-    } else if (body[key] === 'false') {
+    } else if (body[key] === "false") {
       body[key] = false;
     } else {
       body[key] = parseInt(body[key]);
@@ -120,26 +124,26 @@ function cleanSettingsBody(body) {
 
 //middleware to protect settings route
 function middleware(req, res, next) {
-  const token = req?.headers?.authorization?.split(' ')[1];
+  const token = req?.headers?.authorization?.split(" ")[1];
   try {
     const decoded = jwt.verify(token, jwtSecret);
     if (decoded) next();
   } catch (err) {
     console.error(err);
-    return res.status(403).send({ msg: 'Unauthorized' });
+    return res.status(403).send({ msg: "Unauthorized" });
   }
 }
 
 //check env if running in docker
 function isDocker(db) {
   try {
-    if(process.env?.DOCKER_RUNNING) {
-      dbUpdate(db, 'settings', {isDocker: true})
-    }else{
-      dbUpdate(db, 'settings', {isDocker: false})
+    if (process.env?.DOCKER_RUNNING) {
+      dbUpdate(db, "settings", { isDocker: true });
+    } else {
+      dbUpdate(db, "settings", { isDocker: false });
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
@@ -150,8 +154,9 @@ module.exports = {
   dbAll,
   dbUpdate,
   cleanObject,
+  cleanBreakObject,
   cleanSettingsBody,
   middleware,
   dbRemoveDoc,
-  isDocker
+  isDocker,
 };

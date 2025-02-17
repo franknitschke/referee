@@ -38,7 +38,12 @@ declare global {
     isDocker: boolean;
     timekeeper: boolean;
     pauseModus: boolean;
-    pauseTimer: number;
+  } | null;
+
+  type BreakTimerObject = {
+    timer: number;
+    note: string;
+    defaultTimer: number;
   } | null;
 
   type RefObject = {

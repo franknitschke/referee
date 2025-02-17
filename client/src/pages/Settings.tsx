@@ -12,6 +12,7 @@ import SettingsPause from "../components/SettingsPause";
 type Props = {
   ip: string | null;
   settings: SettingsObject;
+  breakTimer: BreakTimerObject;
 };
 
 type Data = {
@@ -28,7 +29,7 @@ const refTitle = {
   timekeeper: "Zeitnehmer",
 };
 
-function Settings({ ip, settings }: Props) {
+function Settings({ ip, settings, breakTimer }: Props) {
   const [data, setData] = useState<Data[] | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
@@ -54,8 +55,8 @@ function Settings({ ip, settings }: Props) {
     }
   }, []);
 
-  function handleChange(e: any) {
-    fetch("/api/settings", {
+  function handleChange(e: any, route?: string) {
+    fetch(route || "/api/settings", {
       headers: {
         "content-type": "application/json",
         Authorization: `Bearer ${accessToken}`,
@@ -75,7 +76,11 @@ function Settings({ ip, settings }: Props) {
         <Loading />
       ) : (
         <div className="grid grid-cols-3 gap-4 p-4 justify-center m-auto">
-          <SettingsPause settings={settings} handleChange={handleChange} />
+          <SettingsPause
+            settings={settings}
+            handleChange={handleChange}
+            breakTimer={breakTimer}
+          />
           <SettingsOptions settings={settings} handleChange={handleChange} />
           {data?.map((el) => (
             <div

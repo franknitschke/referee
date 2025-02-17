@@ -13,6 +13,7 @@ type Props = {
   isConnected: boolean;
   rating: RatingObject;
   settings: SettingsObject;
+  breakTimer: BreakTimerObject;
   competitionData: {
     weight: string;
     discipline: string;
@@ -30,8 +31,10 @@ function Display({
   ip,
   settings,
   competitionData,
+  breakTimer,
 }: Props) {
-  return <Pause />;
+  if (settings?.pauseModus) return <Pause breakTimer={breakTimer} />;
+
   return (
     <div className="h-screen w-full bg-black text-red-600  font-semibold justify-center grid grid-cols-3 gap-2 items-center px-4 overflow-hidden cursor-none">
       {!settings?.hideCountdown && (

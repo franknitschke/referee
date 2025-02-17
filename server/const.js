@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 
 class DefaultRefValue {
   constructor() {
@@ -42,7 +42,7 @@ class DefaultRefValue {
   };
   startTimer = () => {
     this.timer--;
-    console.log('Timer: ', this.timer);
+    console.log("Timer: ", this.timer);
     if (this.timer === 0) this.clearTimer();
   };
 
@@ -84,20 +84,59 @@ class DefaultRefValue {
     return this.main.submit && this.left.submit && this.right.submit;
   }
   get ratingValid() {
-    if([this.main.valid, this.left.valid, this.right.valid].filter(rating => rating).length > 1) {
-      return 'valid'
-    }else {
-      return 'invalid'
+    if (
+      [this.main.valid, this.left.valid, this.right.valid].filter(
+        (rating) => rating
+      ).length > 1
+    ) {
+      return "valid";
+    } else {
+      return "invalid";
     }
   }
 }
 
+class DefaultBreakValue {
+  constructor() {
+    this.defaultTimer = 1200;
+    this.timer = 1200;
+    this.timerRef = null;
+    this.note = "";
+  }
+
+  set DefaultTimerValue(time) {
+    this.defaultTimer = parseInt(time);
+  }
+
+  set NoteValue(note) {
+    this.note = note;
+  }
+
+  startTimer = () => {
+    this.timer--;
+    console.log("Break Timer: ", this.timer);
+    if (this.timer === 0) this.clearTimer();
+  };
+
+  clearTimer = () => {
+    clearInterval(this.timerRef);
+    this.timerRef = null;
+  };
+
+  setBreakTimeValue = () => {
+    this.timerRef = null;
+    this.timer = this.defaultTimer;
+  };
+}
+
 const refValue = new DefaultRefValue();
+const breakTimer = new DefaultBreakValue();
 
 //map for socket user
 const users = new Map();
 
 //jwt secret
 const jwtSecret = process.env?.SECRET || uuidv4();
+console.log("JWT: ", jwtSecret);
 
-module.exports = { refValue, users, jwtSecret };
+module.exports = { refValue, users, jwtSecret, breakTimer };

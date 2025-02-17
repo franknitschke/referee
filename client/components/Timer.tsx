@@ -5,9 +5,7 @@ type Props = {
 function Timer({ time }: Props) {
   return (
     <div className="w-full text-white font-semibold">
-      // @ts-ignore
       <span className="countdown font-mono">
-        // @ts-ignore
         <span
           style={
             {

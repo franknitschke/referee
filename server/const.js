@@ -132,11 +132,7 @@ class DefaultBreakValue {
 const refValue = new DefaultRefValue();
 const breakTimer = new DefaultBreakValue();
 
-//map for socket user
-const users = new Map();
-
 //jwt secret
 const jwtSecret = process.env?.SECRET || uuidv4();
-console.log("JWT: ", jwtSecret);
 
-module.exports = { refValue, users, jwtSecret, breakTimer };
+module.exports = { refValue, jwtSecret, breakTimer };

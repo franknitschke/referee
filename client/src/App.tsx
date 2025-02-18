@@ -109,15 +109,7 @@ function App() {
     <div className="min-h-screen bg-gray-200">
       <Navbar location={location} settings={settings} />
       <Routes>
-        <Route
-          index
-          element={
-            <Home
-              ip={ip}
-              isConnected={isConnected}
-            />
-          }
-        />
+        <Route index element={<Home ip={ip} isConnected={isConnected} />} />
         <Route
           path="/display"
           element={
@@ -133,12 +125,24 @@ function App() {
         />
         <Route
           path="/countdown"
-          element={<Countdown isConnected={isConnected} rating={rating} />}
+          element={
+            <Countdown
+              settings={settings}
+              isConnected={isConnected}
+              rating={rating}
+              breakTimer={breakTimer}
+            />
+          }
         />
         <Route
           path="/versuch"
           element={
-            <Attempt rating={rating} competitionData={competitionData} />
+            <Attempt
+              settings={settings}
+              rating={rating}
+              competitionData={competitionData}
+              breakTimer={breakTimer}
+            />
           }
         />
         <Route

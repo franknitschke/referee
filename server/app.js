@@ -11,7 +11,7 @@ const vportal = require("./routes/vportal");
 const breakRoute = require("./routes/break");
 const cors = require("cors");
 
-const { refValue, users, breakTimer } = require("./const");
+const { refValue, breakTimer } = require("./const");
 
 const { dbMemory } = require("./db/db");
 const { competitionData } = require("./vportal/getCompetitionData");
@@ -33,6 +33,7 @@ const io = new Server(server, {
   cors: {
     origin: "*", //'http://localhost:3000',
   },
+  transports: ["websocket", "webtransport", "polling"],
 });
 
 const port = process.env.PORT || 3030;
@@ -85,19 +86,7 @@ io.on("connection", async (socket) => {
   //send competition data
   socket.emit("intervall", competitionData.get("athletes"));
 
-  socket.on("users", (data) => {
-    users.set(socket.id, data);
-    const usersOnline = Array.from(users.values());
-
-    io.emit("getUsers", usersOnline);
-  });
-
   socket.on("disconnect", (reason) => {
-    users.delete(socket.id);
-
-    const usersOnline = Array.from(users.values());
-    io.emit("getUsers", usersOnline);
-
     console.log(`😪 Disconnect: ${socket.id}`, reason);
   });
 });

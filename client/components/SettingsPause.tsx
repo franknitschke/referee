@@ -13,10 +13,12 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
     <div className="col-span-3 bg-white rounded-lg p-8 w-full">
       <div className="text-xl font-medium text-center py-2">Pause Modus</div>
       {settings?.pauseModus && (
-        <Alert msg="Der Pause Modus ist aktiv!" alert="alert-error" />
+        <div className="h-16 mb-4">
+          <Alert msg="Der Pause Modus ist aktiv!" alert="alert-error" />
+        </div>
       )}
 
-      <div className="form-control w-52 m-auto">
+      <div className="form-control w-52 m-auto h-16">
         <label className="cursor-pointer label">
           <span
             className="label-text tooltip font-semibold"
@@ -45,10 +47,8 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
 
       <div className="grid grid-cols-6 gap-12">
         <div className="col-span-6 lg:col-span-2">
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">Pausenzeit in Minuten</span>
-            </div>
+          <fieldset className="fieldset">
+            <legend className="fieldset-legend">Pausenzeit in Minuten</legend>
             <input
               required
               minLength={4}
@@ -60,15 +60,18 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
                 breakTimer?.defaultTimer ? breakTimer?.defaultTimer / 60 : 0
               }
               className="input input-bordered w-full max-w-xs"
-              onChange={(e) => handleChange(e, `${import.meta.env.VITE_BASE_URL}/api/break/timeValue`)}
+              onChange={(e) =>
+                handleChange(
+                  e,
+                  `${import.meta.env.VITE_BASE_URL}/api/break/timeValue`
+                )
+              }
             />
-          </label>
+          </fieldset>
         </div>
         <div className="col-span-6 lg:col-span-2">
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text">Infotext</span>
-            </div>
+          <fieldset className="fieldset">
+            <legend className="fieldset-legend">Infotext</legend>
             <input
               required
               minLength={4}
@@ -77,13 +80,23 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
               type="text"
               defaultValue={breakTimer?.note}
               className="input input-bordered w-full max-w-xs"
-              onChange={(e) => handleChange(e, `${import.meta.env.VITE_BASE_URL}/api/break/timeValue`)}
+              onChange={(e) =>
+                handleChange(
+                  e,
+                  `${import.meta.env.VITE_BASE_URL}/api/break/timeValue`
+                )
+              }
             />
-          </label>
+          </fieldset>
         </div>
         <div className="col-span-6 lg:col-span-1">
           <button
-            onClick={(e) => handleChange(e, `${import.meta.env.VITE_BASE_URL}/api/break/timer`)}
+            onClick={(e) =>
+              handleChange(
+                e,
+                `${import.meta.env.VITE_BASE_URL}/api/break/timer`
+              )
+            }
             className="btn btn-outline w-32"
           >
             Start / Stop
@@ -91,11 +104,46 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
         </div>
         <div className="col-span-6 lg:col-span-1">
           <button
-            onClick={(e) => handleChange(e, `${import.meta.env.VITE_BASE_URL}/api/break/reset`)}
+            onClick={(e) =>
+              handleChange(
+                e,
+                `${import.meta.env.VITE_BASE_URL}/api/break/reset`
+              )
+            }
             className="btn btn-outline btn-error w-32"
           >
             Reset
           </button>
+        </div>
+        <div className="col-span-6">
+          <div className="grid grid-flow-col gap-5 text-center auto-cols-max m-auto w-full justify-center items-center">
+            <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+              <span className="countdown font-mono text-5xl">
+                <span
+                  style={
+                    {
+                      "--value": breakTimer?.timer
+                        ? Math.floor(breakTimer?.timer / 60)
+                        : 0,
+                    } as React.CSSProperties
+                  }
+                ></span>
+              </span>
+              min
+            </div>
+            <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+              <span className="countdown font-mono text-5xl">
+                <span
+                  style={
+                    {
+                      "--value": breakTimer?.timer ? breakTimer?.timer % 60 : 0,
+                    } as React.CSSProperties
+                  }
+                ></span>
+              </span>
+              sec
+            </div>
+          </div>
         </div>
       </div>
     </div>

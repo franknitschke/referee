@@ -1,14 +1,16 @@
 type AlertProps = {
   msg?: string;
   alert?: "alert-warning" | "alert-error";
+  fontSize?: "1vw" | "2vw" | "3vw" | "4vw" | "6vw" | "8vw";
 };
 
 function Alert({
   msg = "Anzeige nicht verbunden",
   alert = "alert-error",
+  fontSize = "1vw",
 }: AlertProps) {
   return (
-    <div className={`alert ${alert} shadow-lg`}>
+    <div className={`alert ${alert} shadow-lg h-full w-full overflow-hidden`}>
       {alert === "alert-error" && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +41,9 @@ function Alert({
           />
         </svg>
       )}
-      <span>{msg}</span>
+      <div>
+        <div style={{ fontSize: fontSize }}>{msg}</div>
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@
 **The software is developed for use in a secure private network only (for security reasons). It is not recommended to use it on a public server!
 Please change all default passwords and tokens immediately after installation.**
 
-We recommend using the program as a Docker image. **If you run without Docker Node JS version >= 18.18.2 is required!**
+We recommend using the program as a Docker image.
 
 **If you would run the image on a Raspberry Pi, make sure to run an OS in 64 bit. Otherwise the image didn't start.**
 
@@ -73,7 +73,7 @@ add text:
 
 ```
 [autostart]
-chromium = sleep 15;chromium-browser "http://localhost:3030/display" --kiosk --noerrdialogs --disable-infobars --no-first-run --ozone-platform=wayland --enable-features=OverlayScrollbar --start-maximized
+chromium = sleep 15;chromium-browser "http://localhost:3030/display" --kiosk --noerrdialogs --disable-features=Translate --disable-infobars --no-first-run --ozone-platform=wayland --enable-features=OverlayScrollbar --start-maximized
 ```
 
 Chormium will start (with a delay of 15 sec.) and show the referee screen in kiosk mode.

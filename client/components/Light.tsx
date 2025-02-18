@@ -1,11 +1,11 @@
 type LightProps = {
-  color: 'white' | 'red' | '';
+  color: "white" | "red" | "";
   ratingSubmit: boolean | undefined | null;
   ratingColor: any;
-  width: number;
-  widthSubmit: number;
-  paddingBottom: string;
-  paddingBottomSubmit: string;
+  width?: number;
+  widthSubmit?: number;
+  paddingBottom?: string;
+  paddingBottomSubmit?: string;
 };
 
 function Light({
@@ -22,55 +22,55 @@ function Light({
       {ratingSubmit && (
         <div
           style={{
-            width: widthSubmit,
-            paddingBottom: paddingBottomSubmit,
-            position: 'relative',
-            margin: 'auto',
+            width: widthSubmit || "10%",
+            paddingBottom: paddingBottomSubmit || "10%",
+            position: "relative",
+            margin: "auto",
           }}
         >
           <div
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               left: 0,
               right: 0,
               bottom: 0,
 
-              backgroundColor: 'green',
-              borderRadius: '50%',
+              backgroundColor: "green",
+              borderRadius: "50%",
             }}
           ></div>
         </div>
       )}
       <div
         style={{
-          width: width,
-          paddingBottom: paddingBottom,
-          position: 'relative',
+          width: width || "100%",
+          paddingBottom: paddingBottom || "100%",
+          position: "relative",
         }}
       >
         <div
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
 
             backgroundColor: color,
-            borderRadius: '50%',
+            borderRadius: "50%",
           }}
         ></div>
       </div>
-      <div className='w-full h-6 lg:h-20 inline-flex py-2'>
+      <div className="w-full h-6 lg:h-20 inline-flex py-2">
         {!ratingSubmit && ratingColor?.red && (
-          <div className='h-full w-1/3 bg-red-600'></div>
+          <div className="h-full w-1/3 bg-red-600"></div>
         )}
         {!ratingSubmit && ratingColor?.yellow && (
-          <div className='h-full w-1/3 bg-yellow-500'></div>
+          <div className="h-full w-1/3 bg-yellow-500"></div>
         )}
         {!ratingSubmit && ratingColor?.blue && (
-          <div className='h-full w-1/3 bg-blue-600'></div>
+          <div className="h-full w-1/3 bg-blue-600"></div>
         )}
       </div>
     </>
@@ -78,11 +78,3 @@ function Light({
 }
 
 export default Light;
-
-Light.defaultProps = {
-  color: 'none',
-  width: '100%',
-  paddingBottom: '100%',
-  widthSubmit: '10%',
-  paddingBottomSubmit: '10%',
-};

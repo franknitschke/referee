@@ -1,4 +1,5 @@
 import Alert from "./Alert";
+import InfoBox from "./InfoBox";
 
 import type { SettingsObject, BreakTimerObject } from "../types/types";
 
@@ -67,6 +68,7 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
                 )
               }
             />
+            <InfoBox msg="Änderungen werden erst nach dem Reset aktiv." />
           </fieldset>
         </div>
         <div className="col-span-6 lg:col-span-2">
@@ -87,9 +89,11 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
                 )
               }
             />
+
+            <InfoBox msg="Text wird erst nach Reset oder Start / Stop angezeigt." />
           </fieldset>
         </div>
-        <div className="col-span-6 lg:col-span-1">
+        <div className="col-span-6 lg:col-span-1 m-auto">
           <button
             onClick={(e) =>
               handleChange(
@@ -97,19 +101,17 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
                 `${import.meta.env.VITE_BASE_URL}/api/break/timer`
               )
             }
-            className="btn btn-outline w-32"
+            className="btn btn-accent btn-outline w-32"
           >
             Start / Stop
           </button>
         </div>
-        <div className="col-span-6 lg:col-span-1">
+        <div className="col-span-6 lg:col-span-1 m-auto">
           <button
-            onClick={(e) =>
-              handleChange(
-                e,
-                `${import.meta.env.VITE_BASE_URL}/api/break/reset`
-              )
-            }
+            onClick={(e) => {
+              if (window?.confirm(`Zähler wirklich zurück setzen?`) === true)
+                handleChange(e);
+            }}
             className="btn btn-outline btn-error w-32"
           >
             Reset

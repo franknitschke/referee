@@ -21,7 +21,11 @@ function Pause({ breakTimer }: Props) {
       </div>
       {breakTimer?.note && (
         <div className="relative h-full p-4 w-full text-8xl">
-          <Alert fontSize="6vw" alert="alert-warning" msg={breakTimer?.note} />
+          <Alert
+            fontSize="text-9xl"
+            alert="alert-warning"
+            msg={breakTimer?.note}
+          />
         </div>
       )}
     </div>

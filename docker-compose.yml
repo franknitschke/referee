@@ -13,6 +13,6 @@ services:
     environment:
       DOCKER_RUNNING: true
       HOST_IP: 192.168.178.45
-      SECRET: xyz
+      SECRET: xyz1
       FETCH_INTERVAL: 10000
       VPORTAL_URL: dev

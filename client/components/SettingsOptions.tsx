@@ -1,4 +1,5 @@
 import type { SettingsObject } from "../types/types";
+import InfoBox from "./InfoBox";
 
 type Props = {
   settings: SettingsObject;
@@ -22,10 +23,8 @@ function SettingsOptions({ settings, handleChange }: Props) {
                 onChange={handleChange}
               />
             </label>
-            <span className="text-xs font-thin text-gray-600">
-              Menüleiste auf den KaRi Handys ein- / ausblenden
-            </span>
           </div>
+          <InfoBox msg="Menüleiste auf den KaRi Handys ein- / ausblenden" />
         </div>
         <div className="col-span-6 lg:col-span-2">
           <div className="form-control w-52">
@@ -34,7 +33,7 @@ function SettingsOptions({ settings, handleChange }: Props) {
                 className="label-text tooltip"
                 data-tip="Wertung automatisch zurücksetzen"
               >
-                Wertung auto Reset
+                Wertung Auto-Reset
               </span>
               <input
                 type="checkbox"
@@ -45,6 +44,7 @@ function SettingsOptions({ settings, handleChange }: Props) {
               />
             </label>
           </div>
+          <InfoBox msg="Wertung wird automatisch zurückgesetzt" />
         </div>
         <div className="col-span-6 lg:col-span-2">
           <input
@@ -83,10 +83,8 @@ function SettingsOptions({ settings, handleChange }: Props) {
                 onChange={handleChange}
               />
             </label>
-            <span className="text-xs font-thin text-gray-600">
-              Separater Zeitnehmer - blende Start / Reset beim Hauptkari aus
-            </span>
           </div>
+          <InfoBox msg="Separater Zeitnehmer - blende Start / Reset beim Hauptkari aus" />
         </div>
         <div className="col-span-6 lg:col-span-2">
           <div className="form-control w-52">
@@ -105,10 +103,8 @@ function SettingsOptions({ settings, handleChange }: Props) {
                 onChange={handleChange}
               />
             </label>
-            <span className="text-xs font-thin text-gray-600">
-              Countdown auf dem Wertungsdisplay ausblenden
-            </span>
           </div>
+          <InfoBox msg="Timer / Versuche auf Wertungsbildschirm ausblenden" />
         </div>
         <div className="col-span-6 lg:col-span-2">
           <div className="form-control w-52">
@@ -127,10 +123,8 @@ function SettingsOptions({ settings, handleChange }: Props) {
                 onChange={handleChange} //Wertung abrufen api Request
               />
             </label>
-            <span className="text-xs font-thin text-gray-600">
-              Aktuellen Versuch aus dem WK Programm abrufen
-            </span>
           </div>
+          <InfoBox msg="Aktuelle Versuche der Athleten/innen abrufen (VPortal Login nötig!)" />
         </div>
         <div className="col-span-6 lg:col-span-2">
           <div className="form-control w-52">
@@ -149,10 +143,8 @@ function SettingsOptions({ settings, handleChange }: Props) {
                 onChange={handleChange} // ohne api call wird immer vor dem senden gecheckt
               />
             </label>
-            <span className="text-xs font-thin text-gray-600">
-              KaRi Wertung an das WK Programm automatisch senden
-            </span>
           </div>
+          <InfoBox msg="EXPERIMENTELL - KaRi Wertung an das WK Programm automatisch senden" />
         </div>
       </div>
     </div>

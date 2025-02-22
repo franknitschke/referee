@@ -101,7 +101,7 @@ class DefaultBreakValue {
     this.defaultTimer = 1200;
     this.timer = 1200;
     this.timerRef = null;
-    this.note = "";
+    this.note = "Gleich geht es weiter!";
   }
 
   set DefaultTimerValue(time) {
@@ -114,7 +114,7 @@ class DefaultBreakValue {
 
   startTimer = () => {
     this.timer--;
-    console.log("Break Timer: ", this.timer);
+
     if (this.timer === 0) this.clearTimer();
   };
 

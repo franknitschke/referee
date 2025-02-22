@@ -25,7 +25,9 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
             className="label-text tooltip font-semibold"
             data-tip="Pause Modus aktivieren"
           >
-            Pause Modus aktivieren
+            {`Pause Modus ${
+              settings?.pauseModus ? "deaktivieren" : "aktivieren"
+            }`}
           </span>
           <input
             type="checkbox"

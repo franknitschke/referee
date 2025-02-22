@@ -12,7 +12,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       DOCKER_RUNNING: true
-      HOST_IP: 192.168.178.45
+      HOST_IP: 192.168.178.72
       SECRET: xyz1
       FETCH_INTERVAL: 10000
       VPORTAL_URL: dev

@@ -166,65 +166,6 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
     </div>
-
-    /*   <div className="min-h-screen bg-gray-200">
-      
-      <Navbar location={location} settings={settings} />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              ip={ip}
-              isConnected={isConnected}
-              compData={competitionData}
-            />
-          }
-        />
-        <Route
-          path="/display"
-          element={
-            <Display
-              isConnected={isConnected}
-              rating={rating}
-              ip={ip}
-              settings={settings}
-              competitionData={competitionData}
-              breakTimer={breakTimer}
-            />
-          }
-        />
-        <Route
-          path="/countdown"
-          element={<Countdown isConnected={isConnected} rating={rating} />}
-        />
-        <Route
-          path="/versuch"
-          element={
-            <Attempt rating={rating} competitionData={competitionData} />
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <Settings ip={ip} settings={settings} breakTimer={breakTimer} />
-          }
-        />
-
-        <Route
-          path="/ref"
-          element={
-            <Ref
-              rating={rating}
-              isConnected={isConnected}
-              settings={settings}
-            />
-          }
-        />
-
-        <Route path="/login" element={<Login />} />
-      </Routes>
-   </div> */
   );
 }
 

@@ -49,19 +49,19 @@ function SettingsVPortalCard({ accessToken }: Props) {
   }
 
   useEffect(() => {
-    getData(`${import.meta.env.VITE_BASE_URL}/api/vportal`, setVportal);
+    getData(`/api/vportal`, setVportal);
   }, []);
 
   useEffect(() => {
     if (vportal?.access_token) {
       setTab("tab2");
-      getData(`${import.meta.env.VITE_BASE_URL}/api/vportal/stage`, setStages);
+      getData(`/api/vportal/stage`, setStages);
     } else setTab("tab1");
   }, [vportal, success]);
 
   async function handleLogin(e: any): Promise<void> {
     const res: any = await fetchData(
-      `${import.meta.env.VITE_BASE_URL}/api/vportal/login`,
+      `/api/vportal/login`,
       "POST",
       handelSubmit(e),
       accessToken
@@ -178,7 +178,7 @@ function SettingsVPortalCard({ accessToken }: Props) {
                     onChange={async (e) => {
                       e.preventDefault();
                       const res: any = await fetchData(
-                        `${import.meta.env.VITE_BASE_URL}/api/vportal/stage`,
+                        `/api/vportal/stage`,
                         "POST",
                         { defaultStage: stage?.id },
                         accessToken

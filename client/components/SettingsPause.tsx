@@ -63,12 +63,7 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
                 breakTimer?.defaultTimer ? breakTimer?.defaultTimer / 60 : 0
               }
               className="input input-bordered w-full max-w-xs"
-              onChange={(e) =>
-                handleChange(
-                  e,
-                  `${import.meta.env.VITE_BASE_URL}/api/break/timeValue`
-                )
-              }
+              onChange={(e) => handleChange(e, `/api/break/timeValue`)}
             />
             <InfoBox msg="Änderungen werden erst nach dem Reset aktiv." />
           </fieldset>
@@ -84,12 +79,7 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
               type="text"
               defaultValue={breakTimer?.note}
               className="input input-bordered w-full max-w-xs"
-              onChange={(e) =>
-                handleChange(
-                  e,
-                  `${import.meta.env.VITE_BASE_URL}/api/break/timeValue`
-                )
-              }
+              onChange={(e) => handleChange(e, `/api/break/timeValue`)}
             />
 
             <InfoBox msg="Text wird erst nach Reset oder Start / Stop angezeigt." />
@@ -97,12 +87,7 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
         </div>
         <div className="col-span-6 lg:col-span-1 m-auto">
           <button
-            onClick={(e) =>
-              handleChange(
-                e,
-                `${import.meta.env.VITE_BASE_URL}/api/break/timer`
-              )
-            }
+            onClick={(e) => handleChange(e, `/api/break/timer`)}
             className="btn btn-accent btn-outline w-32"
           >
             Start / Stop

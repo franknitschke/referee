@@ -43,14 +43,11 @@ function Settings({ ip, settings, breakTimer }: Props) {
 
   useEffect(() => {
     async function getToken(token: string) {
-      const req = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/settings?field=role&value=ref`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const req = await fetch(`/api/settings?field=role&value=ref`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (!req.ok) return navigate("/login");
       const res = await req.json();
       setData(res);
@@ -65,21 +62,18 @@ function Settings({ ip, settings, breakTimer }: Props) {
   }, []);
 
   async function handleChange(e: any, route?: string) {
-    const req = await fetch(
-      route || `${import.meta.env.VITE_BASE_URL}/api/settings`,
-      {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        method: "POST",
-        body: JSON.stringify({
-          [e.target.name]: `${
-            e.target.type === "checkbox" ? e.target.checked : e.target.value
-          }`,
-        }),
-      }
-    );
+    const req = await fetch(route || `/api/settings`, {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      method: "POST",
+      body: JSON.stringify({
+        [e.target.name]: `${
+          e.target.type === "checkbox" ? e.target.checked : e.target.value
+        }`,
+      }),
+    });
 
     if (req.status === 403) {
       navigate("/login");

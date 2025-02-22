@@ -16,7 +16,7 @@ function SettingsAdminCard({ accessToken }: Props) {
 
   useEffect(() => {
     async function fetchAdmin() {
-      const req = await fetch(`${import.meta.env.VITE_BASE_URL}/api/settings?field=_id&value=admin`, {
+      const req = await fetch(`/api/settings?field=_id&value=admin`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -39,7 +39,7 @@ function SettingsAdminCard({ accessToken }: Props) {
         <form
           onSubmit={(e) =>
             fetchData(
-              `${import.meta.env.VITE_BASE_URL}/api/settings/update/admin`,
+              `/api/settings/update/admin`,
               "POST",
               handelSubmit(e),
               accessToken

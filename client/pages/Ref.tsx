@@ -37,7 +37,7 @@ function Ref({ rating, isConnected, settings }: Props) {
           <div>
             <OnlineStatus isConnected={isConnected} />
           </div>
-          <div className="grid grid-cols-3 gap-2 p-2 bg-gray-300 rounded-2xl border-gray-500 border-2">
+          <div className="grid grid-cols-3 gap-2 p-2 bg-gray-300 rounded-2xl border-gray-500 border-2 w-8/12 justify-center m-auto">
             <div className="col-span-1">
               <Light
                 color={showRating(rating, "left")}
@@ -81,9 +81,7 @@ function Ref({ rating, isConnected, settings }: Props) {
                 <RefButton
                   color={"white"}
                   title={"Weiß"}
-                  url={`${
-                    import.meta.env.VITE_BASE_URL
-                  }/api/ref/?token=${token}&light=white`}
+                  url={`/api/ref/?token=${token}&light=white`}
                   method={"GET"}
                 />
               </div>
@@ -91,9 +89,7 @@ function Ref({ rating, isConnected, settings }: Props) {
                 <RefButton
                   color={"red"}
                   title={"Rot"}
-                  url={`${
-                    import.meta.env.VITE_BASE_URL
-                  }/api/ref/?token=${token}&light=red`}
+                  url={`/api/ref/?token=${token}&light=red`}
                   method={"GET"}
                 />
               </div>
@@ -101,9 +97,7 @@ function Ref({ rating, isConnected, settings }: Props) {
                 <RefButton
                   color={"blue"}
                   title={"Blau"}
-                  url={`${
-                    import.meta.env.VITE_BASE_URL
-                  }/api/ref/?token=${token}&light=blue`}
+                  url={`/api/ref/?token=${token}&light=blue`}
                   method={"GET"}
                 />
               </div>
@@ -111,9 +105,7 @@ function Ref({ rating, isConnected, settings }: Props) {
                 <RefButton
                   color={"yellow"}
                   title={"Gelb"}
-                  url={`${
-                    import.meta.env.VITE_BASE_URL
-                  }/api/ref/?token=${token}&light=yellow`}
+                  url={`/api/ref/?token=${token}&light=yellow`}
                   method={"GET"}
                 />
               </div>
@@ -124,9 +116,7 @@ function Ref({ rating, isConnected, settings }: Props) {
                   <RefButton
                     color={"gray"}
                     title={"Start"}
-                    url={`${
-                      import.meta.env.VITE_BASE_URL
-                    }/api/timer?token=${token}&position=main`}
+                    url={`/api/timer?token=${token}&position=main`}
                     method={"POST"}
                   />
                 </div>
@@ -134,9 +124,7 @@ function Ref({ rating, isConnected, settings }: Props) {
                   <RefButton
                     color={"gray"}
                     title={"Reset"}
-                    url={`${
-                      import.meta.env.VITE_BASE_URL
-                    }/api/ref/reset?token=${token}&position=main`}
+                    url={`/api/ref/reset?token=${token}&position=main`}
                     method={"POST"}
                   />
                 </div>

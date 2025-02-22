@@ -2,16 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { breakTimer } = require("../const");
 
-const {
-  dbFind,
-  dbUpdate,
-
-  middleware,
-  cleanBreakObject,
-} = require("../helper");
+const { middleware, cleanBreakObject } = require("../helper");
 
 //protect routes
-//router.use(middleware);
+router.use(middleware);
 
 router.get("/", async (req, res) => {
   res.header({ "content-type": "application/json" });
@@ -31,8 +25,7 @@ router.post("/timeValue", async (req, res) => {
   if (pauseTimerNote) {
     breakTimer.NoteValue = pauseTimerNote;
   }
-  //res.io.emit("breaktimer", breakTimer);
-  //res.header({ "content-type": "application/json" });
+
   res.status(200).send({ msg: "Ok" });
 });
 

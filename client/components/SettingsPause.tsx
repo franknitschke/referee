@@ -97,7 +97,7 @@ function SettingsPause({ settings, breakTimer, handleChange }: Props) {
           <button
             onClick={(e) => {
               if (window?.confirm(`Zähler wirklich zurück setzen?`) === true)
-                handleChange(e);
+                handleChange(e, `/api/break/reset`);
             }}
             className="btn btn-outline btn-error w-32"
           >

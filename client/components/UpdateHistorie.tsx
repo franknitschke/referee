@@ -37,11 +37,11 @@ function UpdateHistorie() {
   if (updates?.length === 0) return null;
 
   return (
-    <div className="relative w-2/3 h-1/3 m-auto overflow-y-scroll card bg-base-100 shadow-xl gap-y-2 p-2 mt-10">
+    <div className="w-3/4 m-auto justify-center">
       <div>Versionen:</div>
       {updates?.map((el) => (
         <div
-          className="collapse collapse-arrow bg-base-200 relative min-h-fit"
+          className="collapse collapse-arrow bg-base-200 relative min-h-fit mb-2"
           key={el.id}
         >
           <input type="radio" name="my-accordion-2" />

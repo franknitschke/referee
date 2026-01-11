@@ -21,10 +21,11 @@ router.post("/timeValue", async (req, res) => {
       return res.status(500).send({ msg: "False Value" });
     breakTimer.DefaultTimerValue = parseInt(pauseTimer) * 60; //convert minutes in seconds
   }
+  breakTimer.NoteValue = pauseTimerNote;
 
-  if (pauseTimerNote) {
+  /* if (pauseTimerNote) {
     breakTimer.NoteValue = pauseTimerNote;
-  }
+  } */
 
   res.status(200).send({ msg: "Ok" });
 });

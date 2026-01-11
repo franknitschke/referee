@@ -19,7 +19,7 @@ function Pause({ breakTimer }: Props) {
       <div>
         <Timer time={breakTimer?.timer} />
       </div>
-      {breakTimer?.note && (
+      {breakTimer?.note?.trim() && (
         <div className="relative h-full p-4 w-full text-8xl">
           <Alert
             fontSize="text-9xl"
